@@ -180,7 +180,7 @@ struct ME2Format{
 	int numberofPawns;	//assert(0==numberofPawns);
 	playerData player;
 	collection<Henchman> henchmen;
-	//ME2PlotTable Plot;
+	ME2PlotTable Plot;
 	//ME1PlotTable ME1PlotRecord;
 	//There's other stuff, but we're ignoring it for now
 	void read(binFile& saveFile);
@@ -228,7 +228,7 @@ void ME2PlotTable::read(binFile& saveFile){
 	CodexIDs.readBasic(saveFile);
 }
 void ME2PlotTable::cout(){
-	std::cout << "There are " << (BoolVariables.getSize()) << " bool values in the ME2 plot table" << endl;
+	std::cout << "There are " << (BoolVariables.size()) << " bool values in the ME2 plot table" << endl;
 	std::cout << "Displaying bools:"<<endl;
 	BoolVariables.cout();
 	std::cout << "There are " << ints.size() << " interger values in the ME2 plot table" << endl;
@@ -417,7 +417,7 @@ void ME2Format::read(binFile& saveFile){
 	assert(0==numberofPawns);
 	player.read(saveFile);
 	henchmen.read(saveFile);
-	//Plot.read(saveFile);
+	Plot.read(saveFile);
 	//ME1PlotRecord.read(saveFile);
 }
 
@@ -478,7 +478,7 @@ void ME2Format::cout(){
 	std::cout << "There are " << henchmen.size() << " Henchmen" <<endl;
 	std::cout << "Displaying Henchmen:"<<endl;
 	henchmen.cout(false);
-	//Plot.cout();
+	Plot.cout();
 }
 
 //And now the main function
@@ -495,13 +495,10 @@ int main(int argc, char *argv[]){
 	ME2Format me2file;
 	
 	file1.open(argv[1]);
-
 	cout << "File size is:  " << file1.size() << " bytes" << endl;
 	me2file.read(file1);
-	
-	file1.fileStream.close();
+	file1.fileStream.close();	
 	me2file.cout();
-	
 	
 	return 0;
 }

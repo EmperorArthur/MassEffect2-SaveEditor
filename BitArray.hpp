@@ -6,21 +6,17 @@
 #include <fstream>
 class BitArray {
 	public:
-		BitArray();
-		BitArray(int newSize);
 		~BitArray();
-		void setSize(int newSize);			//Warning, this wipes out all old data
 		bool readBit(int index);
 		void writeBit(int index,bool newValue);
 		unsigned char & raw(int byteNumber);
-		int getSize();
+		int size();
 		int getRawSize();
 		void read(std::fstream& saveFile);
 		void cout();
 	private:
 		unsigned char * bytes;
-		int size;
-		int bitSelect;
+		int numberofbytes;
 };
 
 #endif
