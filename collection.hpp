@@ -11,6 +11,7 @@
 
 template <class T>
 struct collection{
+	collection();
 	~collection();
 	int size();
 	void readBasic(binFile& saveFile);
@@ -22,6 +23,10 @@ struct collection{
 		T * items;
 		int numberofItems;
 };
+template <class T>
+collection<T>::collection(){
+	numberofItems = 0;
+}
 template <class T>
 collection<T>::~collection(){
 	if(0 !=numberofItems){
@@ -53,12 +58,14 @@ void collection<T>::readBasic(binFile& saveFile){
 		exit(1);
 	}
 	for(int i=0;i<numberofItems;i++){
-		assert(saveFile.fileStream.good());
+		if(!saveFile.fileStream.good()){
+			throw "FileStream is not good";
+		}
 		try{
 			saveFile.fileStream.read((char *) &items[i],4);
 		}
 		catch (exception& e){
-			cerr << "exception caught: " << e.what() << endl;
+			cerr << "exception: " << e.what() << endl;
 		exit(1);
 		}
 	}
@@ -80,7 +87,9 @@ void collection<T>::read(binFile& saveFile){
 		exit(1);
 	}
 	for(int i=0;i<numberofItems;i++){
-		assert(saveFile.fileStream.good());
+		if(!saveFile.fileStream.good()){
+			throw "FileStream is not good";
+		}
 		try{
 			items[i].read(saveFile);
 		}

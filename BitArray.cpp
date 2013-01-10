@@ -30,8 +30,11 @@ void BitArray::writeBit(int index,bool newValue){
 int BitArray::getRawSize(){
 	return numberofbytes;
 }
+BitArray::BitArray(){
+	numberofbytes = 0;
+}
 BitArray::~BitArray(){
-	if(bytes != NULL){
+	if(0 != numberofbytes){
 		delete[] bytes;
 	}
 }

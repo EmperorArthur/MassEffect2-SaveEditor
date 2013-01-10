@@ -6,6 +6,7 @@
 #include <fstream>
 class BitArray {
 	public:
+		BitArray();
 		~BitArray();
 		bool readBit(int index);
 		void writeBit(int index,bool newValue);
