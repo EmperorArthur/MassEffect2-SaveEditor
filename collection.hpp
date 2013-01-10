@@ -11,6 +11,7 @@
 
 template <class T>
 struct collection{
+	~collection();
 	int size();
 	void readBasic(binFile& saveFile);
 	void read(binFile& saveFile);
@@ -21,6 +22,12 @@ struct collection{
 		T * items;
 		int numberofItems;
 };
+template <class T>
+collection<T>::~collection(){
+	if(0 !=numberofItems){
+		delete[] items;
+	}
+}
 template <class T>
 int collection<T>::size(){
 	return numberofItems;
