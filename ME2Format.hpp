@@ -22,6 +22,7 @@ struct xyzvector{	//(16 bytes total) (This is the only struct without it's own r
 	float z;
 };
 struct LevelRecord{
+	int magicUnused;	/////////This causes windows to crash at the end of the program, but Level's are all messed up without it/////////
 	mstring LevelName;
 	bool Unknown1; // could be ShouldBeVisible or ShouldBeLoaded
 	bool Unknown2; // could be ShouldBeVisible or ShouldBeLoaded
