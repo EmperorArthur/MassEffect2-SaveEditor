@@ -115,13 +115,13 @@ struct ME2PlotTable{
 	void read(binFile& saveFile);
 	void cout();
 };
-// struct ME1PlotTable{
-	// BitArray BoolVariables;
-	// collection<int> ints;
-	// collection<float> floats;
-	// void read(binFile& saveFile);
-	// void cout();
-// };
+struct ME1PlotTable{
+	BitArray BoolVariables;
+	collection<int> ints;
+	collection<float> floats;
+	void read(binFile& saveFile);
+	void cout();
+};
 struct playerData {
 	bool IsFemale;
 	mstring className;
@@ -181,7 +181,7 @@ struct ME2Format{
 	playerData player;
 	collection<Henchman> henchmen;
 	ME2PlotTable Plot;
-	//ME1PlotTable ME1PlotRecord;
+	ME1PlotTable ME1PlotRecord;
 	//There's other stuff, but we're ignoring it for now
 	void read(binFile& saveFile);
 	void cout();
@@ -258,18 +258,24 @@ void Hotkey::cout(){
 	std::cout << "	" << name << " : " << PowerID << endl;
 }
 
-//void ME1PlotTable::read(binFile& saveFile){
-	// BoolVariables.read(saveFile.fileStream);
-	// ints.readBasic(saveFile);
-	// floats.readBasic(saveFile);
-//};
-//void ME1PlotTable::cout(){
-	// std::cout << "****************Start of ME1 Plot Table****************" << std::endl;
-	// BoolVariables.cout();
-	// ints.coutBasic();
-	// floats.coutBasic();
-	// std::cout << "****************End of ME1 Plot Table****************" << std::endl;
-//}
+void ME1PlotTable::read(binFile& saveFile){
+	BoolVariables.read(saveFile.fileStream);
+	ints.readBasic(saveFile);
+	floats.readBasic(saveFile);
+};
+void ME1PlotTable::cout(){
+	std::cout << "****************Start of ME1 Plot Table****************" << std::endl;
+	std::cout << "There are " << (BoolVariables.size()) << " bool values in the ME1 plot table" << endl;
+	std::cout << "Displaying bools:"<<endl;
+	BoolVariables.cout();
+	std::cout << "There are " << ints.size() << " interger values in the ME1 plot table" << endl;
+	std::cout << "Displaying ints:"<<endl;
+	ints.coutBasic();
+	std::cout << "There are " << floats.size() << " floating point values in the ME1 plot table" << endl;
+	std::cout << "Displaying floats:"<<endl;
+	floats.coutBasic();
+	std::cout << "****************End of ME1 Plot Table****************" << std::endl;
+}
 void Henchman::cout(){
 	std::cout << "	" << Tag << ":" << endl;
 	std::cout << "	Displaying powers:"<<endl;
@@ -418,7 +424,7 @@ void ME2Format::read(binFile& saveFile){
 	player.read(saveFile);
 	henchmen.read(saveFile);
 	Plot.read(saveFile);
-	//ME1PlotRecord.read(saveFile);
+	ME1PlotRecord.read(saveFile);
 }
 
 void playerData::cout(){
@@ -479,6 +485,7 @@ void ME2Format::cout(){
 	std::cout << "Displaying Henchmen:"<<endl;
 	henchmen.cout(false);
 	Plot.cout();
+	ME1PlotRecord.cout();
 }
 
 //And now the main function
