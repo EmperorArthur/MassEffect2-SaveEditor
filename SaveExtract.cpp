@@ -8,7 +8,6 @@
 #include <fstream>
 #include <string>
 #include <cassert>
-#include <typeinfo>
 #include "BinFile.hpp"
 #include "BitArray.hpp"
 #include "collection.hpp"
@@ -116,13 +115,13 @@ struct ME2PlotTable{
 	void read(binFile& saveFile);
 	void cout();
 };
-struct ME1PlotTable{
-	BitArray BoolVariables;
-	collection<int> ints;
-	collection<float> floats;
-	void read(binFile& saveFile);
-	void cout();
-};
+// struct ME1PlotTable{
+	// BitArray BoolVariables;
+	// collection<int> ints;
+	// collection<float> floats;
+	// void read(binFile& saveFile);
+	// void cout();
+// };
 struct playerData {
 	bool IsFemale;
 	mstring className;
@@ -181,7 +180,7 @@ struct ME2Format{
 	int numberofPawns;	//assert(0==numberofPawns);
 	playerData player;
 	collection<Henchman> henchmen;
-	ME2PlotTable Plot;
+	//ME2PlotTable Plot;
 	//ME1PlotTable ME1PlotRecord;
 	//There's other stuff, but we're ignoring it for now
 	void read(binFile& saveFile);
@@ -418,7 +417,7 @@ void ME2Format::read(binFile& saveFile){
 	assert(0==numberofPawns);
 	player.read(saveFile);
 	henchmen.read(saveFile);
-	Plot.read(saveFile);
+	//Plot.read(saveFile);
 	//ME1PlotRecord.read(saveFile);
 }
 
@@ -479,7 +478,7 @@ void ME2Format::cout(){
 	std::cout << "There are " << henchmen.size() << " Henchmen" <<endl;
 	std::cout << "Displaying Henchmen:"<<endl;
 	henchmen.cout(false);
-	Plot.cout();
+	//Plot.cout();
 }
 
 //And now the main function

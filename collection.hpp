@@ -4,6 +4,7 @@
 #ifndef COLLECTION_H
 #define COLLECTION_H
 
+#include <typeinfo>
 #include <cassert>
 #include <iostream>
 #include <cstdlib> //for exit
