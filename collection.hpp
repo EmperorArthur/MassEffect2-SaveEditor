@@ -46,58 +46,62 @@ T & collection<T>::operator[](int index){
 template <class T>
 void collection<T>::readBasic(binFile& saveFile){
 	saveFile.fileStream.read((char *) &numberofItems,4);
-	try{
-		items = new T[numberofItems];
-	}
-	catch (bad_alloc& ba){
-		cerr << "bad_alloc caught: " << ba.what() << endl;
-		exit(1);
-	}	
-	catch (exception& e){
-		cerr << "exception caught: " << e.what() << endl;
-		exit(1);
-	}
-	for(int i=0;i<numberofItems;i++){
-		if(!saveFile.fileStream.good()){
-			throw "FileStream is not good";
-		}
+	//Do nothing if we're asked to read something with no values
+	if(numberofItems){
 		try{
-			saveFile.fileStream.read((char *) &items[i],4);
+			items = new T[numberofItems];
 		}
+		catch (bad_alloc& ba){
+			cerr << "bad_alloc caught: " << ba.what() << endl;
+			exit(1);
+		}	
 		catch (exception& e){
-			cerr << "exception: " << e.what() << endl;
-		exit(1);
+			cerr << "exception caught: " << e.what() << endl;
+			exit(1);
+		}
+		for(int i=0;i<numberofItems;i++){
+			if(!saveFile.fileStream.good()){
+				throw "FileStream is not good";
+			}
+			try{
+				saveFile.fileStream.read((char *) &items[i],4);
+			}
+			catch (exception& e){
+				cerr << "exception: " << e.what() << endl;
+			exit(1);
+			}
 		}
 	}
-
 }
 //This reads in multiple items, calling the read function for each individual item
 template <class T>
 void collection<T>::read(binFile& saveFile){
 	saveFile.fileStream.read((char *) &numberofItems,4);
-	try{
-		items = new T[numberofItems];
-	}
-	catch (bad_alloc& ba){
-		cerr << "bad_alloc caught: " << ba.what() << endl;
-		exit(1);
-	}
-	catch (exception& e){
-		cerr << "exception caught: " << e.what() << endl;
-		exit(1);
-	}
-	for(int i=0;i<numberofItems;i++){
-		if(!saveFile.fileStream.good()){
-			throw "FileStream is not good";
-		}
+	//Do nothing if we're asked to read something with no values
+	if(numberofItems){
 		try{
-			items[i].read(saveFile);
+			items = new T[numberofItems];
+		}
+		catch (bad_alloc& ba){
+			cerr << "bad_alloc caught: " << ba.what() << endl;
+			exit(1);
 		}
 		catch (exception& e){
 			cerr << "exception caught: " << e.what() << endl;
+			exit(1);
+		}
+		for(int i=0;i<numberofItems;i++){
+			if(!saveFile.fileStream.good()){
+				throw "FileStream is not good";
+			}
+			try{
+				items[i].read(saveFile);
+			}
+			catch (exception& e){
+				cerr << "exception caught: " << e.what() << endl;
+			}
 		}
 	}
-
 }
 //This is like the regular cout, but for built in types
 template <class T>
