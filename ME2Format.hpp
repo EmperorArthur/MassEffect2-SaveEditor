@@ -205,7 +205,7 @@ struct ME2Format{
 	ME1PlotTable ME1PlotRecord;
 	GalaxyMap galaxy;
 	collection<DependentDLC> dlc;
-	//There's other stuff, but we're ignoring it for now
+	unsigned int crc;							// CRC32 of save data (from start) to before CRC32 value
 	void read(binFile& saveFile);
 	void cout();
 };

@@ -243,6 +243,7 @@ void ME2Format::read(binFile& saveFile){
 	ME1PlotRecord.read(saveFile);
 	galaxy.read(saveFile);
 	dlc.read(saveFile);
+	saveFile.fileStream.read((char *) &crc,4);
 }
 
 void playerData::cout(){
@@ -307,6 +308,7 @@ void ME2Format::cout(){
 	galaxy.cout();
 	std::cout << "This save depends on:" << std::endl;
 	dlc.cout(false);
+	std::cout << "CRC:  0x" << hex << crc << dec << endl;
 }
 void xyvector::read(binFile& saveFile){
 	saveFile.fileStream.read((char *) &x,4);
