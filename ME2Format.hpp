@@ -17,13 +17,12 @@ using namespace std;
 
 //NOTE:  all ints, floats, and bools have a 4 byte size
 
-struct xyzvector{	//(16 bytes total)
+struct xyzvector{	//(16 bytes total) (This is the only struct without it's own read function)
 	float x;
 	float y;
 	float z;
 };
 struct LevelRecord{
-	int nameSize;	/////////////////////////////THIS SHOULD NOT BE NEEDED, BUT IT IS/////////////////////////////
 	mstring LevelName;
 	bool Unknown1; // could be ShouldBeVisible or ShouldBeLoaded
 	bool Unknown2; // could be ShouldBeVisible or ShouldBeLoaded
@@ -70,6 +69,38 @@ struct Hotkey{
 struct Loadout{
 	int WeaponSize[6];
 	mstring Weapon[6];
+	void read(binFile& saveFile);
+	void cout();
+};
+struct playerData {
+	bool IsFemale;
+	mstring className;
+	int level;
+	float xp;
+	mstring firstName;
+	int lastname;				//not actually used
+	char origin;				//This is really an enum (Display as an int)
+	char Notoriety;				//This is really an enum (Display as an int)
+	int TalentPoints;
+	mstring mappedPower1;
+	mstring mappedPower2;
+	mstring mappedPower3;
+	unsigned char Appearance[57];	 //This is a whole seperate struct that I'm currently ignoring
+	collection<Power> powers;
+	collection<Weapon> weapons;
+	Loadout currentLoadout;
+	collection<Hotkey> hotkeys;
+	int Credits;
+	int Medigel;
+	int Eezo;
+	int Iridium;
+	int Palladium;
+	int Platinum;
+	int Probes;
+	float CurrentFuel;
+	int FaceCodeSize;
+	mstring FaceCode;
+	int ClassFriendlyName;
 	void read(binFile& saveFile);
 	void cout();
 };
@@ -135,38 +166,6 @@ struct Planet{
 };
 struct GalaxyMap{
 	collection<Planet> Planets;
-	void read(binFile& saveFile);
-	void cout();
-};
-struct playerData {
-	bool IsFemale;
-	mstring className;
-	int level;
-	float xp;
-	mstring firstName;
-	int lastname;				//not actually used
-	char origin;				//This is really an enum (Display as an int)
-	char Notoriety;				//This is really an enum (Display as an int)
-	int TalentPoints;
-	mstring mappedPower1;
-	mstring mappedPower2;
-	mstring mappedPower3;
-	unsigned char Appearance[57];	 //This is a whole seperate struct that I'm currently ignoring
-	collection<Power> powers;
-	collection<Weapon> weapons;
-	Loadout currentLoadout;
-	collection<Hotkey> hotkeys;
-	int Credits;
-	int Medigel;
-	int Eezo;
-	int Iridium;
-	int Palladium;
-	int Platinum;
-	int Probes;
-	float CurrentFuel;
-	int FaceCodeSize;
-	mstring FaceCode;
-	int ClassFriendlyName;
 	void read(binFile& saveFile);
 	void cout();
 };
