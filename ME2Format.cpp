@@ -216,6 +216,7 @@ void ME2Format::read(binFile& saveFile){
 	//Read the data from the file
 	saveFile.fileStream.seekg(ios_base::beg + 0x00);
 	saveFile.fileStream.read((char *) &version,4);
+	assert(29 == version);	//Make sure we're reading the correct file type
 	DebugName.read(saveFile.fileStream);
 	saveFile.fileStream.read((char *) &playTime,4);
 	Disc.read(saveFile.fileStream);
@@ -244,6 +245,10 @@ void ME2Format::read(binFile& saveFile){
 	galaxy.read(saveFile);
 	dlc.read(saveFile);
 	saveFile.fileStream.read((char *) &crc,4);
+	//Make sure we're at eof (another read will fail the stream, se we could check that way)
+	streampos currentLocation = saveFile.fileStream.tellg();
+	saveFile.fileStream.seekg(0,ios::end);
+	assert(saveFile.fileStream.tellg() == currentLocation);
 }
 
 void playerData::cout(){

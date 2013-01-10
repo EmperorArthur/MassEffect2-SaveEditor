@@ -176,7 +176,7 @@ struct DependentDLC{
 	void cout();
 };
 struct ME2Format{
-	int version;		//Offset 0x00
+	int version;		// ME2 1.0 (release) has saves of version 29 (0x1D)
 	mstring DebugName;
 	float playTime; 	//(In seconds)
 	mstring Disc;
