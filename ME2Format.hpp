@@ -34,6 +34,12 @@ struct StreamingRecord{
 	void read(fstream& saveFile);
 	void cout();
 };
+struct Kismet{
+	unsigned char id[16];
+	bool Value;
+	void read(fstream& saveFile);
+	void cout();
+};
 struct Door{
 	unsigned char id[16];
 	unsigned char CurrentState; //(Display as an int)
@@ -41,6 +47,12 @@ struct Door{
 	void read(fstream& saveFile);
 	void cout();
 };
+struct Pawn{
+	unsigned char id[16];
+	void read(fstream& saveFile);
+	void cout();
+};
+
 struct Power{
 	mstring PowerName;
 	float CurrentRank;
@@ -193,11 +205,9 @@ struct ME2Format{
 	int CurrentLoadingTip;
 	collection<LevelRecord> levels;
 	collection<StreamingRecord> streams;
-	//Gibbed's code talks about kismets, but I don't see anything
-	int numberofKismets;	//assert(0==numberofKismets);
+	collection<Kismet> kismets;
 	collection<Door> doors;
-	//Gibbed's code talks about pawn records, but I don't see anything
-	int numberofPawns;	//assert(0==numberofPawns);
+	collection<Pawn> pawns;
 	playerData player;
 	collection<Henchman> henchmen;
 	ME2PlotTable Plot;

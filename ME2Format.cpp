@@ -112,14 +112,28 @@ void Weapon::cout(){
 		std::cout << "		This is the last equipped weapon."<<endl;
 	}
 }
+
+void Kismet::cout(){
+	std::cout << "	id: ";
+	for(int j=0;j<16;j++){
+		std::cout << hex << (unsigned short)id[j];
+	}
+	std::cout << dec << ": " << Value << endl;
+}
+
 void Door::cout(){
 	std::cout << "	id: ";
 	for(int j=0;j<16;j++){
 		std::cout << hex << (unsigned short)id[j];
 	}
-	std::cout <<	dec << ": " << (int) CurrentState << "," << (int) OldState<< endl;
+	std::cout << dec << ": " << (int) CurrentState << "," << (int) OldState<< endl;
 }
-
+void Pawn::cout(){
+	std::cout << "	id: ";
+	for(int j=0;j<16;j++){
+		std::cout << hex << (unsigned short)id[j];
+	}
+}
 void Power::read(fstream& saveFile){
 
 	PowerName.read(saveFile);
@@ -194,6 +208,13 @@ void Door::read(fstream& saveFile){
 	saveFile.read((char *) &CurrentState,1);
 	saveFile.read((char *) &OldState,1);
 }
+void Kismet::read(fstream& saveFile){
+	saveFile.read((char *) &id,16);
+	saveFile.read((char *) &Value,4);
+}
+void Pawn::read(fstream& saveFile){
+	saveFile.read((char *) &id,16);
+}
 
 void StreamingRecord::read(fstream& saveFile){
 	name.read(saveFile);
@@ -233,11 +254,9 @@ void ME2Format::read(fstream& saveFile){
 	saveFile.read((char *) &CurrentLoadingTip,4);
 	levels.read(saveFile);
 	streams.read(saveFile);
-	saveFile.read((char *) &numberofKismets,4);
-	assert(0==numberofKismets);
+	kismets.read(saveFile);
 	doors.read(saveFile);
-	saveFile.read((char *) &numberofPawns,4);
-	assert(0==numberofPawns);
+	pawns.read(saveFile);
 	player.read(saveFile);
 	henchmen.read(saveFile);
 	Plot.read(saveFile);
@@ -302,8 +321,12 @@ void ME2Format::cout(){
 	levels.cout(false);
 	std::cout << "Displaying Streams:"<<endl;
 	streams.cout(false);
+	std::cout << "Displaying Kismets:"<<endl;
+	kismets.cout(false);
 	std::cout << "Displaying Doors:" << endl;
 	doors.cout(false);
+	std::cout << "Displaying Pawns:" << endl;
+	pawns.cout(false);
 	player.cout();
 	std::cout << "There are " << henchmen.size() << " Henchmen" <<endl;
 	std::cout << "Displaying Henchmen:"<<endl;
