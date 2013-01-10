@@ -39,11 +39,22 @@ void collection<T>::readBasic(binFile& saveFile){
 	catch (bad_alloc& ba){
 		cerr << "bad_alloc caught: " << ba.what() << endl;
 		exit(1);
+	}	
+	catch (exception& e){
+		cerr << "exception caught: " << e.what() << endl;
+		exit(1);
 	}
 	for(int i=0;i<numberofItems;i++){
 		assert(saveFile.fileStream.good());
-		saveFile.fileStream.read((char *) &items[i],4);
+		try{
+			saveFile.fileStream.read((char *) &items[i],4);
+		}
+		catch (exception& e){
+			cerr << "exception caught: " << e.what() << endl;
+		exit(1);
+		}
 	}
+
 }
 //This reads in multiple items, calling the read function for each individual item
 template <class T>
@@ -56,10 +67,20 @@ void collection<T>::read(binFile& saveFile){
 		cerr << "bad_alloc caught: " << ba.what() << endl;
 		exit(1);
 	}
+	catch (exception& e){
+		cerr << "exception caught: " << e.what() << endl;
+		exit(1);
+	}
 	for(int i=0;i<numberofItems;i++){
 		assert(saveFile.fileStream.good());
-		items[i].read(saveFile);
+		try{
+			items[i].read(saveFile);
+		}
+		catch (exception& e){
+			cerr << "exception caught: " << e.what() << endl;
+		}
 	}
+
 }
 //This is like the regular cout, but for built in types
 template <class T>

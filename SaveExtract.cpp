@@ -9,7 +9,6 @@
 #include <string>
 #include <cassert>
 #include <typeinfo>
-#include <vector>
 #include "BinFile.hpp"
 #include "BitArray.hpp"
 #include "collection.hpp"
