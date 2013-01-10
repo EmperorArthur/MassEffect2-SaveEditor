@@ -169,6 +169,12 @@ struct GalaxyMap{
 	void read(binFile& saveFile);
 	void cout();
 };
+struct DependentDLC{
+	int ModuleID;
+	mstring name;
+	void read(binFile& saveFile);
+	void cout();
+};
 struct ME2Format{
 	int version;		//Offset 0x00
 	mstring DebugName;
@@ -198,6 +204,7 @@ struct ME2Format{
 	ME2PlotTable Plot;
 	ME1PlotTable ME1PlotRecord;
 	GalaxyMap galaxy;
+	collection<DependentDLC> dlc;
 	//There's other stuff, but we're ignoring it for now
 	void read(binFile& saveFile);
 	void cout();

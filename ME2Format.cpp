@@ -242,6 +242,7 @@ void ME2Format::read(binFile& saveFile){
 	Plot.read(saveFile);
 	ME1PlotRecord.read(saveFile);
 	galaxy.read(saveFile);
+	dlc.read(saveFile);
 }
 
 void playerData::cout(){
@@ -304,6 +305,8 @@ void ME2Format::cout(){
 	Plot.cout();
 	ME1PlotRecord.cout();
 	galaxy.cout();
+	std::cout << "This save depends on:" << std::endl;
+	dlc.cout(false);
 }
 void xyvector::read(binFile& saveFile){
 	saveFile.fileStream.read((char *) &x,4);
@@ -332,6 +335,12 @@ void GalaxyMap::cout(){
 	Planets.cout(false);
 	std::cout << "*****************End of Galaxy Map*****************" << std::endl;
 }
-
+void DependentDLC::read(binFile& saveFile){
+	saveFile.fileStream.read((char *) &ModuleID,4);
+	name.read(saveFile.fileStream);
+}
+void DependentDLC::cout(){
+	std::cout << "	" << name << " : " << ModuleID << endl;
+}
 
 
