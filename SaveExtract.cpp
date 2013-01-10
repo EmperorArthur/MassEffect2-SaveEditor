@@ -7,269 +7,19 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cstdlib> //for exit
 #include <cassert>
 #include <typeinfo>
 #include <vector>
+#include "BinFile.hpp"
+#include "BitArray.hpp"
+#include "collection.hpp"
+#include "mstring.hpp"
 
 //Can't forget this
 using namespace std;
 
-//This is a quick and dirty easy method of dealing with binary files
-class binFile{
-	public:
-		string fileName;
-		fstream fileStream;
-		void open();
-		void open(string name);
-		void open(char * name);
-		streampos getSize();
-		streampos size();
-		~binFile();
-		int chompZeros();
-		string readString();
-	private:
-		streampos length;
-};
-binFile::~binFile(){
-	fileStream.close();
-}
-void binFile::open(){
-	//Open the file (if it doesn't exist, complain and exit
-	fileStream.open(fileName.c_str(),ios::in|ios::out|ios::binary);
-	if(!fileStream.is_open()){
-		cerr << "ERROR:  Unable to open file  \"" << fileName << "\"" << endl;
-		exit(1);  //When we fail, we fail hard
-	}
-	getSize();
-}
-void binFile::open(string name){
-	fileName = name;
-	open();
-}
-void binFile::open(char * name){
-	fileName = name;
-	open();
-}
-streampos binFile::getSize(){
-	streampos originalPointerPosition = 0;
-	originalPointerPosition = fileStream.tellg();
-	fileStream.seekg(0,ios::end);
-	length = fileStream.tellg();
-	fileStream.seekg(originalPointerPosition);
-	return length;
-}
-streampos binFile::size(){
-	return length;
-}
-
-//Read untill a non-zero is encountered, then go back one
-//Returns number of zeros removed
-int binFile::chompZeros(){
-	char testChar;
-	int zerosRemoved = 0;
-	fileStream.read(&testChar,1);
-	while(0 == testChar){
-		zerosRemoved++;
-		fileStream.read(&testChar,1);
-	}
-	fileStream.unget();
-	return zerosRemoved;
-}
-//Read a null terminated string
-string binFile::readString(){
-	string aString = "";
-	char aChar;
-	fileStream.read(&aChar,1);
-	while(0 != aChar){
-		aString += aChar;
-		fileStream.read(&aChar,1);
-	}
-	return aString;
-}
-
 //NOTE:  Most of the unsigned chars can become ints with proper offsets
 //NOTE:  all ints, floats, and bools have a 4 byte size
-
-
-class BitArray {
-	public:
-		BitArray();
-		BitArray(int newSize);
-		~BitArray();
-		void setSize(int newSize);			//Warning, this wipes out all old data
-		bool readBit(int index);
-		void writeBit(int index,bool newValue);
-		unsigned char & raw(int byteNumber);
-		int getSize();
-		int getRawSize();
-		void read(binFile& saveFile);
-		void cout();
-	private:
-		unsigned char * bytes;
-		int size;
-		int bitSelect;
-};
-BitArray::BitArray(){
-	setSize(1);
-}
-BitArray::BitArray(int newSize){
-	setSize(newSize);
-}
-void BitArray::setSize(int newSize){
-	assert(newSize > 0);
-	if(bytes != NULL){
-		delete[] bytes;
-	}
-	size = newSize * 4;
-	bytes = new unsigned char[size];
-}
-int BitArray::getSize(){
-	return 8*size;
-}
-bool BitArray::readBit(int index){
-	assert(0 <= index && index < (8*size));
-	int byteSelect = index/8;
-	int bitSelect = index%8;
-	return (bytes[byteSelect] & (1 << bitSelect));
-}
-void BitArray::writeBit(int index,bool newValue){
-	assert(0 <= index && index < (8*size));
-	int byteSelect = index/8;
-	int bitSelect = index%8;
-	if(newValue){
-		bytes[byteSelect] |= (1 << bitSelect);
-	}else{
-		bytes[byteSelect] &= ~(1 << bitSelect);
-	}
-}
-int BitArray::getRawSize(){
-	return size;
-}
-BitArray::~BitArray(){
-	if(bytes != NULL){
-		delete[] bytes;
-	}
-}
-unsigned char & BitArray::raw(int byteNumber){
-	assert(0 <= byteNumber && byteNumber < size);
-	assert(bytes != NULL);
-	return bytes[byteNumber];
-}
-void BitArray::read(binFile& saveFile){
-	int newSize;
-	saveFile.fileStream.read((char *) &newSize,4);
-	setSize(newSize);
-	//Read in a for loop
-	for(int i=0;i<size;i++){
-		saveFile.fileStream.read((char *) &bytes[i],1);
-	}
-}
-
-void BitArray::cout(){
-	std::cout << "There are " << (8*size) << " bool values." << std::endl;
-	for(int i=0;i<(8*size);i++){
-		std::cout << "	Bool: " << i << "," << readBit(i) << std::endl;
-	}
-}
-	
-
-template <class T>
-struct collection{
-	int size();
-	void readBasic(binFile& saveFile);
-	void read(binFile& saveFile);
-	T & operator[](int index);
-	void cout(bool verbose = true);
-	void coutBasic(bool verbose = false);
-	private:
-	T * items;
-	int numberofItems;
-};
-template <class T>
-int collection<T>::size(){
-	return numberofItems;
-}
-template <class T>
-T & collection<T>::operator[](int index){
-	assert(0 <= index && index < numberofItems);
-	return items[index];
-}
-//This is like the regular read, but for built in types
-template <class T>
-void collection<T>::readBasic(binFile& saveFile){
-	saveFile.fileStream.read((char *) &numberofItems,4);
-	cerr << "Reading  " << numberofItems << " of type: " << typeid(T).name() << std::endl;
-	items = new T[numberofItems];
-	for(int i=0;i<numberofItems;i++){
-		saveFile.fileStream.read((char *) &items[i],4);
-	}
-}
-//This reads in multiple items, calling the read function for each individual item
-template <class T>
-void collection<T>::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &numberofItems,4);
-	items = new T[numberofItems];
-	for(int i=0;i<numberofItems;i++){
-		items[i].read(saveFile);
-	}
-}
-//This is like the regular cout, but for built in types
-template <class T>
-void collection<T>::coutBasic(bool verbose){
-	if(verbose){
-		std::cout << "There are " << this->size() << " " << typeid(T).name() << " values." << std::endl;
-	}
-	for(int i=0;i<(this->size());i++){
-		std::cout << "		" << typeid(T).name() << ": " << i << "," << items[i] << std::endl;
-	}
-}
-//Output something from all the member funcitons
-template <class T>
-void collection<T>::cout(bool verbose){
-	if(verbose){
-		std::cout << "There are " << this->size() << " " << typeid(T).name() << " values." << std::endl;
-	}
-	for(int i=0;i<this->size();i++){
-		if(verbose){
-			std::cout << "	" << typeid(T).name() << " , " << i << ":"<<endl;
-		}
-		items[i].cout();
-	}
-}
-
-class mstring : public string
-{
-	public:
-	void read(fstream& saveFile);
-	mstring& operator=(const mstring& instring);
-	mstring& operator=(const string& instring);
-};
-mstring& mstring::operator=(const mstring& instring){
-	assign(instring);
-	return *this;
-}
-mstring& mstring::operator=(const string& instring){
-	assign(instring);
-	return *this;
-}
-void mstring::read(fstream& saveFile){
-	int readSize;
-	char readChar;
-	saveFile.read((char *) &readSize,4);
-	clear();
-	if(0 == readSize){
-		return;
-	}
-	//This currently assumes that the readSize is correct
-	//I could look for the null terminator, but why bother.
-	for(int i=0;i< (readSize-1);i++){
-		saveFile.read(&readChar,1);
-		append(1,readChar);
-	}
-	//Read and discard the null at the end of the string
-	saveFile.read(&readChar,1);
-}
 
 struct xyzvector{	//(16 bytes total)
 	float x;
@@ -426,12 +176,14 @@ struct ME2Format{
 	collection<LevelRecord> levels;
 	collection<StreamingRecord> streams;
 	//Gibbed's code talks about kismets, but I don't see anything
+	int numberofKismets;	//assert(0==numberofKismets);
 	collection<Door> doors;
 	//Gibbed's code talks about pawn records, but I don't see anything
+	int numberofPawns;	//assert(0==numberofPawns);
 	playerData player;
 	collection<Henchman> henchmen;
 	ME2PlotTable Plot;
-	ME1PlotTable ME1PlotRecord;
+	//ME1PlotTable ME1PlotRecord;
 	//There's other stuff, but we're ignoring it for now
 	void read(binFile& saveFile);
 	void cout();
@@ -468,21 +220,13 @@ void playerData::read(binFile& saveFile){
 }
 
 void ME2PlotTable::read(binFile& saveFile){
-	cerr << "Reading ME2PlotTable: Bools" << endl;
-	BoolVariables.read(saveFile);
-	cerr << "Reading ME2PlotTable: ints" << endl;
+	BoolVariables.read(saveFile.fileStream);
 	ints.readBasic(saveFile);
-	cerr << "Reading ME2PlotTable: floats" << endl;
 	floats.readBasic(saveFile);
-	cerr << "Reading ME2PlotTable: QuestProgressCounter" << endl;
 	saveFile.fileStream.read((char *) &QuestProgressCounter,4);
-	cerr << "Reading ME2PlotTable: QuestProgress" << endl;
 	QuestProgress.read(saveFile);
-	cerr << "Reading ME2PlotTable: QuestIDs" << endl;
 	QuestIDs.readBasic(saveFile);
-	cerr << "Reading ME2PlotTable: CodexEntries" << endl;
 	CodexEntries.read(saveFile);
-	cerr << "Reading ME2PlotTable: CodexIDs" << endl;
 	CodexIDs.readBasic(saveFile);
 }
 void ME2PlotTable::cout(){
@@ -517,7 +261,7 @@ void Hotkey::cout(){
 }
 
 //void ME1PlotTable::read(binFile& saveFile){
-	// BoolVariables.read(saveFile);
+	// BoolVariables.read(saveFile.fileStream);
 	// ints.readBasic(saveFile);
 	// floats.readBasic(saveFile);
 //};
@@ -668,15 +412,15 @@ void ME2Format::read(binFile& saveFile){
 	saveFile.fileStream.read((char *) &CurrentLoadingTip,4);
 	levels.read(saveFile);
 	streams.read(saveFile);
-	std::cout << "Skipping ===>" << saveFile.fileStream.seekg(4,ios_base::cur)<<"<=== on Line: " << __LINE__ << " KismetRecords" << endl;
+	saveFile.fileStream.read((char *) &numberofKismets,4);
+	assert(0==numberofKismets);
 	doors.read(saveFile);
-	std::cout << "Skipping ===>" << saveFile.fileStream.seekg(4,ios_base::cur)<<"<=== on Line: " << __LINE__ << " PawnRecords" << endl;
+	saveFile.fileStream.read((char *) &numberofPawns,4);
+	assert(0==numberofPawns);
 	player.read(saveFile);
 	henchmen.read(saveFile);
-	cerr << "Reading plot" << endl;
 	Plot.read(saveFile);
 	//ME1PlotRecord.read(saveFile);
-	cerr << "Done Reading ME2Format"<<endl;
 }
 
 void playerData::cout(){
@@ -725,6 +469,7 @@ void ME2Format::cout(){
 	std::cout << "Player's Position is:  x:" << playerPosition.x << "  y:" << playerPosition.y << " z:" << playerPosition.z << endl;
 	std::cout << "Player's rotation is:  " << playerRotation << endl;
 	std::cout << "CurrentLoadingTip is:  " << (int) CurrentLoadingTip << endl;
+	std::cout << "There are "<<levels.size()<< " levels"<< endl;
 	std::cout << "Displaying Levels:"<<endl;
 	levels.cout(false);
 	std::cout << "Displaying Streams:"<<endl;
@@ -755,7 +500,6 @@ int main(int argc, char *argv[]){
 
 	cout << "File size is:  " << file1.size() << " bytes" << endl;
 	me2file.read(file1);
-	cerr << "All data has now been read" << endl;
 	
 	file1.fileStream.close();
 	me2file.cout();
