@@ -3,41 +3,41 @@
 
 #include "ME2Format.hpp"
 
-void playerData::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &IsFemale,4);
-	className.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &level,4);
-	saveFile.fileStream.read((char *) &xp,4);
-	firstName.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &lastname,4);
-	saveFile.fileStream.read((char *) &origin,1);
-	saveFile.fileStream.read((char *) &Notoriety,1);
-	saveFile.fileStream.read((char *) &TalentPoints,4);
-	mappedPower1.read(saveFile.fileStream);
-	mappedPower2.read(saveFile.fileStream);
-	mappedPower3.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &Appearance,57);
+void playerData::read(fstream& saveFile){
+	saveFile.read((char *) &IsFemale,4);
+	className.read(saveFile);
+	saveFile.read((char *) &level,4);
+	saveFile.read((char *) &xp,4);
+	firstName.read(saveFile);
+	saveFile.read((char *) &lastname,4);
+	saveFile.read((char *) &origin,1);
+	saveFile.read((char *) &Notoriety,1);
+	saveFile.read((char *) &TalentPoints,4);
+	mappedPower1.read(saveFile);
+	mappedPower2.read(saveFile);
+	mappedPower3.read(saveFile);
+	saveFile.read((char *) &Appearance,57);
 	powers.read(saveFile);
 	weapons.read(saveFile);
 	currentLoadout.read(saveFile);
 	hotkeys.read(saveFile);
-	saveFile.fileStream.read((char *) &Credits,4);
-	saveFile.fileStream.read((char *) &Medigel,4);
-	saveFile.fileStream.read((char *) &Eezo,4);
-	saveFile.fileStream.read((char *) &Iridium,4);
-	saveFile.fileStream.read((char *) &Palladium,4);
-	saveFile.fileStream.read((char *) &Platinum,4);
-	saveFile.fileStream.read((char *) &Probes,4);
-	saveFile.fileStream.read((char *) &CurrentFuel,4);
-	FaceCode.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &ClassFriendlyName,4);
+	saveFile.read((char *) &Credits,4);
+	saveFile.read((char *) &Medigel,4);
+	saveFile.read((char *) &Eezo,4);
+	saveFile.read((char *) &Iridium,4);
+	saveFile.read((char *) &Palladium,4);
+	saveFile.read((char *) &Platinum,4);
+	saveFile.read((char *) &Probes,4);
+	saveFile.read((char *) &CurrentFuel,4);
+	FaceCode.read(saveFile);
+	saveFile.read((char *) &ClassFriendlyName,4);
 }
 
-void ME2PlotTable::read(binFile& saveFile){
-	BoolVariables.read(saveFile.fileStream);
+void ME2PlotTable::read(fstream& saveFile){
+	BoolVariables.read(saveFile);
 	ints.readBasic(saveFile);
 	floats.readBasic(saveFile);
-	saveFile.fileStream.read((char *) &QuestProgressCounter,4);
+	saveFile.read((char *) &QuestProgressCounter,4);
 	QuestProgress.read(saveFile);
 	QuestIDs.readBasic(saveFile);
 	CodexEntries.read(saveFile);
@@ -74,8 +74,8 @@ void Hotkey::cout(){
 	std::cout << "	" << name << " : " << PowerID << endl;
 }
 
-void ME1PlotTable::read(binFile& saveFile){
-	BoolVariables.read(saveFile.fileStream);
+void ME1PlotTable::read(fstream& saveFile){
+	BoolVariables.read(saveFile);
 	ints.readBasic(saveFile);
 	floats.readBasic(saveFile);
 };
@@ -120,18 +120,18 @@ void Door::cout(){
 	std::cout <<	dec << ": " << (int) CurrentState << "," << (int) OldState<< endl;
 }
 
-void Power::read(binFile& saveFile){
+void Power::read(fstream& saveFile){
 
-	PowerName.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &CurrentRank,4);
+	PowerName.read(saveFile);
+	saveFile.read((char *) &CurrentRank,4);
 
-	PowerClassName.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &WheelDisplayIndex,4);
+	PowerClassName.read(saveFile);
+	saveFile.read((char *) &WheelDisplayIndex,4);
 }
 
-void Loadout::read(binFile& saveFile){
+void Loadout::read(fstream& saveFile){
 	for(int i=0;i<6;i++){
-			Weapon[i].read(saveFile.fileStream);
+			Weapon[i].read(saveFile);
 	}
 }
 void Loadout::cout(){
@@ -139,24 +139,24 @@ void Loadout::cout(){
 		std::cout << "		" << Weapon[i] << endl;
 	}
 }
-void CodexEntry::read(binFile& saveFile){
+void CodexEntry::read(fstream& saveFile){
 	pages.read(saveFile);
 }
 void CodexEntry::cout(){
 	pages.cout(false);
 }
-void CodexPage::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &Page,4);
-	saveFile.fileStream.read((char *) &isNew,4);
+void CodexPage::read(fstream& saveFile){
+	saveFile.read((char *) &Page,4);
+	saveFile.read((char *) &isNew,4);
 }
 void CodexPage::cout(){
 		std::cout <<"		Page: "<< Page << endl;
 		std::cout <<"		isNew: "<< isNew << endl;
 }
 
-void PlotQuest::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &QuestCounter,4);
-	saveFile.fileStream.read((char *) &QuestUpdated,4);
+void PlotQuest::read(fstream& saveFile){
+	saveFile.read((char *) &QuestCounter,4);
+	saveFile.read((char *) &QuestUpdated,4);
 	History.readBasic(saveFile);
 }
 void PlotQuest::cout(){
@@ -164,79 +164,79 @@ void PlotQuest::cout(){
 	History.coutBasic();
 }
 
-void Henchman::read(binFile& saveFile){
-	Tag.read(saveFile.fileStream);
+void Henchman::read(fstream& saveFile){
+	Tag.read(saveFile);
 	powers.read(saveFile);
-	saveFile.fileStream.read((char *) &CharacterLevel,4);
-	saveFile.fileStream.read((char *) &TalentPoints,4);
+	saveFile.read((char *) &CharacterLevel,4);
+	saveFile.read((char *) &TalentPoints,4);
 	currentLoadout.read(saveFile);
-	MappedPower.read(saveFile.fileStream);
+	MappedPower.read(saveFile);
 }
 
-void Weapon::read(binFile& saveFile){
-	name.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &AmmoUsedCount,4);
-	saveFile.fileStream.read((char *) &TotalAmmo,4);
-	saveFile.fileStream.read((char *) &CurrentWeapon,1);
-	std::cout << "Skipping ===>" << saveFile.fileStream.seekg(3,ios_base::cur)<<"<=== on Line: " << __LINE__ << endl;
-	saveFile.fileStream.read((char *) &LastWeapon,1);
-	std::cout << "Skipping ===>" << saveFile.fileStream.seekg(3,ios_base::cur)<<"<=== on Line: " << __LINE__ << endl;
-	ammoName.read(saveFile.fileStream);
+void Weapon::read(fstream& saveFile){
+	name.read(saveFile);
+	saveFile.read((char *) &AmmoUsedCount,4);
+	saveFile.read((char *) &TotalAmmo,4);
+	saveFile.read((char *) &CurrentWeapon,1);
+	std::cout << "Skipping ===>" << saveFile.seekg(3,ios_base::cur)<<"<=== on Line: " << __LINE__ << endl;
+	saveFile.read((char *) &LastWeapon,1);
+	std::cout << "Skipping ===>" << saveFile.seekg(3,ios_base::cur)<<"<=== on Line: " << __LINE__ << endl;
+	ammoName.read(saveFile);
 }
 
-void Hotkey::read(binFile& saveFile){
-	name.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &PowerID,4);
+void Hotkey::read(fstream& saveFile){
+	name.read(saveFile);
+	saveFile.read((char *) &PowerID,4);
 }
 
-void Door::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &id,16);
-	saveFile.fileStream.read((char *) &CurrentState,1);
-	saveFile.fileStream.read((char *) &OldState,1);
+void Door::read(fstream& saveFile){
+	saveFile.read((char *) &id,16);
+	saveFile.read((char *) &CurrentState,1);
+	saveFile.read((char *) &OldState,1);
 }
 
-void StreamingRecord::read(binFile& saveFile){
-	name.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &active,4);
+void StreamingRecord::read(fstream& saveFile){
+	name.read(saveFile);
+	saveFile.read((char *) &active,4);
 }
 void StreamingRecord::cout(){
 	std::cout << "	"<< name << ": " << active<< endl;
 }
 
-void LevelRecord::read(binFile& saveFile){
-	LevelName.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &Unknown1,4);
-	saveFile.fileStream.read((char *) &Unknown2,4);
+void LevelRecord::read(fstream& saveFile){
+	LevelName.read(saveFile);
+	saveFile.read((char *) &Unknown1,4);
+	saveFile.read((char *) &Unknown2,4);
 }
 void LevelRecord::cout(){
 	std::cout << "	"<< LevelName << ": " << Unknown1 << "," << Unknown2<< endl;
 }
 
-void ME2Format::read(binFile& saveFile){
+void ME2Format::read(fstream& saveFile){
 	//Read the data from the file
-	saveFile.fileStream.seekg(ios_base::beg + 0x00);
-	saveFile.fileStream.read((char *) &version,4);
+	saveFile.seekg(ios_base::beg + 0x00);
+	saveFile.read((char *) &version,4);
 	assert(29 == version);	//Make sure we're reading the correct file type
-	DebugName.read(saveFile.fileStream);
-	saveFile.fileStream.read((char *) &playTime,4);
-	Disc.read(saveFile.fileStream);
-	BaseLevelName.read(saveFile.fileStream);
-	saveFile.fileStream.read(&dificulty,1);
-	saveFile.fileStream.read((char *) &EndGameState,4);
-	saveFile.fileStream.read((char *) &timestamp.SecondsSinceMidnight,4);
-	saveFile.fileStream.read((char *) &timestamp.day,4);
-	saveFile.fileStream.read((char *) &timestamp.month,4);
-	saveFile.fileStream.read((char *) &timestamp.year,4);
-	saveFile.fileStream.read((char *) &playerPosition,16);
-	saveFile.fileStream.read((char *) &playerRotation,4);
-	std::cout << "Skipping ===>" << saveFile.fileStream.seekg(4,ios_base::cur)<<"<=== on Line: " << __LINE__ << " between playerRotation and CurrentLoadingTip" << endl;
-	saveFile.fileStream.read((char *) &CurrentLoadingTip,4);
+	DebugName.read(saveFile);
+	saveFile.read((char *) &playTime,4);
+	Disc.read(saveFile);
+	BaseLevelName.read(saveFile);
+	saveFile.read(&dificulty,1);
+	saveFile.read((char *) &EndGameState,4);
+	saveFile.read((char *) &timestamp.SecondsSinceMidnight,4);
+	saveFile.read((char *) &timestamp.day,4);
+	saveFile.read((char *) &timestamp.month,4);
+	saveFile.read((char *) &timestamp.year,4);
+	saveFile.read((char *) &playerPosition,16);
+	saveFile.read((char *) &playerRotation,4);
+	std::cout << "Skipping ===>" << saveFile.seekg(4,ios_base::cur)<<"<=== on Line: " << __LINE__ << " between playerRotation and CurrentLoadingTip" << endl;
+	saveFile.read((char *) &CurrentLoadingTip,4);
 	levels.read(saveFile);
 	streams.read(saveFile);
-	saveFile.fileStream.read((char *) &numberofKismets,4);
+	saveFile.read((char *) &numberofKismets,4);
 	assert(0==numberofKismets);
 	doors.read(saveFile);
-	saveFile.fileStream.read((char *) &numberofPawns,4);
+	saveFile.read((char *) &numberofPawns,4);
 	assert(0==numberofPawns);
 	player.read(saveFile);
 	henchmen.read(saveFile);
@@ -244,11 +244,11 @@ void ME2Format::read(binFile& saveFile){
 	ME1PlotRecord.read(saveFile);
 	galaxy.read(saveFile);
 	dlc.read(saveFile);
-	saveFile.fileStream.read((char *) &crc,4);
+	saveFile.read((char *) &crc,4);
 	//Make sure we're at eof (another read will fail the stream, se we could check that way)
-	streampos currentLocation = saveFile.fileStream.tellg();
-	saveFile.fileStream.seekg(0,ios::end);
-	assert(saveFile.fileStream.tellg() == currentLocation);
+	streampos currentLocation = saveFile.tellg();
+	saveFile.seekg(0,ios::end);
+	assert(saveFile.tellg() == currentLocation);
 }
 
 void playerData::cout(){
@@ -315,16 +315,16 @@ void ME2Format::cout(){
 	dlc.cout(false);
 	std::cout << "CRC:  0x" << hex << crc << dec << endl;
 }
-void xyvector::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &x,4);
-	saveFile.fileStream.read((char *) &y,4);
+void xyvector::read(fstream& saveFile){
+	saveFile.read((char *) &x,4);
+	saveFile.read((char *) &y,4);
 }
 void xyvector::cout(){
 	std::cout << "		"<<x<<","<<y<<endl;
 }
-void Planet::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &PlanetID,4);
-	saveFile.fileStream.read((char *) &Visited,4);
+void Planet::read(fstream& saveFile){
+	saveFile.read((char *) &PlanetID,4);
+	saveFile.read((char *) &Visited,4);
 	Probes.read(saveFile);
 }
 void Planet::cout(){
@@ -332,7 +332,7 @@ void Planet::cout(){
 	std::cout << "	Visited: "<<Visited<<endl;
 	Probes.cout(false);
 }
-void GalaxyMap::read(binFile& saveFile){
+void GalaxyMap::read(fstream& saveFile){
 	Planets.read(saveFile);
 }
 void GalaxyMap::cout(){
@@ -342,9 +342,9 @@ void GalaxyMap::cout(){
 	Planets.cout(false);
 	std::cout << "*****************End of Galaxy Map*****************" << std::endl;
 }
-void DependentDLC::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &ModuleID,4);
-	name.read(saveFile.fileStream);
+void DependentDLC::read(fstream& saveFile){
+	saveFile.read((char *) &ModuleID,4);
+	name.read(saveFile);
 }
 void DependentDLC::cout(){
 	std::cout << "	" << name << " : " << ModuleID << endl;

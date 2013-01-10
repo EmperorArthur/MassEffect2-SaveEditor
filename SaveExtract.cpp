@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "BinFile.hpp"
 #include "ME2Format.hpp"
 
 using namespace std;
@@ -23,7 +24,7 @@ int main(int argc, char *argv[]){
 	
 	file1.open(argv[1]);
 	cout << "File size is:  " << file1.size() << " bytes" << endl;
-	me2file.read(file1);
+	me2file.read(file1.fileStream);
 	file1.fileStream.close();	
 	me2file.cout();
 	

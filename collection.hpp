@@ -4,18 +4,20 @@
 #ifndef COLLECTION_H
 #define COLLECTION_H
 
+#include <fstream>
 #include <typeinfo>
 #include <cassert>
 #include <iostream>
 #include <cstdlib> //for exit
+using namespace std;
 
 template <class T>
 struct collection{
 	collection();
 	~collection();
 	int size();
-	void readBasic(binFile& saveFile);
-	void read(binFile& saveFile);
+	void readBasic(fstream& saveFile);
+	void read(fstream& saveFile);
 	T & operator[](int index);
 	void cout(bool verbose = true);
 	void coutBasic(bool verbose = false);
@@ -44,8 +46,8 @@ T & collection<T>::operator[](int index){
 }
 //This is like the regular read, but for built in types
 template <class T>
-void collection<T>::readBasic(binFile& saveFile){
-	saveFile.fileStream.read((char *) &numberofItems,4);
+void collection<T>::readBasic(fstream& saveFile){
+	saveFile.read((char *) &numberofItems,4);
 	//Do nothing if we're asked to read something with no values
 	if(numberofItems){
 		try{
@@ -60,11 +62,11 @@ void collection<T>::readBasic(binFile& saveFile){
 			exit(1);
 		}
 		for(int i=0;i<numberofItems;i++){
-			if(!saveFile.fileStream.good()){
+			if(!saveFile.good()){
 				throw "FileStream is not good";
 			}
 			try{
-				saveFile.fileStream.read((char *) &items[i],4);
+				saveFile.read((char *) &items[i],4);
 			}
 			catch (exception& e){
 				cerr << "exception: " << e.what() << endl;
@@ -75,8 +77,8 @@ void collection<T>::readBasic(binFile& saveFile){
 }
 //This reads in multiple items, calling the read function for each individual item
 template <class T>
-void collection<T>::read(binFile& saveFile){
-	saveFile.fileStream.read((char *) &numberofItems,4);
+void collection<T>::read(fstream& saveFile){
+	saveFile.read((char *) &numberofItems,4);
 	//Do nothing if we're asked to read something with no values
 	if(numberofItems){
 		try{
@@ -91,7 +93,7 @@ void collection<T>::read(binFile& saveFile){
 			exit(1);
 		}
 		for(int i=0;i<numberofItems;i++){
-			if(!saveFile.fileStream.good()){
+			if(!saveFile.good()){
 				throw "FileStream is not good";
 			}
 			try{

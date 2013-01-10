@@ -8,7 +8,6 @@
 #include <fstream>
 #include <string>
 #include <cassert>
-#include "BinFile.hpp"
 #include "BitArray.hpp"
 #include "collection.hpp"
 #include "mstring.hpp"
@@ -26,20 +25,20 @@ struct LevelRecord{
 	mstring LevelName;
 	bool Unknown1; // could be ShouldBeVisible or ShouldBeLoaded
 	bool Unknown2; // could be ShouldBeVisible or ShouldBeLoaded
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct StreamingRecord{
 	mstring name;
 	bool active;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct Door{
 	unsigned char id[16];
 	unsigned char CurrentState; //(Display as an int)
 	unsigned char OldState; //(Display as an int)
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct Power{
@@ -47,7 +46,7 @@ struct Power{
 	float CurrentRank;
 	mstring PowerClassName;
 	int WheelDisplayIndex;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct Weapon{
@@ -57,19 +56,19 @@ struct Weapon{
 	mstring ammoName;
 	bool CurrentWeapon;
 	bool LastWeapon;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct Hotkey{
 	mstring name;
 	int PowerID;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct Loadout{
 	int WeaponSize[6];
 	mstring Weapon[6];
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct playerData {
@@ -101,7 +100,7 @@ struct playerData {
 	int FaceCodeSize;
 	mstring FaceCode;
 	int ClassFriendlyName;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct Henchman{
@@ -111,25 +110,25 @@ struct Henchman{
 	int TalentPoints;
 	Loadout currentLoadout;
 	mstring MappedPower;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct PlotQuest{
 	unsigned int QuestCounter;
 	bool QuestUpdated;
 	collection<int> History;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct CodexPage{
 	int Page;
 	bool isNew;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct CodexEntry{
 	collection<CodexPage> pages;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct ME2PlotTable{
@@ -141,38 +140,38 @@ struct ME2PlotTable{
 	collection<int> QuestIDs;
 	collection<CodexEntry> CodexEntries;
 	collection<int> CodexIDs;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct ME1PlotTable{
 	BitArray BoolVariables;
 	collection<int> ints;
 	collection<float> floats;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct xyvector{
 	int x;
 	int y;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct Planet{
 	int PlanetID;
 	bool Visited;
 	collection<xyvector> Probes;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct GalaxyMap{
 	collection<Planet> Planets;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct DependentDLC{
 	int ModuleID;
 	mstring name;
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 struct ME2Format{
@@ -206,7 +205,7 @@ struct ME2Format{
 	GalaxyMap galaxy;
 	collection<DependentDLC> dlc;
 	unsigned int crc;							// CRC32 of save data (from start) to before CRC32 value
-	void read(binFile& saveFile);
+	void read(fstream& saveFile);
 	void cout();
 };
 
