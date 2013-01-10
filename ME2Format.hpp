@@ -120,6 +120,24 @@ struct ME1PlotTable{
 	void read(binFile& saveFile);
 	void cout();
 };
+struct xyvector{
+	int x;
+	int y;
+	void read(binFile& saveFile);
+	void cout();
+};
+struct Planet{
+	int PlanetID;
+	bool Visited;
+	collection<xyvector> Probes;
+	void read(binFile& saveFile);
+	void cout();
+};
+struct GalaxyMap{
+	collection<Planet> Planets;
+	void read(binFile& saveFile);
+	void cout();
+};
 struct playerData {
 	bool IsFemale;
 	mstring className;
@@ -180,6 +198,7 @@ struct ME2Format{
 	collection<Henchman> henchmen;
 	ME2PlotTable Plot;
 	ME1PlotTable ME1PlotRecord;
+	GalaxyMap galaxy;
 	//There's other stuff, but we're ignoring it for now
 	void read(binFile& saveFile);
 	void cout();

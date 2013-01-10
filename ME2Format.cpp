@@ -241,6 +241,7 @@ void ME2Format::read(binFile& saveFile){
 	henchmen.read(saveFile);
 	Plot.read(saveFile);
 	ME1PlotRecord.read(saveFile);
+	galaxy.read(saveFile);
 }
 
 void playerData::cout(){
@@ -302,6 +303,35 @@ void ME2Format::cout(){
 	henchmen.cout(false);
 	Plot.cout();
 	ME1PlotRecord.cout();
+	galaxy.cout();
+}
+void xyvector::read(binFile& saveFile){
+	saveFile.fileStream.read((char *) &x,4);
+	saveFile.fileStream.read((char *) &y,4);
+}
+void xyvector::cout(){
+	std::cout << "		"<<x<<","<<y<<endl;
+}
+void Planet::read(binFile& saveFile){
+	saveFile.fileStream.read((char *) &PlanetID,4);
+	saveFile.fileStream.read((char *) &Visited,4);
+	Probes.read(saveFile);
+}
+void Planet::cout(){
+	std::cout << "Planet ID: "<<PlanetID<<endl;
+	std::cout << "	Visited: "<<Visited<<endl;
+	Probes.cout(false);
+}
+void GalaxyMap::read(binFile& saveFile){
+	Planets.read(saveFile);
+}
+void GalaxyMap::cout(){
+	std::cout << "****************Start of Galaxy Map****************" << std::endl;
+	std::cout << "There are "<< Planets.size() << " Planets"<<endl;
+	std::cout << "Listing Planets"<<endl;
+	Planets.cout(false);
+	std::cout << "*****************End of Galaxy Map*****************" << std::endl;
 }
 
-//And now the main function
+
+
