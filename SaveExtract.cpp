@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
 	
 	binFile file1;
 	ME2Format me2file;
-	
+	cerr << "Extracting file: " << argv[1] << endl;
 	file1.open(argv[1]);
 	cout << "File size is:  " << file1.size() << " bytes" << endl;
 	me2file.read(file1.fileStream);

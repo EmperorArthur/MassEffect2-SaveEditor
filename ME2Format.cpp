@@ -16,7 +16,7 @@ void playerData::read(fstream& saveFile){
 	mappedPower1.read(saveFile);
 	mappedPower2.read(saveFile);
 	mappedPower3.read(saveFile);
-	saveFile.read((char *) &Appearance,57);
+	myAppearance.read(saveFile);
 	powers.read(saveFile);
 	weapons.read(saveFile);
 	currentLoadout.read(saveFile);
@@ -43,6 +43,29 @@ void ME2PlotTable::read(fstream& saveFile){
 	CodexEntries.read(saveFile);
 	CodexIDs.readBasic(saveFile);
 }
+void Appearance::read(fstream& saveFile){
+	saveFile.read((char *) &CombatAppearance,1);
+	saveFile.read((char *) &CasualID,4);
+	saveFile.read((char *) &FullBodyID,4);
+	saveFile.read((char *) &TorsoID,4);
+	saveFile.read((char *) &ShoulderID,4);
+	saveFile.read((char *) &ArmID,4);
+	saveFile.read((char *) &LegID,4);
+	saveFile.read((char *) &SpecID,4);
+	saveFile.read((char *) &Tint1ID,4);
+	saveFile.read((char *) &Tint2ID,4);
+	saveFile.read((char *) &Tint3ID,4);
+	saveFile.read((char *) &PatternID,4);
+	saveFile.read((char *) &PatternColorID,4);
+	saveFile.read((char *) &HelmetID,4);
+	saveFile.read((char *) &HasMorphHead,4);
+	assert(!HasMorphHead);
+}
+void Appearance::cout(){
+	bool ThisFunctionNeedsToBeWritten = true;
+	assert(!ThisFunctionNeedsToBeWritten);
+}
+
 void ME2PlotTable::cout(){
 	std::cout << "There are " << (BoolVariables.size()) << " bool values in the ME2 plot table" << endl;
 	std::cout << "Displaying bools:"<<endl;

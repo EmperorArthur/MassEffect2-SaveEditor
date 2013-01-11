@@ -16,7 +16,9 @@ using namespace std;
 
 //NOTE:  all ints, floats, and bools have a 4 byte size
 
-struct xyzvector{	//(16 bytes total) (This is the only struct without it's own read function)
+//This is only struct without its own read function
+//(16 bytes total)
+struct xyzvector{
 	float x;
 	float y;
 	float z;
@@ -53,7 +55,27 @@ struct Pawn{
 	void read(fstream& saveFile);
 	void cout();
 };
-
+//This is 57 bytes without a head morph
+struct Appearance{
+	unsigned char CombatAppearance; //(display as an int) really an enum(0 means parts, 1 means full)
+	int CasualID;
+	int FullBodyID;
+	int TorsoID;
+	int ShoulderID;
+	int ArmID;
+	int LegID;
+	int SpecID;
+	int Tint1ID;
+	int Tint2ID;
+	int Tint3ID;
+	int PatternID;
+	int PatternColorID;
+	int HelmetID;
+	bool HasMorphHead;	//assert(!HasMorphHead);	//I don't properly handle this right now
+	//MorphHead myHead;
+	void read(fstream& saveFile);
+	void cout();
+};
 struct Power{
 	mstring PowerName;
 	float CurrentRank;
@@ -97,7 +119,7 @@ struct playerData {
 	mstring mappedPower1;
 	mstring mappedPower2;
 	mstring mappedPower3;
-	unsigned char Appearance[57];	 //This is a whole seperate struct that I'm currently ignoring
+	Appearance myAppearance;
 	collection<Power> powers;
 	collection<Weapon> weapons;
 	Loadout currentLoadout;
