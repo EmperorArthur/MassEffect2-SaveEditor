@@ -156,6 +156,7 @@ void Pawn::cout(){
 	for(int j=0;j<16;j++){
 		std::cout << hex << (unsigned short)id[j];
 	}
+	std::cout << dec << endl;
 }
 void Power::read(fstream& saveFile){
 
