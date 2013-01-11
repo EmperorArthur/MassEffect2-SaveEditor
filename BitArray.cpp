@@ -46,22 +46,22 @@ unsigned char & BitArray::raw(int byteNumber){
 void BitArray::read(std::fstream& saveFile){
 	saveFile.read((char *) &numberofbytes,4);
 	numberofbytes *=4;
-	try{
-		if(0 != numberofbytes){
+	if(numberofbytes){
+		try{
 			bytes = new unsigned char[numberofbytes];
 		}
-	}
-	catch (bad_alloc& ba){
-		cerr << "bad_alloc caught: " << ba.what() << endl;
-		exit(1);
-	}	
-	catch (exception& e){
-		cerr << "exception caught: " << e.what() << endl;
-		exit(1);
-	}
-	//Read in a for loop
-	for(int i=0;i<numberofbytes;i++){
-		saveFile.read((char *) &bytes[i],1);
+		catch (bad_alloc& ba){
+			cerr << "bad_alloc caught: " << ba.what() << endl;
+			exit(1);
+		}	
+		catch (exception& e){
+			cerr << "exception caught: " << e.what() << endl;
+			exit(1);
+		}
+		//Read in a for loop
+		for(int i=0;i<numberofbytes;i++){
+			saveFile.read((char *) &bytes[i],1);
+		}
 	}
 }
 
