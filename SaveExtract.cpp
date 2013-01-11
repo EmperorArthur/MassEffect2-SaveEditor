@@ -50,7 +50,6 @@ int main(int argc, char *argv[]){
 	file1.open(argv[argc-1]);
 	cout << "File size is:  " << file1.size() << " bytes" << endl;
 	me2file.read(file1.fileStream);
-	file1.fileStream.close();
 	if(argumentP){
 		me2file.Plot.cout();
 	}else{
