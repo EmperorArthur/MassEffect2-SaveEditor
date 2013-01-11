@@ -47,7 +47,9 @@ void BitArray::read(std::fstream& saveFile){
 	saveFile.read((char *) &numberofbytes,4);
 	numberofbytes *=4;
 	try{
-		bytes = new unsigned char[numberofbytes];
+		if(0 != numberofbytes){
+			bytes = new unsigned char[numberofbytes];
+		}
 	}
 	catch (bad_alloc& ba){
 		cerr << "bad_alloc caught: " << ba.what() << endl;
