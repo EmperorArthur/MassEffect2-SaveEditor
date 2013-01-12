@@ -1,0 +1,21 @@
+This is a save editor for Mass Effect 2
+
+All of this is copyright Arthur Moore 2012 under the GPL V3 license.
+If this doesn't suit your neads contact me at Arthur.Moore@cd-net.net
+
+Currently, this only supports extracting savegames, and seems to have issues on windows systems.
+
+All of this is based off of Gibbed's ME2 save editor.
+He did a wonderful job, and I'm still not sure what I was thinking of making my own instead of expanding on his.
+All the code is mine, but you might notice that a few variable names are the same.
+See here for more:  http://blog.gib.me/
+
+To Do:
+	Fix the crash at exit bug on windows systems.
+		There is an unused variable that seems to cause the problem.
+		However, when it's removed LevelRecords start repeating the second name seen.
+		The weird thing is that, not only does it not crash on my linux machine, but valgrind reports no errors.
+		I'm going to try testing with different save files to see if I can replicate the problem on my linux box.
+	Create write functions for my objects.
+		This is fairly straightforward, but takes time to actually write.
+	Figure out how to calculate a CRC32 value.
