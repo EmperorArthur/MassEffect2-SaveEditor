@@ -16,6 +16,8 @@ To Do:
 		However, when it's removed LevelRecords start repeating the second name seen.
 		The weird thing is that, not only does it not crash on my linux machine, but valgrind reports no errors.
 		I'm going to try testing with different save files to see if I can replicate the problem on my linux box.
+	Handle Head Morphs
+		Currently this code asserts and dies with a charachter that has a head morph.
 	Create write functions for my objects.
 		This is fairly straightforward, but takes time to actually write.
 	Figure out how to calculate a CRC32 value.
