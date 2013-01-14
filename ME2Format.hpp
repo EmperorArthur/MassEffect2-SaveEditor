@@ -11,65 +11,12 @@
 #include "BitArray.hpp"
 #include "collection.hpp"
 #include "mstring.hpp"
+#include "MEShared.hpp"
 
 using namespace std;
 
 //NOTE:  all ints, floats, and bools have a 4 byte size
 
-struct xyzvector{
-	float x;
-	float y;
-	float z;
-	void read(fstream& saveFile);
-	void cout();
-};
-struct Timestamp {
-	int SecondsSinceMidnight;	// (In seconds)
-	int day;
-	int month;
-	int year;
-	void read(fstream& saveFile);
-	void cout();
-};
-struct PlayerRotation{
-	int Pitch;
-	int Yaw;
-	int Roll;
-	void read(fstream& saveFile);
-	void cout();
-};
-struct LevelRecord{
-	int magicUnused;	/////////This causes windows to crash at the end of the program, but Level's are all messed up without it/////////
-	mstring LevelName;
-	bool Unknown1; // could be ShouldBeVisible or ShouldBeLoaded
-	bool Unknown2; // could be ShouldBeVisible or ShouldBeLoaded
-	void read(fstream& saveFile);
-	void cout();
-};
-struct StreamingRecord{
-	mstring name;
-	bool active;
-	void read(fstream& saveFile);
-	void cout();
-};
-struct Kismet{
-	unsigned char id[16];
-	bool Value;
-	void read(fstream& saveFile);
-	void cout();
-};
-struct Door{
-	unsigned char id[16];
-	unsigned char CurrentState; //(Display as an int)
-	unsigned char OldState; //(Display as an int)
-	void read(fstream& saveFile);
-	void cout();
-};
-struct Pawn{
-	unsigned char id[16];
-	void read(fstream& saveFile);
-	void cout();
-};
 //This is 57 bytes without a head morph
 struct Appearance{
 	unsigned char CombatAppearance; //(display as an int) really an enum(0 means parts, 1 means full)
@@ -115,12 +62,6 @@ struct Hotkey{
 	void read(fstream& saveFile);
 	void cout();
 };
-struct Loadout{
-	int WeaponSize[6];
-	mstring Weapon[6];
-	void read(fstream& saveFile);
-	void cout();
-};
 struct playerData {
 	bool IsFemale;
 	mstring className;
@@ -147,7 +88,6 @@ struct playerData {
 	int Platinum;
 	int Probes;
 	float CurrentFuel;
-	int FaceCodeSize;
 	mstring FaceCode;
 	int ClassFriendlyName;
 	void read(fstream& saveFile);
@@ -190,19 +130,6 @@ struct ME2PlotTable{
 	collection<int> QuestIDs;
 	collection<CodexEntry> CodexEntries;
 	collection<int> CodexIDs;
-	void read(fstream& saveFile);
-	void cout();
-};
-struct ME1PlotTable{
-	BitArray BoolVariables;
-	collection<int> ints;
-	collection<float> floats;
-	void read(fstream& saveFile);
-	void cout();
-};
-struct xyvector{
-	int x;
-	int y;
 	void read(fstream& saveFile);
 	void cout();
 };

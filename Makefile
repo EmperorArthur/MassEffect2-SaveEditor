@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=SaveExtract.cpp BinFile.cpp BitArray.cpp mstring.cpp ME2Format.cpp
+SOURCES=SaveExtract.cpp BinFile.cpp BitArray.cpp mstring.cpp MEShared.cpp ME2Format.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=SaveExtract
 
