@@ -23,6 +23,14 @@ struct xyzvector{
 	float y;
 	float z;
 };
+struct Timestamp {
+	int SecondsSinceMidnight;	// (In seconds)
+	int day;
+	int month;
+	int year;
+	void read(fstream& saveFile);
+	void cout();
+};
 struct LevelRecord{
 	int magicUnused;	/////////This causes windows to crash at the end of the program, but Level's are all messed up without it/////////
 	mstring LevelName;
@@ -217,12 +225,7 @@ struct ME2Format{
 	mstring BaseLevelName;
 	char dificulty;		//This is really an enum (Display as an int)
 	int EndGameState;	//This is really an enum
-	struct {
-		int SecondsSinceMidnight;	// (In seconds)
-		int day;
-		int month;
-		int year;
-	} timestamp;
+	Timestamp SaveDateTime;
 	xyzvector playerPosition;		//(16 byte size)
 	int playerRotation;
 	int CurrentLoadingTip;
