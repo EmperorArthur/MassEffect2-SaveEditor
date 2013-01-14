@@ -265,7 +265,14 @@ void Timestamp::read(fstream& saveFile){
 void Timestamp::cout(){
 	std::cout << "Timestamp is:  " << SecondsSinceMidnight/3600 << ":" << (SecondsSinceMidnight/60)%60 << " " << (int) month << "/" << (int) day <<"/" << year << endl;
 }
-
+void PlayerRotation::read(fstream& saveFile){
+	saveFile.read((char *) &Pitch,4);
+	saveFile.read((char *) &Yaw,4);
+	saveFile.read((char *) &Roll,4);
+}
+void PlayerRotation::cout(){
+	std::cout << "Player's rotation is:  " << Yaw << endl;
+}
 void ME2Format::read(fstream& saveFile){
 	//Read the data from the file
 	saveFile.seekg(ios_base::beg + 0x00);
@@ -278,9 +285,8 @@ void ME2Format::read(fstream& saveFile){
 	saveFile.read(&dificulty,1);
 	saveFile.read((char *) &EndGameState,4);
 	SaveDateTime.read(saveFile);
-	saveFile.read((char *) &playerPosition,16);
-	saveFile.read((char *) &playerRotation,4);
-	std::cout << "Skipping ===>" << saveFile.seekg(4,ios_base::cur)<<"<=== on Line: " << __LINE__ << " between playerRotation and CurrentLoadingTip" << endl;
+	saveFile.read((char *) &playerPosition,12);
+	myRotation.read(saveFile);
 	saveFile.read((char *) &CurrentLoadingTip,4);
 	levels.read(saveFile);
 	streams.read(saveFile);
@@ -343,7 +349,7 @@ void ME2Format::cout(){
 	std::cout << "EndGameState is:  "<<(int)EndGameState<<endl;
 	SaveDateTime.cout();
 	std::cout << "Player's Position is:  x:" << playerPosition.x << "  y:" << playerPosition.y << " z:" << playerPosition.z << endl;
-	std::cout << "Player's rotation is:  " << playerRotation << endl;
+	myRotation.cout();
 	std::cout << "CurrentLoadingTip is:  " << (int) CurrentLoadingTip << endl;
 	std::cout << "There are "<<levels.size()<< " levels"<< endl;
 	std::cout << "Displaying Levels:"<<endl;
