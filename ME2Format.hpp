@@ -16,12 +16,12 @@ using namespace std;
 
 //NOTE:  all ints, floats, and bools have a 4 byte size
 
-//This is only struct without its own read function
-//(12 bytes total)
 struct xyzvector{
 	float x;
 	float y;
 	float z;
+	void read(fstream& saveFile);
+	void cout();
 };
 struct Timestamp {
 	int SecondsSinceMidnight;	// (In seconds)
@@ -233,7 +233,7 @@ struct ME2Format{
 	char dificulty;		//This is really an enum (Display as an int)
 	int EndGameState;	//This is really an enum
 	Timestamp SaveDateTime;
-	xyzvector playerPosition;		//(12 byte size)
+	xyzvector playerPosition;
 	PlayerRotation myRotation;
 	int CurrentLoadingTip;
 	collection<LevelRecord> levels;

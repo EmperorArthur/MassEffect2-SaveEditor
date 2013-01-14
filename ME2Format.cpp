@@ -273,6 +273,15 @@ void PlayerRotation::read(fstream& saveFile){
 void PlayerRotation::cout(){
 	std::cout << "Player's rotation is:  " << Yaw << endl;
 }
+void xyzvector::read(fstream& saveFile){
+	saveFile.read((char *) &x,4);
+	saveFile.read((char *) &y,4);
+	saveFile.read((char *) &z,4);
+}
+void xyzvector::cout(){
+	std::cout << "Player's Position is:  x:" << x << "  y:" << y << " z:" << z << endl;
+}
+
 void ME2Format::read(fstream& saveFile){
 	//Read the data from the file
 	saveFile.seekg(ios_base::beg + 0x00);
@@ -285,7 +294,7 @@ void ME2Format::read(fstream& saveFile){
 	saveFile.read(&dificulty,1);
 	saveFile.read((char *) &EndGameState,4);
 	SaveDateTime.read(saveFile);
-	saveFile.read((char *) &playerPosition,12);
+	playerPosition.read(saveFile);
 	myRotation.read(saveFile);
 	saveFile.read((char *) &CurrentLoadingTip,4);
 	levels.read(saveFile);
@@ -348,7 +357,7 @@ void ME2Format::cout(){
 	std::cout << "dificulty is:  "<<(int)dificulty<<endl;
 	std::cout << "EndGameState is:  "<<(int)EndGameState<<endl;
 	SaveDateTime.cout();
-	std::cout << "Player's Position is:  x:" << playerPosition.x << "  y:" << playerPosition.y << " z:" << playerPosition.z << endl;
+	playerPosition.cout();
 	myRotation.cout();
 	std::cout << "CurrentLoadingTip is:  " << (int) CurrentLoadingTip << endl;
 	std::cout << "There are "<<levels.size()<< " levels"<< endl;
