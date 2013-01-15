@@ -19,7 +19,7 @@ struct collection{
 	void readBasic(fstream& saveFile);
 	void read(fstream& saveFile);
 	T & operator[](int index);
-	void cout(bool verbose = true);
+	void cout(bool verbose = false);
 	void coutBasic(bool verbose = false);
 	private:
 		T * items;

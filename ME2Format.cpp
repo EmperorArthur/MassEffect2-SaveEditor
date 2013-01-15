@@ -79,13 +79,13 @@ void ME2PlotTable::cout(){
 	std::cout << " QuestProgressCounter: " << QuestProgressCounter << endl;
 	std::cout << "There are " << QuestProgress.size() << " quest plots the ME2 plot table" << endl;
 	std::cout << "Displaying plots:"<<endl;
-	QuestProgress.cout(false);
+	QuestProgress.cout();
 	std::cout << "There are " << QuestIDs.size() << " quest IDs in the ME2 plot table" << endl;
 	std::cout << "Displaying quest IDs:"<<endl;
 	QuestIDs.coutBasic();
 	std::cout << "There are " << CodexEntries.size() << " Codex Entries in the ME2 plot table" << endl;
 	std::cout << "Displaying Codex Entries:"<<endl;
-	CodexEntries.cout();
+	CodexEntries.cout(true);
 	std::cout << "There are " << CodexIDs.size() << " codex IDs in the ME2 plot table" << endl;
 	std::cout << "Displaying codex IDs:"<<endl;
 	CodexIDs.coutBasic();
@@ -99,7 +99,7 @@ void Hotkey::cout(){
 void Henchman::cout(){
 	std::cout << "	" << Tag << ":" << endl;
 	std::cout << "	Displaying powers:"<<endl;
-	powers.cout(false);
+	powers.cout();
 	std::cout << "	Level: " << CharacterLevel << endl;
 	std::cout << "	TalentPoints: " << TalentPoints << endl;
 	std::cout << "	Displaying Weapons Loadout:"<<endl;
@@ -128,7 +128,7 @@ void CodexEntry::read(fstream& saveFile){
 	pages.read(saveFile);
 }
 void CodexEntry::cout(){
-	pages.cout(false);
+	pages.cout();
 }
 void CodexPage::read(fstream& saveFile){
 	saveFile.read((char *) &Page,4);
@@ -221,13 +221,13 @@ void playerData::cout(){
 	std::cout << "Mapped Power #2: " << mappedPower2 << endl;
 	std::cout << "Mapped Power #3: " << mappedPower3 << endl;
 	std::cout << "Displaying powers:"<<endl;
-	powers.cout(false);
+	powers.cout();
 	std::cout << "Displaying Weapons:"<<endl;
-	weapons.cout(false);
+	weapons.cout();
 	std::cout << "Displaying Weapons Loadout:"<<endl;
 	currentLoadout.cout();
 	std::cout << "Displaying Hotkeys:"<<endl;
-	hotkeys.cout(false);
+	hotkeys.cout();
 	std::cout << "Player has " << Credits << " Credits" << endl;
 	std::cout << "Player has " << Medigel << " Medigel" << endl;
 	std::cout << "Player has " << Eezo << " Eezo" << endl;
@@ -254,24 +254,24 @@ void ME2Format::cout(){
 	std::cout << "CurrentLoadingTip is:  " << (int) CurrentLoadingTip << endl;
 	std::cout << "There are "<<levels.size()<< " levels"<< endl;
 	std::cout << "Displaying Levels:"<<endl;
-	levels.cout(false);
+	levels.cout();
 	std::cout << "Displaying Streams:"<<endl;
-	streams.cout(false);
+	streams.cout();
 	std::cout << "Displaying Kismets:"<<endl;
-	kismets.cout(false);
+	kismets.cout();
 	std::cout << "Displaying Doors:" << endl;
-	doors.cout(false);
+	doors.cout();
 	std::cout << "Displaying Pawns:" << endl;
-	pawns.cout(false);
+	pawns.cout();
 	player.cout();
 	std::cout << "There are " << henchmen.size() << " Henchmen" <<endl;
 	std::cout << "Displaying Henchmen:"<<endl;
-	henchmen.cout(false);
+	henchmen.cout();
 	Plot.cout();
 	ME1PlotRecord.cout();
 	galaxy.cout();
 	std::cout << "This save depends on:" << std::endl;
-	dlc.cout(false);
+	dlc.cout();
 	std::cout << "CRC:  0x" << hex << crc << dec << endl;
 }
 
@@ -283,7 +283,7 @@ void Planet::read(fstream& saveFile){
 void Planet::cout(){
 	std::cout << "Planet ID: "<<PlanetID<<endl;
 	std::cout << "	Visited: "<<Visited<<endl;
-	Probes.cout(false);
+	Probes.cout();
 }
 void GalaxyMap::read(fstream& saveFile){
 	Planets.read(saveFile);
@@ -292,7 +292,7 @@ void GalaxyMap::cout(){
 	std::cout << "****************Start of Galaxy Map****************" << std::endl;
 	std::cout << "There are "<< Planets.size() << " Planets"<<endl;
 	std::cout << "Listing Planets"<<endl;
-	Planets.cout(false);
+	Planets.cout();
 	std::cout << "*****************End of Galaxy Map*****************" << std::endl;
 }
 void DependentDLC::read(fstream& saveFile){
