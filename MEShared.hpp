@@ -22,6 +22,7 @@ struct Timestamp {
 	int month;
 	int year;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct xyzvector{
@@ -29,6 +30,7 @@ struct xyzvector{
 	float y;
 	float z;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 
@@ -37,6 +39,7 @@ struct PlayerRotation{
 	int Yaw;
 	int Roll;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct LevelRecord{
@@ -45,18 +48,21 @@ struct LevelRecord{
 	bool ShouldBeLoaded;
 	bool ShouldBeVisible;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct StreamingRecord{
 	mstring name;
 	bool active;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct Kismet{
 	unsigned char id[16];
 	bool Value;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct Door{
@@ -64,11 +70,13 @@ struct Door{
 	unsigned char CurrentState; //(Display as an int)
 	unsigned char OldState; //(Display as an int)
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct Pawn{
 	unsigned char id[16];
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct Loadout{
@@ -81,6 +89,7 @@ struct Loadout{
 	//	HeavyWeapon
 	mstring Weapon[6];
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct ME1PlotTable{
@@ -88,12 +97,14 @@ struct ME1PlotTable{
 	collection<int> ints;
 	collection<float> floats;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct xyvector{
 	int x;
 	int y;
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 
