@@ -59,47 +59,51 @@ void StreamingRecord::read(fstream& saveFile){
 void StreamingRecord::cout(){
 	std::cout << "	"<< name << ": " << active<< endl;
 }
-void Kismet::read(fstream& saveFile,int version){
+void guid::read(fstream& saveFile,int version){
 	read(saveFile);
 }
-void Kismet::read(fstream& saveFile){
+void guid::read(fstream& saveFile){
 	saveFile.read((char *) &id,16);
-	saveFile.read((char *) &Value,4);
 }
-void Kismet::cout(){
+void guid::cout(){
 	std::cout << "	id: ";
 	for(int j=0;j<16;j++){
 		std::cout << hex << (unsigned short)id[j];
 	}
-	std::cout << dec << ": " << Value << endl;
+	std::cout << dec;
+}
+void Kismet::read(fstream& saveFile,int version){
+	read(saveFile);
+}
+void Kismet::read(fstream& saveFile){
+	id.read(saveFile);
+	saveFile.read((char *) &Value,4);
+}
+void Kismet::cout(){
+	id.cout();
+	std::cout << ": " << Value << endl;
 }
 void Door::read(fstream& saveFile,int version){
 	read(saveFile);
 }
 void Door::read(fstream& saveFile){
-	saveFile.read((char *) &id,16);
+	id.read(saveFile);
 	saveFile.read((char *) &CurrentState,1);
 	saveFile.read((char *) &OldState,1);
 }
 void Door::cout(){
-	std::cout << "	id: ";
-	for(int j=0;j<16;j++){
-		std::cout << hex << (unsigned short)id[j];
-	}
-	std::cout << dec << ": " << (int) CurrentState << "," << (int) OldState<< endl;
+	id.cout();
+	std::cout << ": " << (int) CurrentState << "," << (int) OldState<< endl;
 }
 void Pawn::read(fstream& saveFile,int version){
-	read(saveFile);
+	id.read(saveFile);
 }
 void Pawn::read(fstream& saveFile){
-	saveFile.read((char *) &id,16);
+	id.read(saveFile);
 }
 void Pawn::cout(){
-	std::cout << "	id: ";
-	for(int j=0;j<16;j++){
-		std::cout << hex << (unsigned short)id[j];
-	}
-	std::cout << dec << endl;
+	id.cout();
+	std::cout << endl;
 }
 void Loadout::read(fstream& saveFile,int version){
 	read(saveFile);

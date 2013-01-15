@@ -58,15 +58,21 @@ struct StreamingRecord{
 	void read(fstream& saveFile,int version);
 	void cout();
 };
-struct Kismet{
+struct guid{
 	unsigned char id[16];
+	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
+	void cout();
+};
+struct Kismet{
+	guid id;
 	bool Value;
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct Door{
-	unsigned char id[16];
+	guid id;
 	unsigned char CurrentState; //(Display as an int)
 	unsigned char OldState; //(Display as an int)
 	void read(fstream& saveFile);
@@ -74,7 +80,7 @@ struct Door{
 	void cout();
 };
 struct Pawn{
-	unsigned char id[16];
+	guid id;
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
