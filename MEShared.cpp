@@ -4,6 +4,12 @@
 #include "MEShared.hpp"
 
 
+Timestamp::Timestamp(){
+	SecondsSinceMidnight = 0;
+	day = 0;
+	month = 0;
+	year = 0;
+}
 void Timestamp::read(fstream& saveFile,int version){
 	read(saveFile);
 }
@@ -15,6 +21,11 @@ void Timestamp::read(fstream& saveFile){
 }
 void Timestamp::cout(){
 	std::cout << "Timestamp is:  " << SecondsSinceMidnight/3600 << ":" << (SecondsSinceMidnight/60)%60 << " " << (int) month << "/" << (int) day <<"/" << year << endl;
+}
+xyzvector::xyzvector(){
+	x = 0;
+	y = 0;
+	z = 0;
 }
 void xyzvector::read(fstream& saveFile,int version){
 	read(saveFile);
@@ -30,6 +41,11 @@ void xyzvector::cout(){
 void PlayerRotation::read(fstream& saveFile,int version){
 	read(saveFile);
 }
+PlayerRotation::PlayerRotation(){
+	Pitch = 0;
+	Yaw = 0;
+	Roll = 0;
+}
 void PlayerRotation::read(fstream& saveFile){
 	saveFile.read((char *) &Pitch,4);
 	saveFile.read((char *) &Yaw,4);
@@ -37,6 +53,11 @@ void PlayerRotation::read(fstream& saveFile){
 }
 void PlayerRotation::cout(){
 	std::cout << "Player's rotation is:  " << Yaw << endl;
+}
+LevelRecord::LevelRecord(){
+	LevelName = "";
+	ShouldBeLoaded = 0;
+	ShouldBeVisible = 0;
 }
 void LevelRecord::read(fstream& saveFile,int version){
 	read(saveFile);
@@ -49,6 +70,10 @@ void LevelRecord::read(fstream& saveFile){
 void LevelRecord::cout(){
 	std::cout << "	"<< LevelName << ": " << ShouldBeLoaded << "," << ShouldBeVisible<< endl;
 }
+StreamingRecord::StreamingRecord(){
+	name = "";
+	active = 0;
+}
 void StreamingRecord::read(fstream& saveFile,int version){
 	read(saveFile);
 }
@@ -58,6 +83,11 @@ void StreamingRecord::read(fstream& saveFile){
 }
 void StreamingRecord::cout(){
 	std::cout << "	"<< name << ": " << active<< endl;
+}
+guid::guid(){
+	for(int j=0;j<16;j++){
+		id[j] = 0;
+	}
 }
 void guid::read(fstream& saveFile,int version){
 	read(saveFile);
@@ -72,6 +102,9 @@ void guid::cout(){
 	}
 	std::cout << dec;
 }
+Kismet::Kismet(){
+	Value = 0;
+}
 void Kismet::read(fstream& saveFile,int version){
 	read(saveFile);
 }
@@ -82,6 +115,10 @@ void Kismet::read(fstream& saveFile){
 void Kismet::cout(){
 	id.cout();
 	std::cout << ": " << Value << endl;
+}
+Door::Door(){
+	CurrentState = 0;
+	OldState = 0;
 }
 void Door::read(fstream& saveFile,int version){
 	read(saveFile);
@@ -104,6 +141,11 @@ void Pawn::read(fstream& saveFile){
 void Pawn::cout(){
 	id.cout();
 	std::cout << endl;
+}
+Loadout::Loadout(){
+	for(int i=0;i<6;i++){
+			Weapon[i]="";
+	}
 }
 void Loadout::read(fstream& saveFile,int version){
 	read(saveFile);
@@ -138,6 +180,10 @@ void ME1PlotTable::cout(){
 	std::cout << "Displaying floats:"<<endl;
 	floats.coutBasic();
 	std::cout << "****************End of ME1 Plot Table****************" << std::endl;
+}
+xyvector::xyvector(){
+	x = 0;
+	y = 0;
 }
 void xyvector::read(fstream& saveFile,int version){
 	read(saveFile);

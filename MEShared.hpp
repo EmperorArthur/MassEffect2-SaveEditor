@@ -21,6 +21,7 @@ struct Timestamp {
 	int day;
 	int month;
 	int year;
+	Timestamp();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -29,6 +30,7 @@ struct xyzvector{
 	float x;
 	float y;
 	float z;
+	xyzvector();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -38,6 +40,7 @@ struct PlayerRotation{
 	int Pitch;
 	int Yaw;
 	int Roll;
+	PlayerRotation();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -47,6 +50,7 @@ struct LevelRecord{
 	mstring LevelName;
 	bool ShouldBeLoaded;
 	bool ShouldBeVisible;
+	LevelRecord();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -54,12 +58,14 @@ struct LevelRecord{
 struct StreamingRecord{
 	mstring name;
 	bool active;
+	StreamingRecord();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct guid{
 	unsigned char id[16];
+	guid();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -67,6 +73,7 @@ struct guid{
 struct Kismet{
 	guid id;
 	bool Value;
+	Kismet();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -75,12 +82,16 @@ struct Door{
 	guid id;
 	unsigned char CurrentState; //(Display as an int)
 	unsigned char OldState; //(Display as an int)
+	Door();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
 };
+//This only exists because of legacy code
+//I can probably easily get rid of it.
 struct Pawn{
 	guid id;
+	//guid's default constructor is automatically called
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -94,6 +105,7 @@ struct Loadout{
 	//	Pistol
 	//	HeavyWeapon
 	mstring Weapon[6];
+	Loadout();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -102,6 +114,7 @@ struct ME1PlotTable{
 	BitArray BoolVariables;
 	collection<int> ints;
 	collection<float> floats;
+	//Have to leave it up to the default constructors that are automatically called
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -109,6 +122,7 @@ struct ME1PlotTable{
 struct xyvector{
 	int x;
 	int y;
+	xyvector();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
