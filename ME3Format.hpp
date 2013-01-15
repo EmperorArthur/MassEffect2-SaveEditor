@@ -16,9 +16,20 @@
 using namespace std;
 
 //NOTE:  all ints, floats, and bools have a 4 byte size
+//NOTE: all commented out items (with the exception of headmorph) are done so because there's something in Gibbed's code that looks like a version check.
+//NOTE:  all comments that look like (Version < 36,"None") or (Version < 46) are things that do not exist below that version number.
 
-//NOTE: all commented out items (with the exception of headmorph) are done so becausethere's something in Gibbed's code that looks like a version check.
+//These are the actuall new stuff in ME3
+struct Placeable{
+	guid id;
+	char IsDestroyed;
+	char IsDeactivated;
+	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
+	void cout();
+};
 
+//All of these are just ME2 structs with some extra stuff added on
 struct Appearance{
 	unsigned char CombatAppearance; //(display as an int) really an enum(0 means parts, 1 means full)
 	int CasualID;
@@ -52,6 +63,8 @@ struct Power{
 	// bool Evolution5BottomChoice;
 	// bool Evolution6TopChoice;
 	// bool Evolution6BottomChoice;
+	//Gibbed has it as
+	//int EvolvedChoice[6];
 	mstring PowerClassName;
 	int WheelDisplayIndex;
 	void read(fstream& saveFile);
@@ -92,9 +105,9 @@ struct Hotkey{
 struct playerData {
 	bool IsFemale;
 	mstring className;
-	//bool IsCombatPawn; //Not sure about this
-	//bool IsInjuredPawn; //Not sure about this
-	//bool UseCasualAppearance; //Not sure about this
+	//bool IsCombatPawn; //s => s.Version < 37, () => true);
+	//bool IsInjuredPawn; //s => s.Version < 48, () => false);
+	//bool UseCasualAppearance; //s => s.Version < 48, () => false);
 	int level;
 	float xp;
 	mstring firstName;
@@ -107,15 +120,15 @@ struct playerData {
 	mstring mappedPower3;
 	Appearance myAppearance;
 	collection<Power> powers;
-	//collection<GAWAsset> assets; //Not sure about this
+	//collection<GAWAsset> assets; //Version < 38
 	collection<Weapon> weapons;
-	//collection<WeaponMod> WeaponMods; //Not sure about this
-	//Loadout currentLoadout; //Not sure about this
-	//mstring PrimaryWeapon; //Not sure about this
-	//mstring SecondaryWeapon; //Not sure about this
-	//collection<int> LoadoutWeaponGroups; //Not sure about this
-	//collection<Hotkey> hotkeys; //Not sure about this
-	//float CurrentHealth; //Not sure about this
+	//collection<WeaponMod> WeaponMods; //Version < 32
+	//Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());
+	//mstring PrimaryWeapon; //s => s.Version < 41, () => null);
+	//mstring SecondaryWeapon; //s => s.Version < 41, () => null);
+	//collection<int> LoadoutWeaponGroups; //Version < 33
+	//collection<Hotkey> hotkeys; //Version < 19
+	//float CurrentHealth; //s => s.Version < 44, () => 0.0f);
 	int Credits;
 	int Medigel;
 	int Eezo;
@@ -124,12 +137,28 @@ struct playerData {
 	int Platinum;
 	int Probes;
 	float CurrentFuel;
+	//int Grenades; //Version < 54,0
+	//mstring FaceCode; //assert(stream.Version >= 25) (this is pretty much what gibbed's code does
+	//int ClassFriendlyName; //Version < 26,0
+	//guid id; //s.Version < 42, () => Guid.Empty);
+	void read(fstream& saveFile,int version);
+	void cout();
+};
+struct Henchman{
+	mstring Tag;
+	collection<Power> powers;
+	int CharacterLevel;
+	int TalentPoints;
+	//Loadout currentLoadout; //Not sure about this
+	//mstring MappedPower; //Not sure about this
+	//collection<WeaponMod> WeaponMods; //Not sure about this
 	//int Grenades; //Not sure about this
-	//mstring FaceCode; //Not sure about this
-	//int ClassFriendlyName; //Not sure about this
-	//unsigned char id[16]; //Not sure about this
+	//collection<Weapon> weapons; //Not sure about this
 	void read(fstream& saveFile);
 	void cout();
+};
+struct ME3PlotTable{
+	//Stuff goes here
 };
 struct Planet{
 	int PlanetID;
@@ -145,7 +174,7 @@ struct System{
 	//bool ReapersDetected; //Not sure about this
 	void read(fstream& saveFile);
 	void cout();
-}
+};
 struct GalaxyMap{
 	collection<Planet> Planets;
 	collection<System> Systems;
@@ -161,11 +190,12 @@ struct DependentDLC{
 };
 struct ME3Format{
 	unsigned int version;		// This handles saves of version 29 and 59 (Coppied from Gibbed's work)
+								// 29 is ME2 and 59 is ME3
 	mstring DebugName;
 	float playTime; 	//(In seconds)
 	int Disc;
 	mstring BaseLevelName;
-	//mstring _BaseLevelNameDisplayOverrideAsRead; //Not sure what this is.
+	mstring BaseLevelNameDisplayOverrideAsRead; //Version < 36,"None"
 	char dificulty;		//This is really an enum (Display as an int)
 	int EndGameState;	//This is really an enum
 	Timestamp SaveDateTime;
@@ -176,17 +206,19 @@ struct ME3Format{
 	collection<StreamingRecord> streams;
 	collection<Kismet> kismets;
 	collection<Door> doors;
-	//collection<Placeable> placeables; //Not sure what this is.
+	collection<Placeable> placeables; //Version < 46
 	collection<Pawn> pawns;
 	playerData player;
 	collection<Henchman> henchmen;
 	ME3PlotTable Plot;
 	ME1PlotTable ME1PlotRecord;
-	//collection<PlayerVariable> _PlayerVariables; //Not sure what this is
+	//collection<PlayerVariable> _PlayerVariables; //Version < 34, () => new List<Save.PlayerVariable>());
 	GalaxyMap galaxy;
 	collection<DependentDLC> dlc;
 	//More stuff here///////////////////////////////////////
 	unsigned int crc;
+	void read(fstream& saveFile);
+	void cout();
 };
 
 #endif
