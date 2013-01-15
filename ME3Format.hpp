@@ -30,6 +30,14 @@ struct Placeable{
 	void read(fstream& saveFile,int version);
 	void cout();
 };
+//GAW stands for "Galaxy at War," which requires online mode.
+struct GAWAsset{
+	int ID;
+	int Strength;
+	GAWAsset();
+	void read(fstream& saveFile);
+	void cout();
+};
 
 //All of these are just ME2 structs with some extra stuff added on
 struct Appearance{
@@ -63,13 +71,6 @@ struct Power{
 	Power();
 	void read(fstream& saveFile,int version);
 	void cout(int version);
-};
-//GAW stands for "Galaxy at War," which requires online mode.
-struct GAWAsset{
-	int ID;
-	int Strength;
-	void read(fstream& saveFile);
-	void cout();
 };
 struct Weapon{
 	mstring name;
@@ -114,7 +115,7 @@ struct playerData {
 	mstring mappedPower3;
 	Appearance myAppearance;
 	collection<Power> powers;
-	//collection<GAWAsset> assets; //Version < 38
+	collection<GAWAsset> assets; //Version < 38
 	collection<Weapon> weapons;
 	//collection<WeaponMod> WeaponMods; //Version < 32
 	//Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());

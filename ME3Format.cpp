@@ -6,6 +6,8 @@
 //These are some macros to help me with my reading depending on version number
 #define READ4(variable) saveFile.read((char *) &variable,4);
 #define IFELSEREAD4(versionCheck,checkFailedState,variable) if(versionCheck){variable = checkFailedState;}else{READ4(variable);}
+//WATCH OUT:  This does the reading in the if block.  IFELSEREAD4 does the reading in the else block
+#define IFREAD4(versionCheck,variable) if(versionCheck){READ4(variable);}
 
 void ME3Format::read(fstream& saveFile){
 	//Read the data from the file
@@ -112,6 +114,9 @@ void playerData::read(fstream& saveFile,int version){
 	mappedPower3.read(saveFile);
 	myAppearance.read(saveFile,version);
 	powers.read(saveFile,version);
+	if(version >=38){
+		assets.read(saveFile);
+	}
 }
 void playerData::cout(int version){
 	std::cout << "****************Start of Player Information****************" << std::endl;
@@ -137,7 +142,12 @@ void playerData::cout(int version){
 	std::cout << "	Mapped Power #2: " << mappedPower2 << endl;
 	std::cout << "	Mapped Power #3: " << mappedPower3 << endl;
 	//myAppearance.cout(version);
+	std::cout << "Displaying powers:"<<endl;
 	powers.cout(version);
+	if(version >=38){
+		std::cout << "Displaying Galaxy at War assets:"<<endl;
+		assets.cout();
+	}
 	
 	std::cout << "****************End of Player Information****************" << std::endl;
 }
@@ -194,4 +204,15 @@ void Power::cout(int version){
 		}
 		std::cout << endl;
 	}
+}
+GAWAsset::GAWAsset(){
+	ID = 0;
+	Strength = 0;
+}
+void GAWAsset::read(fstream& saveFile){
+	saveFile.read((char *) &ID,4);
+	saveFile.read((char *) &Strength,4);
+}
+void GAWAsset::cout(){
+	std::cout << "	Asset ID:  "<<ID<< " Strength:  "<<Strength<<endl;
 }
