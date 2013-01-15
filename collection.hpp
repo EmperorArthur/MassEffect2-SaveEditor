@@ -18,8 +18,10 @@ struct collection{
 	int size();
 	void readBasic(fstream& saveFile);
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	T & operator[](int index);
 	void cout(bool verbose = false);
+	void cout(int version);
 	void coutBasic(bool verbose = false);
 	private:
 		T * items;
@@ -105,6 +107,37 @@ void collection<T>::read(fstream& saveFile){
 		}
 	}
 }
+//This reads in multiple items, calling the read function for each individual item
+//(With version specific details
+template <class T>
+void collection<T>::read(fstream& saveFile,int version){
+	saveFile.read((char *) &numberofItems,4);
+	//Do nothing if we're asked to read something with no values
+	if(numberofItems){
+		try{
+			items = new T[numberofItems];
+		}
+		catch (bad_alloc& ba){
+			cerr << "bad_alloc caught: " << ba.what() << endl;
+			exit(1);
+		}
+		catch (exception& e){
+			cerr << "exception caught: " << e.what() << endl;
+			exit(1);
+		}
+		for(int i=0;i<numberofItems;i++){
+			if(!saveFile.good()){
+				throw "FileStream is not good";
+			}
+			try{
+				items[i].read(saveFile,version);
+			}
+			catch (exception& e){
+				cerr << "exception caught: " << e.what() << endl;
+			}
+		}
+	}
+}
 //This is like the regular cout, but for built in types
 template <class T>
 void collection<T>::coutBasic(bool verbose){
@@ -126,6 +159,13 @@ void collection<T>::cout(bool verbose){
 			std::cout << "	" << typeid(T).name() << " , " << i << ":"<<endl;
 		}
 		items[i].cout();
+	}
+}
+//Output something from all the members (with version specific details)
+template <class T>
+void collection<T>::cout(int version){
+	for(int i=0;i<this->size();i++){
+		items[i].cout(version);
 	}
 }
 #endif
