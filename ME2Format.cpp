@@ -181,7 +181,7 @@ void ME2Format::read(fstream& saveFile){
 	assert(29 == version);	//Make sure we're reading the correct file type
 	DebugName.read(saveFile);
 	saveFile.read((char *) &playTime,4);
-	Disc.read(saveFile);
+	saveFile.read((char *) &Disc,4);
 	BaseLevelName.read(saveFile);
 	saveFile.read(&dificulty,1);
 	saveFile.read((char *) &EndGameState,4);

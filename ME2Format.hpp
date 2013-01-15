@@ -155,7 +155,7 @@ struct ME2Format{
 	int version;		// ME2 1.0 (release) has saves of version 29 (0x1D)
 	mstring DebugName;
 	float playTime; 	//(In seconds)
-	mstring Disc;
+	int Disc;
 	mstring BaseLevelName;
 	char dificulty;		//This is really an enum (Display as an int)
 	int EndGameState;	//This is really an enum
