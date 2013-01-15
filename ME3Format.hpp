@@ -18,12 +18,14 @@ using namespace std;
 //NOTE:  all ints, floats, and bools have a 4 byte size
 //NOTE: all commented out items (with the exception of headmorph) are done so because there's something in Gibbed's code that looks like a version check.
 //NOTE:  all comments that look like (Version < 36,"None") or (Version < 46) are things that do not exist below that version number.
+//		The second item is what the default constructor needs to be, if the item is not read (because it doesn't exist in the version number being read)
 
 //These are the actuall new stuff in ME3
 struct Placeable{
 	guid id;
-	char IsDestroyed;
-	char IsDeactivated;
+	char IsDestroyed;		//This is really a bool
+	char IsDeactivated;		//This is really a bool
+	Placeable();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
@@ -47,28 +49,20 @@ struct Appearance{
 	int HelmetID;
 	bool HasMorphHead;	//assert(!HasMorphHead);	//I don't properly handle this right now
 	//MorphHead myHead;
-	//int EmissiveId; //Not sure about this
-	void read(fstream& saveFile);
-	void cout();
+	int EmissiveId; //Version < 55,0
+	void read(fstream& saveFile,int version);
+	void cout(int version);
 };
 struct Power{
 	mstring PowerName;
 	float CurrentRank;
-	//This is the choice made when evolving a power
-	//Either the top or bottom choice should be selected
-	//Not sure about these
-	// bool Evolution4TopChoice;
-	// bool Evolution4BottomChoice;
-	// bool Evolution5TopChoice;
-	// bool Evolution5BottomChoice;
-	// bool Evolution6TopChoice;
-	// bool Evolution6BottomChoice;
-	//Gibbed has it as
-	//int EvolvedChoice[6];
+	//This is the choice made when evolving a power (I'm not sure exactly how it maps to the in game power choice)
+	int EvolvedChoice[6]; //0-1 is (Version < 30,0) and  2-5 is (Version < 31,0)
 	mstring PowerClassName;
 	int WheelDisplayIndex;
-	void read(fstream& saveFile);
-	void cout();
+	Power();
+	void read(fstream& saveFile,int version);
+	void cout(int version);
 };
 //GAW stands for "Galaxy at War," which requires online mode.
 struct GAWAsset{
@@ -105,9 +99,9 @@ struct Hotkey{
 struct playerData {
 	bool IsFemale;
 	mstring className;
-	//bool IsCombatPawn; //s => s.Version < 37, () => true);
-	//bool IsInjuredPawn; //s => s.Version < 48, () => false);
-	//bool UseCasualAppearance; //s => s.Version < 48, () => false);
+	bool IsCombatPawn; //Version < 37,true
+	bool IsInjuredPawn; //Version < 48,false
+	bool UseCasualAppearance; //Version < 48,false
 	int level;
 	float xp;
 	mstring firstName;
@@ -138,11 +132,11 @@ struct playerData {
 	int Probes;
 	float CurrentFuel;
 	//int Grenades; //Version < 54,0
-	//mstring FaceCode; //assert(stream.Version >= 25) (this is pretty much what gibbed's code does
+	//mstring FaceCode; //assert(stream.Version >= 25) (this is pretty much what gibbed's code does)
 	//int ClassFriendlyName; //Version < 26,0
 	//guid id; //s.Version < 42, () => Guid.Empty);
 	void read(fstream& saveFile,int version);
-	void cout();
+	void cout(int version);
 };
 struct Henchman{
 	mstring Tag;
@@ -212,7 +206,7 @@ struct ME3Format{
 	collection<Henchman> henchmen;
 	ME3PlotTable Plot;
 	ME1PlotTable ME1PlotRecord;
-	//collection<PlayerVariable> _PlayerVariables; //Version < 34, () => new List<Save.PlayerVariable>());
+	//collection<PlayerVariable> _PlayerVariables; //Version < 34
 	GalaxyMap galaxy;
 	collection<DependentDLC> dlc;
 	//More stuff here///////////////////////////////////////
