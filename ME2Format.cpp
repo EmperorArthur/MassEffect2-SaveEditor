@@ -252,7 +252,6 @@ void ME2Format::cout(){
 	playerPosition.cout();
 	myRotation.cout();
 	std::cout << "CurrentLoadingTip is:  " << (int) CurrentLoadingTip << endl;
-	std::cout << "There are "<<levels.size()<< " levels"<< endl;
 	std::cout << "Displaying Levels:"<<endl;
 	levels.cout();
 	std::cout << "Displaying Streams:"<<endl;
