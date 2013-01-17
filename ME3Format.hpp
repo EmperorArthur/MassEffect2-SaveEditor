@@ -76,13 +76,14 @@ struct Weapon{
 	mstring name;
 	int AmmoUsedCount;			
 	int TotalAmmo;
-	mstring ammoName;
 	bool CurrentWeapon;
 	bool LastWeapon;
-	//mstring AmmoPowerName; //Not sure about this
-	//mstring AmmoPowerSourceTag; //Not sure about this
-	void read(fstream& saveFile);
-	void cout();
+	mstring AmmoPowerName; //Version < 17
+	mstring AmmoPowerSourceTag; //Version < 59
+	Weapon();
+	~Weapon();
+	void read(fstream& saveFile,int version);
+	void cout(int version);
 };
 struct WeaponMod{
 	mstring name;

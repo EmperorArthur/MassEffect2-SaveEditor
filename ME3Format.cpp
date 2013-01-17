@@ -117,6 +117,7 @@ void playerData::read(fstream& saveFile,int version){
 	if(version >=38){
 		assets.read(saveFile);
 	}
+	weapons.read(saveFile,version);
 }
 void playerData::cout(int version){
 	std::cout << "****************Start of Player Information****************" << std::endl;
@@ -148,6 +149,8 @@ void playerData::cout(int version){
 		std::cout << "Displaying Galaxy at War assets:"<<endl;
 		assets.cout();
 	}
+	std::cout << "Displaying Weapons:"<<endl;
+	weapons.cout(version);
 	
 	std::cout << "****************End of Player Information****************" << std::endl;
 }
@@ -215,4 +218,51 @@ void GAWAsset::read(fstream& saveFile){
 }
 void GAWAsset::cout(){
 	std::cout << "	Asset ID:  "<<ID<< " Strength:  "<<Strength<<endl;
+}
+Weapon::Weapon(){
+	name = "";
+	AmmoUsedCount = 0;
+	TotalAmmo = 0;
+	CurrentWeapon = 0;
+	LastWeapon = 0;
+	AmmoPowerName = "";
+	AmmoPowerSourceTag = "";
+}
+Weapon::~Weapon(){
+	//Nothing to be done.
+	//All the mstrings should clean themselves up
+}
+void Weapon::read(fstream& saveFile,int version){
+	std::cout << "Reading weapon" << endl;
+	name.read(saveFile);
+	saveFile.read((char *) &AmmoUsedCount,4);
+	saveFile.read((char *) &TotalAmmo,4);
+	saveFile.read((char *) &CurrentWeapon,4);
+	saveFile.read((char *) &LastWeapon,4);
+	cout(version);
+	if(version >=17){
+		cerr << "Reading AmmoPowerName" << endl;
+		AmmoPowerName.read(saveFile);
+		cerr << "Read AmmoPowerName" << endl;
+		//cerr << "AmmoPowerName:  " << AmmoPowerName << endl;
+	}
+	if(version >=59){
+		cerr << "Reading AmmoPowerSourceTag" << endl;
+		AmmoPowerSourceTag.read(saveFile);
+	}
+}
+void Weapon::cout(int version){
+	std::cout << "	" << name << " : " << endl;
+	std::cout << "		" << (TotalAmmo - AmmoUsedCount) << "/" << TotalAmmo << endl;
+	if(CurrentWeapon){
+		std::cout << "		This is the currently equipped weapon."<<endl;
+	}
+	if(LastWeapon){
+		std::cout << "		This is the last equipped weapon."<<endl;
+	}
+	if(version >=59){
+		std::cout << "		Power:  "<< AmmoPowerName << "	From:  " << AmmoPowerSourceTag << endl;
+	}else if(version >=17){
+		std::cout << "		Power:  "<< AmmoPowerName << endl;
+	}
 }
