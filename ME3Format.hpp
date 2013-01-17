@@ -8,8 +8,8 @@
 #include <fstream>
 #include <string>
 #include <cassert>
+#include <vector>
 #include "BitArray.hpp"
-#include "collection.hpp"
 #include "RWHelper.hpp"
 #include "MEShared.hpp"
 
@@ -29,6 +29,7 @@ struct Placeable{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 //GAW stands for "Galaxy at War," which requires online mode.
 struct GAWAsset{
@@ -36,7 +37,9 @@ struct GAWAsset{
 	int Strength;
 	GAWAsset();
 	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 
 //All of these are just ME2 structs with some extra stuff added on
@@ -81,13 +84,13 @@ struct Weapon{
 	string AmmoPowerName; //Version < 17
 	string AmmoPowerSourceTag; //Version < 59
 	Weapon();
-	~Weapon();
 	void read(fstream& saveFile,int version);
 	void cout(int version);
 };
 struct WeaponMod{
+	~WeaponMod();
 	string name;
-	collection<string> WeaponModClassNames;
+	vector<string*> WeaponModClassNames;
 	void read(fstream& saveFile);
 	void cout();
 };
@@ -99,6 +102,7 @@ struct Hotkey{
 	void cout();
 };
 struct playerData {
+	~playerData();
 	bool IsFemale;
 	string className;
 	bool IsCombatPawn; //Version < 37,true
@@ -115,15 +119,15 @@ struct playerData {
 	string mappedPower2;
 	string mappedPower3;
 	Appearance myAppearance;
-	collection<Power> powers;
-	collection<GAWAsset> assets; //Version < 38
-	collection<Weapon> weapons;
-	//collection<WeaponMod> WeaponMods; //Version < 32
+	vector<Power*> powers;
+	vector<GAWAsset*> assets; //Version < 38
+	vector<Weapon*> weapons;
+	//vector<WeaponMod*> WeaponMods; //Version < 32
 	//Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());
 	//string PrimaryWeapon; //s => s.Version < 41, () => null);
 	//string SecondaryWeapon; //s => s.Version < 41, () => null);
-	//collection<int> LoadoutWeaponGroups; //Version < 33
-	//collection<Hotkey> hotkeys; //Version < 19
+	//vector<int> LoadoutWeaponGroups; //Version < 33
+	//vector<Hotkey*> hotkeys; //Version < 19
 	//float CurrentHealth; //s => s.Version < 44, () => 0.0f);
 	int Credits;
 	int Medigel;
@@ -141,15 +145,16 @@ struct playerData {
 	void cout(int version);
 };
 struct Henchman{
+	~Henchman();
 	string Tag;
-	collection<Power> powers;
+	vector<Power*> powers;
 	int CharacterLevel;
 	int TalentPoints;
 	//Loadout currentLoadout; //Not sure about this
 	//mstring MappedPower; //Not sure about this
-	//collection<WeaponMod> WeaponMods; //Not sure about this
+	//vector<WeaponMod*> WeaponMods; //Not sure about this
 	//int Grenades; //Not sure about this
-	//collection<Weapon> weapons; //Not sure about this
+	//vector<Weapon*> weapons; //Not sure about this
 	void read(fstream& saveFile);
 	void cout();
 };
@@ -157,9 +162,10 @@ struct ME3PlotTable{
 	//Stuff goes here
 };
 struct Planet{
+	~Planet();
 	int PlanetID;
 	bool Visited;
-	collection<xyvector> Probes;
+	vector<xyvector*> Probes;
 	//bool ShowAsScanned; //Not sure about this
 	void read(fstream& saveFile);
 	void cout();
@@ -172,8 +178,9 @@ struct System{
 	void cout();
 };
 struct GalaxyMap{
-	collection<Planet> Planets;
-	collection<System> Systems;
+	~GalaxyMap();
+	vector<Planet*> Planets;
+	vector<System*> Systems;
 	void read(fstream& saveFile);
 	void cout();
 };
@@ -185,6 +192,7 @@ struct DependentDLC{
 	void cout();
 };
 struct ME3Format{
+	~ME3Format();
 	unsigned int version;		// This handles saves of version 29 and 59 (Coppied from Gibbed's work)
 								// 29 is ME2 and 59 is ME3
 	string DebugName;
@@ -198,21 +206,23 @@ struct ME3Format{
 	xyzvector playerPosition;
 	PlayerRotation myRotation;
 	int CurrentLoadingTip;
-	collection<LevelRecord> levels;
-	collection<StreamingRecord> streams;
-	collection<Kismet> kismets;
-	collection<Door> doors;
-	collection<Placeable> placeables; //Version < 46
-	collection<Pawn> pawns;
+	vector<LevelRecord*> levels;
+	vector<StreamingRecord*> streams;
+	vector<Kismet*> kismets;
+	vector<Door*> doors;
+	vector<Placeable*> placeables; //Version < 46
+	vector<Pawn*> pawns;
 	playerData player;
-	collection<Henchman> henchmen;
+	/*
+	vector<Henchman*> henchmen;
 	ME3PlotTable Plot;
 	ME1PlotTable ME1PlotRecord;
-	//collection<PlayerVariable> _PlayerVariables; //Version < 34
+	//vector<PlayerVariable*> _PlayerVariables; //Version < 34
 	GalaxyMap galaxy;
-	collection<DependentDLC> dlc;
+	vector<DependentDLC*> dlc;
 	//More stuff here///////////////////////////////////////
 	unsigned int crc;
+	*/
 	void read(fstream& saveFile);
 	void cout();
 };
