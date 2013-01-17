@@ -165,8 +165,8 @@ void ME1PlotTable::read(fstream& saveFile,int version){
 }
 void ME1PlotTable::read(fstream& saveFile){
 	BoolVariables.read(saveFile);
-	ints.readBasic(saveFile);
-	floats.readBasic(saveFile);
+	VectorRead4(saveFile,ints);
+	VectorRead4(saveFile,floats);
 };
 void ME1PlotTable::cout(){
 	std::cout << "****************Start of ME1 Plot Table****************" << std::endl;
@@ -175,10 +175,10 @@ void ME1PlotTable::cout(){
 	BoolVariables.cout();
 	std::cout << "There are " << ints.size() << " interger values in the ME1 plot table" << endl;
 	std::cout << "Displaying ints:"<<endl;
-	ints.coutBasic();
+	VectorCoutBasic(ints);
 	std::cout << "There are " << floats.size() << " floating point values in the ME1 plot table" << endl;
 	std::cout << "Displaying floats:"<<endl;
-	floats.coutBasic();
+	VectorCoutBasic(floats);
 	std::cout << "****************End of ME1 Plot Table****************" << std::endl;
 }
 xyvector::xyvector(){
