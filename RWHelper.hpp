@@ -76,4 +76,15 @@ void VectorCoutBasic(const vector<T>& items){
 	}
 }
 
+//Delete all the objects in a vector of pointers
+template <typename  T>
+void VectorDelete(vector<T*>& items){
+	T * temp;
+	while(0!=items.size()){
+		temp = items.back();		
+		items.pop_back();
+		delete temp;
+	}
+}
+
 #endif
