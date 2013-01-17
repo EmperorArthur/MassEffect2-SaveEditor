@@ -14,14 +14,14 @@ void ME3Format::read(fstream& saveFile){
 	saveFile.seekg(ios_base::beg + 0x00);
 	saveFile.read((char *) &version,4);
 	assert(29 == version||59 == version);	//Make sure we're reading the correct file type
-	DebugName.read(saveFile);
+	StringRead(saveFile,DebugName);
 	saveFile.read((char *) &playTime,4);
 	saveFile.read((char *) &Disc,4);
-	BaseLevelName.read(saveFile);
+	StringRead(saveFile,BaseLevelName);
 	if(version<36){
 		BaseLevelNameDisplayOverrideAsRead = "None";
 	}else{
-		BaseLevelNameDisplayOverrideAsRead.read(saveFile);
+		StringRead(saveFile,BaseLevelNameDisplayOverrideAsRead);
 	}
 	saveFile.read(&dificulty,1);
 	if (version >= 43 && version <= 46){
@@ -93,7 +93,7 @@ void Placeable::cout(){
 }
 void playerData::read(fstream& saveFile,int version){
 	saveFile.read((char *) &IsFemale,4);
-	className.read(saveFile);
+	StringRead(saveFile,className);
 	//This if statement and the IFELSEREAD4 are the same thing, one just involves less typing
 	if(version < 37){
 		IsCombatPawn = true;
@@ -104,14 +104,14 @@ void playerData::read(fstream& saveFile,int version){
 	IFELSEREAD4(version < 48,false,UseCasualAppearance);
 	saveFile.read((char *) &level,4);
 	saveFile.read((char *) &xp,4);
-	firstName.read(saveFile);
+	StringRead(saveFile,firstName);
 	saveFile.read((char *) &lastname,4);
 	saveFile.read((char *) &origin,1);
 	saveFile.read((char *) &Notoriety,1);
 	saveFile.read((char *) &TalentPoints,4);
-	mappedPower1.read(saveFile);
-	mappedPower2.read(saveFile);
-	mappedPower3.read(saveFile);
+	StringRead(saveFile,mappedPower1);
+	StringRead(saveFile,mappedPower2);
+	StringRead(saveFile,mappedPower3);
 	myAppearance.read(saveFile,version);
 	powers.read(saveFile,version);
 	if(version >=38){
@@ -187,7 +187,7 @@ Power::Power(){
 	WheelDisplayIndex = -1;
 }
 void Power::read(fstream& saveFile,int version){
-	PowerName.read(saveFile);
+	StringRead(saveFile,PowerName);
 	saveFile.read((char *) &CurrentRank,4);
 	IFELSEREAD4(version < 30,0,EvolvedChoice[0]);
 	IFELSEREAD4(version < 30,0,EvolvedChoice[1]);
@@ -195,7 +195,7 @@ void Power::read(fstream& saveFile,int version){
 	IFELSEREAD4(version < 31,0,EvolvedChoice[3]);
 	IFELSEREAD4(version < 31,0,EvolvedChoice[4]);
 	IFELSEREAD4(version < 31,0,EvolvedChoice[5]);
-	PowerClassName.read(saveFile);
+	StringRead(saveFile,PowerClassName);
 	saveFile.read((char *) &WheelDisplayIndex,4);
 }
 void Power::cout(int version){
@@ -234,7 +234,7 @@ Weapon::~Weapon(){
 }
 void Weapon::read(fstream& saveFile,int version){
 	std::cout << "Reading weapon" << endl;
-	name.read(saveFile);
+	StringRead(saveFile,name);
 	saveFile.read((char *) &AmmoUsedCount,4);
 	saveFile.read((char *) &TotalAmmo,4);
 	saveFile.read((char *) &CurrentWeapon,4);
@@ -242,13 +242,13 @@ void Weapon::read(fstream& saveFile,int version){
 	cout(version);
 	if(version >=17){
 		cerr << "Reading AmmoPowerName" << endl;
-		AmmoPowerName.read(saveFile);
+		StringRead(saveFile,AmmoPowerName);
 		cerr << "Read AmmoPowerName" << endl;
 		//cerr << "AmmoPowerName:  " << AmmoPowerName << endl;
 	}
 	if(version >=59){
 		cerr << "Reading AmmoPowerSourceTag" << endl;
-		AmmoPowerSourceTag.read(saveFile);
+		StringRead(saveFile,AmmoPowerSourceTag);
 	}
 }
 void Weapon::cout(int version){

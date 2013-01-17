@@ -10,7 +10,7 @@
 #include <cassert>
 #include "BitArray.hpp"
 #include "collection.hpp"
-#include "mstring.hpp"
+#include "RWHelper.hpp"
 #include "MEShared.hpp"
 
 using namespace std;
@@ -62,37 +62,37 @@ struct Appearance{
 	void cout(int version);
 };
 struct Power{
-	mstring PowerName;
+	string PowerName;
 	float CurrentRank;
 	//This is the choice made when evolving a power (I'm not sure exactly how it maps to the in game power choice)
 	int EvolvedChoice[6]; //0-1 is (Version < 30,0) and  2-5 is (Version < 31,0)
-	mstring PowerClassName;
+	string PowerClassName;
 	int WheelDisplayIndex;
 	Power();
 	void read(fstream& saveFile,int version);
 	void cout(int version);
 };
 struct Weapon{
-	mstring name;
+	string name;
 	int AmmoUsedCount;			
 	int TotalAmmo;
 	bool CurrentWeapon;
 	bool LastWeapon;
-	mstring AmmoPowerName; //Version < 17
-	mstring AmmoPowerSourceTag; //Version < 59
+	string AmmoPowerName; //Version < 17
+	string AmmoPowerSourceTag; //Version < 59
 	Weapon();
 	~Weapon();
 	void read(fstream& saveFile,int version);
 	void cout(int version);
 };
 struct WeaponMod{
-	mstring name;
-	collection<mstring> WeaponModClassNames;
+	string name;
+	collection<string> WeaponModClassNames;
 	void read(fstream& saveFile);
 	void cout();
 };
 struct Hotkey{
-	mstring PawnName;
+	string PawnName;
 	int PowerID; //Not sure about this
 	//mstring PowerName; //Not sure about this
 	void read(fstream& saveFile);
@@ -100,28 +100,28 @@ struct Hotkey{
 };
 struct playerData {
 	bool IsFemale;
-	mstring className;
+	string className;
 	bool IsCombatPawn; //Version < 37,true
 	bool IsInjuredPawn; //Version < 48,false
 	bool UseCasualAppearance; //Version < 48,false
 	int level;
 	float xp;
-	mstring firstName;
+	string firstName;
 	int lastname;				//not actually used
 	char origin;				//This is really an enum (Display as an int)
 	char Notoriety;				//This is really an enum (Display as an int)
 	int TalentPoints;
-	mstring mappedPower1;
-	mstring mappedPower2;
-	mstring mappedPower3;
+	string mappedPower1;
+	string mappedPower2;
+	string mappedPower3;
 	Appearance myAppearance;
 	collection<Power> powers;
 	collection<GAWAsset> assets; //Version < 38
 	collection<Weapon> weapons;
 	//collection<WeaponMod> WeaponMods; //Version < 32
 	//Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());
-	//mstring PrimaryWeapon; //s => s.Version < 41, () => null);
-	//mstring SecondaryWeapon; //s => s.Version < 41, () => null);
+	//string PrimaryWeapon; //s => s.Version < 41, () => null);
+	//string SecondaryWeapon; //s => s.Version < 41, () => null);
 	//collection<int> LoadoutWeaponGroups; //Version < 33
 	//collection<Hotkey> hotkeys; //Version < 19
 	//float CurrentHealth; //s => s.Version < 44, () => 0.0f);
@@ -134,14 +134,14 @@ struct playerData {
 	int Probes;
 	float CurrentFuel;
 	//int Grenades; //Version < 54,0
-	//mstring FaceCode; //assert(stream.Version >= 25) (this is pretty much what gibbed's code does)
+	//string FaceCode; //assert(stream.Version >= 25) (this is pretty much what gibbed's code does)
 	//int ClassFriendlyName; //Version < 26,0
 	//guid id; //s.Version < 42, () => Guid.Empty);
 	void read(fstream& saveFile,int version);
 	void cout(int version);
 };
 struct Henchman{
-	mstring Tag;
+	string Tag;
 	collection<Power> powers;
 	int CharacterLevel;
 	int TalentPoints;
@@ -179,19 +179,19 @@ struct GalaxyMap{
 };
 struct DependentDLC{
 	int ModuleID;
-	mstring name;
-	mstring CanonicalName;
+	string name;
+	string CanonicalName;
 	void read(fstream& saveFile);
 	void cout();
 };
 struct ME3Format{
 	unsigned int version;		// This handles saves of version 29 and 59 (Coppied from Gibbed's work)
 								// 29 is ME2 and 59 is ME3
-	mstring DebugName;
+	string DebugName;
 	float playTime; 	//(In seconds)
 	int Disc;
-	mstring BaseLevelName;
-	mstring BaseLevelNameDisplayOverrideAsRead; //Version < 36,"None"
+	string BaseLevelName;
+	string BaseLevelNameDisplayOverrideAsRead; //Version < 36,"None"
 	char dificulty;		//This is really an enum (Display as an int)
 	int EndGameState;	//This is really an enum
 	Timestamp SaveDateTime;
