@@ -103,7 +103,7 @@ void Placeable::cout(int version){
 }
 void Placeable::cout(){
 	id.cout();
-	std::cout << ": " << IsDestroyed << "," << IsDeactivated << endl;
+	std::cout << ": " << (bool)IsDestroyed << "," << (bool)IsDeactivated << endl;
 }
 playerData::~playerData(){
 	VectorDelete(powers);
