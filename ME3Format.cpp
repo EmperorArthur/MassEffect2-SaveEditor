@@ -33,14 +33,14 @@ void ME3Format::read(fstream& saveFile){
 	playerPosition.read(saveFile);
 	myRotation.read(saveFile);
 	saveFile.read((char *) &CurrentLoadingTip,4);
-	levels.read(saveFile);
-	streams.read(saveFile);
-	kismets.read(saveFile);
-	doors.read(saveFile);
+	VectorRead(saveFile,levels,version);
+	VectorRead(saveFile,streams,version);
+	VectorRead(saveFile,kismets,version);
+	VectorRead(saveFile,doors,version);
 	if (version >= 46){
-		placeables.read(saveFile);
+		VectorRead(saveFile,placeables,version);
 	}
-	pawns.read(saveFile);
+	VectorRead(saveFile,pawns,version);
 	player.read(saveFile,version);
 }
 void ME3Format::cout(){
@@ -59,19 +59,19 @@ void ME3Format::cout(){
 	myRotation.cout();
 	std::cout << "CurrentLoadingTip is:  " << (int) CurrentLoadingTip << endl;
 	std::cout << "Displaying Levels:"<<endl;
-	levels.cout();
+	VectorCout(levels);
 	std::cout << "Displaying Streams:"<<endl;
-	streams.cout();
+	VectorCout(streams);
 	std::cout << "Displaying Kismets:"<<endl;
-	kismets.cout();
+	VectorCout(kismets);
 	std::cout << "Displaying Doors:" << endl;
-	doors.cout();
+	VectorCout(doors);
 	if (version >= 46){
 		std::cout << "Displaying Placeables:" << endl;
-		placeables.cout();
+		VectorCout(placeables);
 	}
 	std::cout << "Displaying Pawns:" << endl;
-	pawns.cout();
+	VectorCout(pawns);
 	player.cout(version);
 	
 }
@@ -86,6 +86,9 @@ void Placeable::read(fstream& saveFile){
 	id.read(saveFile);
 	saveFile.read((char *) &IsDestroyed,1);
 	saveFile.read((char *) &IsDeactivated,1);
+}
+void Placeable::cout(int version){
+	cout();
 }
 void Placeable::cout(){
 	id.cout();
@@ -113,11 +116,11 @@ void playerData::read(fstream& saveFile,int version){
 	StringRead(saveFile,mappedPower2);
 	StringRead(saveFile,mappedPower3);
 	myAppearance.read(saveFile,version);
-	powers.read(saveFile,version);
+	VectorRead(saveFile,powers,version);
 	if(version >=38){
-		assets.read(saveFile);
+		VectorRead(saveFile,assets,version);
 	}
-	weapons.read(saveFile,version);
+	VectorRead(saveFile,weapons,version);
 }
 void playerData::cout(int version){
 	std::cout << "****************Start of Player Information****************" << std::endl;
@@ -144,13 +147,13 @@ void playerData::cout(int version){
 	std::cout << "	Mapped Power #3: " << mappedPower3 << endl;
 	//myAppearance.cout(version);
 	std::cout << "Displaying powers:"<<endl;
-	powers.cout(version);
+	VectorCout(powers,version);
 	if(version >=38){
 		std::cout << "Displaying Galaxy at War assets:"<<endl;
-		assets.cout();
+		VectorCout(assets);
 	}
 	std::cout << "Displaying Weapons:"<<endl;
-	weapons.cout(version);
+	VectorCout(weapons,version);
 	
 	std::cout << "****************End of Player Information****************" << std::endl;
 }
@@ -212,9 +215,15 @@ GAWAsset::GAWAsset(){
 	ID = 0;
 	Strength = 0;
 }
+void GAWAsset::read(fstream& saveFile,int version){
+	read(saveFile);
+}
 void GAWAsset::read(fstream& saveFile){
 	saveFile.read((char *) &ID,4);
 	saveFile.read((char *) &Strength,4);
+}
+void GAWAsset::cout(int version){
+	cout();
 }
 void GAWAsset::cout(){
 	std::cout << "	Asset ID:  "<<ID<< " Strength:  "<<Strength<<endl;
@@ -233,21 +242,15 @@ Weapon::~Weapon(){
 	//All the mstrings should clean themselves up
 }
 void Weapon::read(fstream& saveFile,int version){
-	std::cout << "Reading weapon" << endl;
 	StringRead(saveFile,name);
 	saveFile.read((char *) &AmmoUsedCount,4);
 	saveFile.read((char *) &TotalAmmo,4);
 	saveFile.read((char *) &CurrentWeapon,4);
 	saveFile.read((char *) &LastWeapon,4);
-	cout(version);
 	if(version >=17){
-		cerr << "Reading AmmoPowerName" << endl;
 		StringRead(saveFile,AmmoPowerName);
-		cerr << "Read AmmoPowerName" << endl;
-		//cerr << "AmmoPowerName:  " << AmmoPowerName << endl;
 	}
 	if(version >=59){
-		cerr << "Reading AmmoPowerSourceTag" << endl;
 		StringRead(saveFile,AmmoPowerSourceTag);
 	}
 }
