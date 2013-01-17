@@ -9,7 +9,6 @@
 #include <string>
 #include <cassert>
 #include "BitArray.hpp"
-#include "collection.hpp"
 #include "RWHelper.hpp"
 
 using namespace std;
@@ -122,8 +121,8 @@ struct Loadout{
 };
 struct ME1PlotTable{
 	BitArray BoolVariables;
-	collection<int> ints;
-	collection<float> floats;
+	vector<int> ints;
+	vector<float> floats;
 	//Have to leave it up to the default constructors that are automatically called
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
