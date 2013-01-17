@@ -63,7 +63,7 @@ void LevelRecord::read(fstream& saveFile,int version){
 	read(saveFile);
 }
 void LevelRecord::read(fstream& saveFile){
-	LevelName.read(saveFile);
+	StringRead(saveFile,LevelName);
 	saveFile.read((char *) &ShouldBeLoaded,4);
 	saveFile.read((char *) &ShouldBeVisible,4);
 }
@@ -78,7 +78,7 @@ void StreamingRecord::read(fstream& saveFile,int version){
 	read(saveFile);
 }
 void StreamingRecord::read(fstream& saveFile){
-	name.read(saveFile);
+	StringRead(saveFile,name);
 	saveFile.read((char *) &active,4);
 }
 void StreamingRecord::cout(){
@@ -152,7 +152,7 @@ void Loadout::read(fstream& saveFile,int version){
 }
 void Loadout::read(fstream& saveFile){
 	for(int i=0;i<6;i++){
-			Weapon[i].read(saveFile);
+		StringRead(saveFile,Weapon[i]);
 	}
 }
 void Loadout::cout(){

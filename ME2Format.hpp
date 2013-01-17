@@ -10,7 +10,7 @@
 #include <cassert>
 #include "BitArray.hpp"
 #include "collection.hpp"
-#include "mstring.hpp"
+#include "RWHelper.hpp"
 #include "MEShared.hpp"
 
 using namespace std;
@@ -39,42 +39,42 @@ struct Appearance{
 	void cout();
 };
 struct Power{
-	mstring PowerName;
+	string PowerName;
 	float CurrentRank;
-	mstring PowerClassName;
+	string PowerClassName;
 	int WheelDisplayIndex;
 	void read(fstream& saveFile);
 	void cout();
 };
 struct Weapon{
-	mstring name;
+	string name;
 	int AmmoUsedCount;			
 	int TotalAmmo;
-	mstring ammoName;
+	string ammoName;
 	bool CurrentWeapon;
 	bool LastWeapon;
 	void read(fstream& saveFile);
 	void cout();
 };
 struct Hotkey{
-	mstring name;
+	string name;
 	int PowerID;
 	void read(fstream& saveFile);
 	void cout();
 };
 struct playerData {
 	bool IsFemale;
-	mstring className;
+	string className;
 	int level;
 	float xp;
-	mstring firstName;
+	string firstName;
 	int lastname;				//not actually used
 	char origin;				//This is really an enum (Display as an int)
 	char Notoriety;				//This is really an enum (Display as an int)
 	int TalentPoints;
-	mstring mappedPower1;
-	mstring mappedPower2;
-	mstring mappedPower3;
+	string mappedPower1;
+	string mappedPower2;
+	string mappedPower3;
 	Appearance myAppearance;
 	collection<Power> powers;
 	collection<Weapon> weapons;
@@ -88,18 +88,18 @@ struct playerData {
 	int Platinum;
 	int Probes;
 	float CurrentFuel;
-	mstring FaceCode;
+	string FaceCode;
 	int ClassFriendlyName;
 	void read(fstream& saveFile);
 	void cout();
 };
 struct Henchman{
-	mstring Tag;
+	string Tag;
 	collection<Power> powers;
 	int CharacterLevel;
 	int TalentPoints;
 	Loadout currentLoadout;
-	mstring MappedPower;
+	string MappedPower;
 	void read(fstream& saveFile);
 	void cout();
 };
@@ -147,16 +147,16 @@ struct GalaxyMap{
 };
 struct DependentDLC{
 	int ModuleID;
-	mstring name;
+	string name;
 	void read(fstream& saveFile);
 	void cout();
 };
 struct ME2Format{
 	int version;		// ME2 1.0 (release) has saves of version 29 (0x1D)
-	mstring DebugName;
+	string DebugName;
 	float playTime; 	//(In seconds)
 	int Disc;
-	mstring BaseLevelName;
+	string BaseLevelName;
 	char dificulty;		//This is really an enum (Display as an int)
 	int EndGameState;	//This is really an enum
 	Timestamp SaveDateTime;

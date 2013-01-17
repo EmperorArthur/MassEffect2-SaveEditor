@@ -10,7 +10,7 @@
 #include <cassert>
 #include "BitArray.hpp"
 #include "collection.hpp"
-#include "mstring.hpp"
+#include "RWHelper.hpp"
 
 using namespace std;
 
@@ -47,7 +47,7 @@ struct PlayerRotation{
 };
 struct LevelRecord{
 	int magicUnused;	/////////This causes windows to crash at the end of the program, but Level's are all messed up without it/////////
-	mstring LevelName;
+	string LevelName;
 	bool ShouldBeLoaded;
 	bool ShouldBeVisible;
 	LevelRecord();
@@ -56,7 +56,7 @@ struct LevelRecord{
 	void cout();
 };
 struct StreamingRecord{
-	mstring name;
+	string name;
 	bool active;
 	StreamingRecord();
 	void read(fstream& saveFile);
@@ -104,7 +104,7 @@ struct Loadout{
 	//	SubmachineGun
 	//	Pistol
 	//	HeavyWeapon
-	mstring Weapon[6];
+	string Weapon[6];
 	Loadout();
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
