@@ -5,17 +5,17 @@
 
 void playerData::read(fstream& saveFile){
 	saveFile.read((char *) &IsFemale,4);
-	className.read(saveFile);
+	StringRead(saveFile,className);
 	saveFile.read((char *) &level,4);
 	saveFile.read((char *) &xp,4);
-	firstName.read(saveFile);
+	StringRead(saveFile,firstName);
 	saveFile.read((char *) &lastname,4);
 	saveFile.read((char *) &origin,1);
 	saveFile.read((char *) &Notoriety,1);
 	saveFile.read((char *) &TalentPoints,4);
-	mappedPower1.read(saveFile);
-	mappedPower2.read(saveFile);
-	mappedPower3.read(saveFile);
+	StringRead(saveFile,mappedPower1);
+	StringRead(saveFile,mappedPower2);
+	StringRead(saveFile,mappedPower3);
 	myAppearance.read(saveFile);
 	powers.read(saveFile);
 	weapons.read(saveFile);
@@ -29,7 +29,7 @@ void playerData::read(fstream& saveFile){
 	saveFile.read((char *) &Platinum,4);
 	saveFile.read((char *) &Probes,4);
 	saveFile.read((char *) &CurrentFuel,4);
-	FaceCode.read(saveFile);
+	StringRead(saveFile,FaceCode);
 	saveFile.read((char *) &ClassFriendlyName,4);
 }
 
@@ -117,11 +117,9 @@ void Weapon::cout(){
 	}
 }
 void Power::read(fstream& saveFile){
-
-	PowerName.read(saveFile);
+	StringRead(saveFile,PowerName);
 	saveFile.read((char *) &CurrentRank,4);
-
-	PowerClassName.read(saveFile);
+	StringRead(saveFile,PowerClassName);
 	saveFile.read((char *) &WheelDisplayIndex,4);
 }
 void CodexEntry::read(fstream& saveFile){
@@ -150,27 +148,27 @@ void PlotQuest::cout(){
 }
 
 void Henchman::read(fstream& saveFile){
-	Tag.read(saveFile);
+	StringRead(saveFile,Tag);
 	powers.read(saveFile);
 	saveFile.read((char *) &CharacterLevel,4);
 	saveFile.read((char *) &TalentPoints,4);
 	currentLoadout.read(saveFile);
-	MappedPower.read(saveFile);
+	StringRead(saveFile,MappedPower);
 }
 
 void Weapon::read(fstream& saveFile){
-	name.read(saveFile);
+	StringRead(saveFile,name);
 	saveFile.read((char *) &AmmoUsedCount,4);
 	saveFile.read((char *) &TotalAmmo,4);
 	saveFile.read((char *) &CurrentWeapon,1);
 	std::cout << "Skipping ===>" << saveFile.seekg(3,ios_base::cur)<<"<=== on Line: " << __LINE__ << endl;
 	saveFile.read((char *) &LastWeapon,1);
 	std::cout << "Skipping ===>" << saveFile.seekg(3,ios_base::cur)<<"<=== on Line: " << __LINE__ << endl;
-	ammoName.read(saveFile);
+	StringRead(saveFile,ammoName);
 }
 
 void Hotkey::read(fstream& saveFile){
-	name.read(saveFile);
+	StringRead(saveFile,name);
 	saveFile.read((char *) &PowerID,4);
 }
 
@@ -179,10 +177,10 @@ void ME2Format::read(fstream& saveFile){
 	saveFile.seekg(ios_base::beg + 0x00);
 	saveFile.read((char *) &version,4);
 	assert(29 == version);	//Make sure we're reading the correct file type
-	DebugName.read(saveFile);
+	StringRead(saveFile,DebugName);
 	saveFile.read((char *) &playTime,4);
 	saveFile.read((char *) &Disc,4);
-	BaseLevelName.read(saveFile);
+	StringRead(saveFile,BaseLevelName);
 	saveFile.read(&dificulty,1);
 	saveFile.read((char *) &EndGameState,4);
 	SaveDateTime.read(saveFile);
@@ -296,7 +294,7 @@ void GalaxyMap::cout(){
 }
 void DependentDLC::read(fstream& saveFile){
 	saveFile.read((char *) &ModuleID,4);
-	name.read(saveFile);
+	StringRead(saveFile,name);
 }
 void DependentDLC::cout(){
 	std::cout << "	" << name << " : " << ModuleID << endl;
