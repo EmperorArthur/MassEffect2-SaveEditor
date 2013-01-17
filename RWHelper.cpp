@@ -1,4 +1,4 @@
-//Helper functions for binary read write of strings
+//Helper functions for binary read write of strings and vectors
 //Copyright Arthur Moore 2012 GPL V3
 
 #include "RWHelper.hpp"
