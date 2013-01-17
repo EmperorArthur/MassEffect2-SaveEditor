@@ -25,6 +25,7 @@ struct Timestamp {
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct xyzvector{
 	float x;
@@ -34,6 +35,7 @@ struct xyzvector{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 
 struct PlayerRotation{
@@ -44,6 +46,7 @@ struct PlayerRotation{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct LevelRecord{
 	int magicUnused;	/////////This causes windows to crash at the end of the program, but Level's are all messed up without it/////////
@@ -54,6 +57,7 @@ struct LevelRecord{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct StreamingRecord{
 	string name;
@@ -62,6 +66,7 @@ struct StreamingRecord{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct guid{
 	unsigned char id[16];
@@ -69,6 +74,7 @@ struct guid{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct Kismet{
 	guid id;
@@ -77,6 +83,7 @@ struct Kismet{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct Door{
 	guid id;
@@ -86,6 +93,7 @@ struct Door{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 //This only exists because of legacy code
 //I can probably easily get rid of it.
@@ -95,6 +103,7 @@ struct Pawn{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct Loadout{
 	//Always in this order:
@@ -109,6 +118,7 @@ struct Loadout{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct ME1PlotTable{
 	BitArray BoolVariables;
@@ -118,6 +128,7 @@ struct ME1PlotTable{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 struct xyvector{
 	int x;
@@ -126,6 +137,7 @@ struct xyvector{
 	void read(fstream& saveFile);
 	void read(fstream& saveFile,int version);
 	void cout();
+	void cout(int version);
 };
 
 #endif
