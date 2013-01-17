@@ -15,8 +15,8 @@ using namespace std;
 
 void StringRead(fstream& saveFile,string& aString);
 
-template <typename  T>
-void VectorRead(fstream& saveFile,vector<T>& items,int version){
+template <typename T>
+void VectorRead(fstream& saveFile,vector<T*>& items,int version){
 	int numberofItems = 0;
 	saveFile.read((char *) &numberofItems,4);
 	items.clear();
@@ -28,8 +28,8 @@ void VectorRead(fstream& saveFile,vector<T>& items,int version){
 				cerr << "FileStream is not good" << endl;
 				exit(1);
 			}
-			T anItem;
-			anItem.read(saveFile,version);
+			T * anItem = new T;
+			anItem->read(saveFile,version);
 			items.push_back(anItem);
 		}
 	}
@@ -56,9 +56,16 @@ void VectorRead4(fstream& saveFile,vector<T>& items){
 }
 
 template <typename  T>
-void VectorCout(const vector<T>& items,int version){
+void VectorCout(vector<T>& items,int version){
 	for(size_t i=0;i<items.size();i++){
-		items[i].cout(version);
+		items[i]->cout(version);
+	}
+}
+//This is the same as above, but without the version information
+template <typename  T>
+void VectorCout(vector<T>& items){
+	for(size_t i=0;i<items.size();i++){
+		items[i]->cout();
 	}
 }
 
