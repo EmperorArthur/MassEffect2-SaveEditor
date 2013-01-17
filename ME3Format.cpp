@@ -9,6 +9,17 @@
 //WATCH OUT:  This does the reading in the if block.  IFELSEREAD4 does the reading in the else block
 #define IFREAD4(versionCheck,variable) if(versionCheck){READ4(variable);}
 
+ME3Format::~ME3Format(){
+	VectorDelete(levels);
+	VectorDelete(streams);
+	VectorDelete(kismets);
+	VectorDelete(doors);
+	VectorDelete(placeables);
+	VectorDelete(pawns);
+	//VectorDelete(henchmen);
+	//VectorDelete(dlc);
+}
+
 void ME3Format::read(fstream& saveFile){
 	//Read the data from the file
 	saveFile.seekg(ios_base::beg + 0x00);
@@ -93,6 +104,11 @@ void Placeable::cout(int version){
 void Placeable::cout(){
 	id.cout();
 	std::cout << ": " << IsDestroyed << "," << IsDeactivated << endl;
+}
+playerData::~playerData(){
+	VectorDelete(powers);
+	VectorDelete(assets);
+	VectorDelete(weapons);
 }
 void playerData::read(fstream& saveFile,int version){
 	saveFile.read((char *) &IsFemale,4);
@@ -236,10 +252,6 @@ Weapon::Weapon(){
 	LastWeapon = 0;
 	AmmoPowerName = "";
 	AmmoPowerSourceTag = "";
-}
-Weapon::~Weapon(){
-	//Nothing to be done.
-	//All the mstrings should clean themselves up
 }
 void Weapon::read(fstream& saveFile,int version){
 	StringRead(saveFile,name);

@@ -84,11 +84,11 @@ struct Weapon{
 	string AmmoPowerName; //Version < 17
 	string AmmoPowerSourceTag; //Version < 59
 	Weapon();
-	~Weapon();
 	void read(fstream& saveFile,int version);
 	void cout(int version);
 };
 struct WeaponMod{
+	~WeaponMod();
 	string name;
 	vector<string*> WeaponModClassNames;
 	void read(fstream& saveFile);
@@ -102,6 +102,7 @@ struct Hotkey{
 	void cout();
 };
 struct playerData {
+	~playerData();
 	bool IsFemale;
 	string className;
 	bool IsCombatPawn; //Version < 37,true
@@ -144,6 +145,7 @@ struct playerData {
 	void cout(int version);
 };
 struct Henchman{
+	~Henchman();
 	string Tag;
 	vector<Power*> powers;
 	int CharacterLevel;
@@ -160,6 +162,7 @@ struct ME3PlotTable{
 	//Stuff goes here
 };
 struct Planet{
+	~Planet();
 	int PlanetID;
 	bool Visited;
 	vector<xyvector*> Probes;
@@ -175,6 +178,7 @@ struct System{
 	void cout();
 };
 struct GalaxyMap{
+	~GalaxyMap();
 	vector<Planet*> Planets;
 	vector<System*> Systems;
 	void read(fstream& saveFile);
@@ -188,6 +192,7 @@ struct DependentDLC{
 	void cout();
 };
 struct ME3Format{
+	~ME3Format();
 	unsigned int version;		// This handles saves of version 29 and 59 (Coppied from Gibbed's work)
 								// 29 is ME2 and 59 is ME3
 	string DebugName;
@@ -208,6 +213,7 @@ struct ME3Format{
 	vector<Placeable*> placeables; //Version < 46
 	vector<Pawn*> pawns;
 	playerData player;
+	/*
 	vector<Henchman*> henchmen;
 	ME3PlotTable Plot;
 	ME1PlotTable ME1PlotRecord;
@@ -216,6 +222,7 @@ struct ME3Format{
 	vector<DependentDLC*> dlc;
 	//More stuff here///////////////////////////////////////
 	unsigned int crc;
+	*/
 	void read(fstream& saveFile);
 	void cout();
 };
