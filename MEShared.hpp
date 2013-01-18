@@ -48,7 +48,6 @@ struct PlayerRotation{
 	void cout(int version);
 };
 struct LevelRecord{
-	int magicUnused;	/////////This causes windows to crash at the end of the program, but Level's are all messed up without it/////////
 	string LevelName;
 	bool ShouldBeLoaded;
 	bool ShouldBeVisible;
