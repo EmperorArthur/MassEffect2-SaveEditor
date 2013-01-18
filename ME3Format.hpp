@@ -15,7 +15,7 @@
 
 using namespace std;
 
-//NOTE:  all ints, floats, and bools have a 4 byte size
+//NOTE:  all ints and floats are 4 byte little endian values
 //NOTE: all commented out items (with the exception of headmorph) are done so because there's something in Gibbed's code that looks like a version check.
 //NOTE:  all comments that look like (Version < 36,"None") or (Version < 46) are things that do not exist below that version number.
 //		The second item is what the default constructor needs to be, if the item is not read (because it doesn't exist in the version number being read)

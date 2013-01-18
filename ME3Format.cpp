@@ -6,6 +6,7 @@
 //These are some macros to help me with my reading depending on version number
 #define READ4(variable) saveFile.read((char *) &variable,4);
 #define IFELSEREAD4(versionCheck,checkFailedState,variable) if(versionCheck){variable = checkFailedState;}else{READ4(variable);}
+#define IFELSEREADBOOL(versionCheck,checkFailedState,variable) if(versionCheck){variable = checkFailedState;}else{ReadBool(saveFile,variable);}
 //WATCH OUT:  This does the reading in the if block.  IFELSEREAD4 does the reading in the else block
 #define IFREAD4(versionCheck,variable) if(versionCheck){READ4(variable);}
 
@@ -111,16 +112,16 @@ playerData::~playerData(){
 	VectorDelete(weapons);
 }
 void playerData::read(fstream& saveFile,int version){
-	saveFile.read((char *) &IsFemale,4);
+	ReadBool(saveFile,IsFemale);
 	StringRead(saveFile,className);
-	//This if statement and the IFELSEREAD4 are the same thing, one just involves less typing
+	//This if statement and the IFELSEREADBOOL are the same thing, one just involves less typing
 	if(version < 37){
 		IsCombatPawn = true;
 	}else{
-		saveFile.read((char *) &IsCombatPawn,4);
+		ReadBool(saveFile,IsCombatPawn);
 	}
-	IFELSEREAD4(version < 48,false,IsInjuredPawn);
-	IFELSEREAD4(version < 48,false,UseCasualAppearance);
+	IFELSEREADBOOL(version < 48,false,IsInjuredPawn);
+	IFELSEREADBOOL(version < 48,false,UseCasualAppearance);
 	saveFile.read((char *) &level,4);
 	saveFile.read((char *) &xp,4);
 	StringRead(saveFile,firstName);
@@ -188,7 +189,7 @@ void Appearance::read(fstream& saveFile,int version){
 	saveFile.read((char *) &PatternID,4);
 	saveFile.read((char *) &PatternColorID,4);
 	saveFile.read((char *) &HelmetID,4);
-	saveFile.read((char *) &HasMorphHead,4);
+	ReadBool(saveFile,HasMorphHead);
 	assert(!HasMorphHead);
 	IFELSEREAD4(version < 55,0,EmissiveId);
 }
@@ -257,8 +258,8 @@ void Weapon::read(fstream& saveFile,int version){
 	StringRead(saveFile,name);
 	saveFile.read((char *) &AmmoUsedCount,4);
 	saveFile.read((char *) &TotalAmmo,4);
-	saveFile.read((char *) &CurrentWeapon,4);
-	saveFile.read((char *) &LastWeapon,4);
+	ReadBool(saveFile,CurrentWeapon);
+	ReadBool(saveFile,LastWeapon);
 	if(version >=17){
 		StringRead(saveFile,AmmoPowerName);
 	}
