@@ -6,8 +6,8 @@
 #include <iostream>
 #include <fstream>
 #include "BinFile.hpp"
-#include "ME2Format.hpp"
-//#include "ME3Format.hpp"
+//#include "ME2Format.hpp"
+#include "ME3Format.hpp"
 
 using namespace std;
 
@@ -46,19 +46,19 @@ int main(int argc, char *argv[]){
 	//	Then the last argument is also treated as the file name in addition to its regular fuctions
 	
 	binFile file1;
-	ME2Format me2file;
-	//ME3Format me3file;
+	//ME2Format me2file;
+	ME3Format me3file;
 	cerr << "Extracting file: " << argv[argc-1] << endl;
 	file1.open(argv[argc-1]);
 	cout << "File size is:  " << file1.size() << " bytes" << endl;
-	me2file.read(file1.fileStream);
-	//me3file.read(file1.fileStream);
+	//me2file.read(file1.fileStream);
+	me3file.read(file1.fileStream);
 	if(argumentP){
-		me2file.Plot.cout();
+		//me2file.Plot.cout();
 		//me3file.Plot.cout();
 	}else{
-		me2file.cout();
-		//me3file.cout();
+		//me2file.cout();
+		me3file.cout();
 	}
 	
 	return 0;
