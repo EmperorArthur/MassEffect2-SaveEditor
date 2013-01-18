@@ -73,8 +73,8 @@ void LevelRecord::read(fstream& saveFile,int version){
 }
 void LevelRecord::read(fstream& saveFile){
 	StringRead(saveFile,LevelName);
-	saveFile.read((char *) &ShouldBeLoaded,4);
-	saveFile.read((char *) &ShouldBeVisible,4);
+	ReadBool(saveFile,ShouldBeLoaded);
+	ReadBool(saveFile,ShouldBeVisible);
 }
 void LevelRecord::cout(int version){
 	this->cout();
@@ -91,7 +91,7 @@ void StreamingRecord::read(fstream& saveFile,int version){
 }
 void StreamingRecord::read(fstream& saveFile){
 	StringRead(saveFile,name);
-	saveFile.read((char *) &active,4);
+	ReadBool(saveFile,active);
 }
 void StreamingRecord::cout(int version){
 	this->cout();
@@ -128,7 +128,7 @@ void Kismet::read(fstream& saveFile,int version){
 }
 void Kismet::read(fstream& saveFile){
 	id.read(saveFile);
-	saveFile.read((char *) &Value,4);
+	ReadBool(saveFile,Value);
 }
 void Kismet::cout(int version){
 	this->cout();

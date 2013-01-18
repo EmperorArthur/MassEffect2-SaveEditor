@@ -13,7 +13,7 @@
 
 using namespace std;
 
-//NOTE:  all ints, floats, and bools have a 4 byte size
+//NOTE:  all ints and floats are 4 byte little endian values
 
 struct Timestamp {
 	int SecondsSinceMidnight;	// (In seconds)
