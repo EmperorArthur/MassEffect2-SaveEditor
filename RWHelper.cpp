@@ -20,3 +20,10 @@ void StringRead(fstream& saveFile,string& aString){
 	//Read and discard the null at the end of the string
 	saveFile.read(&readChar,1);
 }
+
+void ReadBool(fstream& saveFile,bool& aBool){
+	unsigned char rawBool;
+	saveFile.read((char *) &rawBool,1);
+	aBool = (bool) rawBool;
+	saveFile.seekg(3,ios_base::cur);
+}

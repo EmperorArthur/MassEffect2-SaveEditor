@@ -13,7 +13,12 @@
 
 using namespace std;
 
+//This handles reading a string from a binary file
+//This is a format where the length of the string is stored as a 4 byte little endian int before the string itself.
 void StringRead(fstream& saveFile,string& aString);
+//Read a bool from a binary file
+//This is for binary files that store bools as a 4 byte little endian value, where 1 is true and 0 is false.
+void ReadBool(fstream& saveFile,bool& aBool);
 
 template <typename T>
 void VectorRead(fstream& saveFile,vector<T*>& items,int version){
@@ -81,7 +86,7 @@ template <typename  T>
 void VectorDelete(vector<T*>& items){
 	T * temp;
 	while(0!=items.size()){
-		temp = items.back();		
+		temp = items.back();
 		items.pop_back();
 		delete temp;
 	}
