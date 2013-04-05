@@ -138,6 +138,7 @@ void playerData::read(fstream& saveFile,int version){
 		VectorRead(saveFile,assets,version);
 	}
 	VectorRead(saveFile,weapons,version);
+	IFELSEREAD4(version < 54, 0, Grenades);
 }
 void playerData::cout(int version){
 	std::cout << "****************Start of Player Information****************" << std::endl;
@@ -171,6 +172,9 @@ void playerData::cout(int version){
 	}
 	std::cout << "	Displaying Weapons:"<<endl;
 	VectorCout(weapons,version);
+	if(version >=54){
+		std::cout << "Player has " << Grenades << " Grenades" << endl;
+	}
 	
 	std::cout << "****************End of Player Information****************" << std::endl;
 }
