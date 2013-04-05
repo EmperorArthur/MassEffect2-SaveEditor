@@ -138,6 +138,17 @@ void playerData::read(fstream& saveFile,int version){
 		VectorRead(saveFile,assets,version);
 	}
 	VectorRead(saveFile,weapons,version);
+	///////////////////////////////////////////MORE ME3 Stuff here
+	
+	///////////////////////////////////////////END ME3 Stuff
+	READ4(Credits);
+	READ4(Medigel);
+	READ4(Eezo);
+	READ4(Iridium);
+	READ4(Palladium);
+	READ4(Platinum);
+	READ4(Probes);
+	READ4(CurrentFuel);
 	IFELSEREAD4(version < 54, 0, Grenades);
 }
 void playerData::cout(int version){
@@ -172,6 +183,17 @@ void playerData::cout(int version){
 	}
 	std::cout << "	Displaying Weapons:"<<endl;
 	VectorCout(weapons,version);
+	///////////////////////////////////////////MORE ME3 Stuff here
+	
+	///////////////////////////////////////////END ME3 Stuff
+	std::cout << "Player has " << Credits << " Credits" << endl;
+	std::cout << "Player has " << Medigel << " Medigel" << endl;
+	std::cout << "Player has " << Eezo << " Eezo" << endl;
+	std::cout << "Player has " << Iridium << " Iridium" << endl;
+	std::cout << "Player has " << Palladium << " Palladium" << endl;
+	std::cout << "Player has " << Platinum << " Platinum" << endl;
+	std::cout << "Player has " << Probes << " Probes" << endl;
+	std::cout << "Player has " << CurrentFuel << " CurrentFuel" << endl;
 	if(version >=54){
 		std::cout << "Player has " << Grenades << " Grenades" << endl;
 	}
