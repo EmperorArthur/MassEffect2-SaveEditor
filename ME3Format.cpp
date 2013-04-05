@@ -163,13 +163,13 @@ void playerData::cout(int version){
 	std::cout << "	Mapped Power #2: " << mappedPower2 << endl;
 	std::cout << "	Mapped Power #3: " << mappedPower3 << endl;
 	//myAppearance.cout(version);
-	std::cout << "Displaying powers:"<<endl;
+	std::cout << "	Displaying powers:"<<endl;
 	VectorCout(powers,version);
 	if(version >=38){
-		std::cout << "Displaying Galaxy at War assets:"<<endl;
+		std::cout << "	Displaying Galaxy at War assets:"<<endl;
 		VectorCout(assets);
 	}
-	std::cout << "Displaying Weapons:"<<endl;
+	std::cout << "	Displaying Weapons:"<<endl;
 	VectorCout(weapons,version);
 	
 	std::cout << "****************End of Player Information****************" << std::endl;
@@ -243,7 +243,7 @@ void GAWAsset::cout(int version){
 	cout();
 }
 void GAWAsset::cout(){
-	std::cout << "	Asset ID:  "<<ID<< " Strength:  "<<Strength<<endl;
+	std::cout << "		Asset ID:  "<<ID<< " Strength:  "<<Strength<<endl;
 }
 Weapon::Weapon(){
 	name = "";
@@ -268,17 +268,17 @@ void Weapon::read(fstream& saveFile,int version){
 	}
 }
 void Weapon::cout(int version){
-	std::cout << "	" << name << " : " << endl;
-	std::cout << "		" << (TotalAmmo - AmmoUsedCount) << "/" << TotalAmmo << endl;
+	std::cout << "		" << name << " : " << endl;
+	std::cout << "			" << (TotalAmmo - AmmoUsedCount) << "/" << TotalAmmo << endl;
 	if(CurrentWeapon){
-		std::cout << "		This is the currently equipped weapon."<<endl;
+		std::cout << "			This is the currently equipped weapon."<<endl;
 	}
 	if(LastWeapon){
-		std::cout << "		This is the last equipped weapon."<<endl;
+		std::cout << "			This is the last equipped weapon."<<endl;
 	}
 	if(version >=59){
-		std::cout << "		Power:  "<< AmmoPowerName << "	From:  " << AmmoPowerSourceTag << endl;
+		std::cout << "			Power:  "<< AmmoPowerName << "	From:  " << AmmoPowerSourceTag << endl;
 	}else if(version >=17){
-		std::cout << "		Power:  "<< AmmoPowerName << endl;
+		std::cout << "			Power:  "<< AmmoPowerName << endl;
 	}
 }
