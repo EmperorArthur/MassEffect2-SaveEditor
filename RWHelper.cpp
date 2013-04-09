@@ -33,3 +33,15 @@ void ReadItem(fstream& saveFile,vector<string>& items,int version){
 	StringRead(saveFile,aString);
 	items.push_back(aString);
 }
+
+void ReadItem(fstream& saveFile,vector<int>& items,int version){
+	int anInt;
+	saveFile.read((char *) &anInt,4);
+	items.push_back(anInt);
+}
+
+void ReadItem(fstream& saveFile,vector<float>& items,int version){
+	float aFloat;
+	saveFile.read((char *) &aFloat,4);
+	items.push_back(aFloat);
+}

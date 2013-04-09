@@ -195,8 +195,9 @@ void ME1PlotTable::read(fstream& saveFile,int version){
 }
 void ME1PlotTable::read(fstream& saveFile){
 	BoolVariables.read(saveFile);
-	VectorRead4(saveFile,ints);
-	VectorRead4(saveFile,floats);
+	//I'm cheating by putting '0's in the version field
+	VectorRead(saveFile,ints,0);
+	VectorRead(saveFile,floats,0);
 };
 void ME1PlotTable::cout(int version){
 	this->cout();

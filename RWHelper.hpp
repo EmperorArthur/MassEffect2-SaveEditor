@@ -23,6 +23,10 @@ void ReadBool(fstream& saveFile,bool& aBool);
 //This allows me to cut down on copy and pasted codes
 //Read a string into a vector
 void ReadItem(fstream& saveFile,vector<string>& items,int version);
+//Read an int into a vector
+void ReadItem(fstream& saveFile,vector<int>& items,int version);
+//Read a float into a vector
+void ReadItem(fstream& saveFile,vector<float>& items,int version);
 //Read an item into a vector
 template <typename T>
 void ReadItem(fstream& saveFile,vector<T*>& items,int version){
@@ -31,6 +35,7 @@ void ReadItem(fstream& saveFile,vector<T*>& items,int version){
 		items.push_back(anItem);
 }
 
+//Read a saved vector from the file
 template <typename T>
 void VectorRead(fstream& saveFile,vector<T>& items,int version){
 	int numberofItems = 0;
@@ -45,27 +50,6 @@ void VectorRead(fstream& saveFile,vector<T>& items,int version){
 				exit(1);
 			}
 			ReadItem(saveFile,items,version);
-		}
-	}
-}
-
-//This is a copy of VectorRead with the "anItem.read(...)" replaced by reading in 4 bytes, and version removed
-template <typename  T>
-void VectorRead4(fstream& saveFile,vector<T>& items){
-	unsigned int numberofItems = 0;
-	saveFile.read((char *) &numberofItems,4);
-	items.clear();
-	if(numberofItems){
-		items.reserve(numberofItems);
-		for(unsigned int i=0;i<numberofItems;i++){
-			if(!saveFile.good()){
-				cerr << "Error in void VectorRead(fstream& saveFile,vector<T> aVector,int version)" << endl; 
-				cerr << "FileStream is not good" << endl;
-				exit(1);
-			}
-			T anItem;
-			saveFile.read((char *) &anItem,4);
-			items.push_back(anItem);
 		}
 	}
 }
