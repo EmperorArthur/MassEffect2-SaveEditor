@@ -23,8 +23,17 @@ void ReadBool(fstream& saveFile,bool& aBool);
 //This is a near copy of the general VectorRead, but it's designed to work with strings
 void VectorRead(fstream& saveFile,vector<string>& items,int version);
 
+//This allows me to cut down on copy and pasted codes
+//Read an item into a vector
 template <typename T>
-void VectorRead(fstream& saveFile,vector<T*>& items,int version){
+void ReadItem(fstream& saveFile,vector<T*>& items,int version){
+		T * anItem = new T;
+		anItem->read(saveFile,version);
+		items.push_back(anItem);
+}
+
+template <typename T>
+void VectorRead(fstream& saveFile,vector<T>& items,int version){
 	int numberofItems = 0;
 	saveFile.read((char *) &numberofItems,4);
 	items.clear();
@@ -36,9 +45,7 @@ void VectorRead(fstream& saveFile,vector<T*>& items,int version){
 				cerr << "FileStream is not good" << endl;
 				exit(1);
 			}
-			T * anItem = new T;
-			anItem->read(saveFile,version);
-			items.push_back(anItem);
+			ReadItem(saveFile,items,version);
 		}
 	}
 }
