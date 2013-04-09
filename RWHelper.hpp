@@ -34,7 +34,12 @@ void VectorRead(fstream& saveFile,vector<T*>& items,int version){
 				exit(1);
 			}
 			T * anItem = new T;
-			anItem->read(saveFile,version);
+			//I'm trying to read strings without having to create a whole new function.
+// 			if(typeid(T) == typeid(std::string)){
+// 				StringRead(saveFile,*anItem);
+// 			}else{
+				anItem->read(saveFile,version);
+// 			}
 			items.push_back(anItem);
 		}
 	}

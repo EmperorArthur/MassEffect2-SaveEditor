@@ -91,7 +91,7 @@ struct WeaponMod{
 	~WeaponMod();
 	string name;
 	vector<string*> WeaponModClassNames;
-	void read(fstream& saveFile);
+	void read(fstream& saveFile,int version);
 	void cout();
 };
 struct Hotkey{
@@ -122,7 +122,7 @@ struct playerData {
 	vector<Power*> powers;
 	vector<GAWAsset*> assets; //Version < 38
 	vector<Weapon*> weapons;
-	//vector<WeaponMod*> WeaponMods; //Version < 32
+	vector<WeaponMod*> WeaponMods; //Version < 32
 	//Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());
 	//string PrimaryWeapon; //s => s.Version < 41, () => null);
 	//string SecondaryWeapon; //s => s.Version < 41, () => null);

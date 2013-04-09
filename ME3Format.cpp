@@ -138,6 +138,7 @@ void playerData::read(fstream& saveFile,int version){
 		VectorRead(saveFile,assets,version);
 	}
 	VectorRead(saveFile,weapons,version);
+	//VectorRead(saveFile,WeaponMods,version);
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
@@ -183,6 +184,8 @@ void playerData::cout(int version){
 	}
 	std::cout << "	Displaying Weapons:"<<endl;
 	VectorCout(weapons,version);
+	std::cout << "	Displaying Weapon Mods:"<<endl;
+	//VectorCout(WeaponMods);
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
@@ -306,5 +309,19 @@ void Weapon::cout(int version){
 		std::cout << "			Power:  "<< AmmoPowerName << "	From:  " << AmmoPowerSourceTag << endl;
 	}else if(version >=17){
 		std::cout << "			Power:  "<< AmmoPowerName << endl;
+	}
+}
+
+WeaponMod::~WeaponMod(){
+	VectorDelete(WeaponModClassNames);
+}
+void WeaponMod::read(fstream& saveFile, int version){
+	StringRead(saveFile,name);
+	//VectorRead(saveFile,WeaponModClassNames,version);
+}
+void WeaponMod::cout(){
+	std::cout << "Mod Name:  " << name << endl;
+	for(size_t i=0;i<WeaponModClassNames.size();i++){
+		std::cout << "	ClassName:  " << WeaponModClassNames[i] << endl;
 	}
 }
