@@ -123,7 +123,7 @@ struct playerData {
 	vector<GAWAsset*> assets; //Version < 38
 	vector<Weapon*> weapons;
 	vector<WeaponMod*> WeaponMods; //Version < 32
-	//Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());
+	Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());
 	//string PrimaryWeapon; //s => s.Version < 41, () => null);
 	//string SecondaryWeapon; //s => s.Version < 41, () => null);
 	//vector<int> LoadoutWeaponGroups; //Version < 33

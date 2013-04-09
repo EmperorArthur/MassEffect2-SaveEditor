@@ -141,6 +141,9 @@ void playerData::read(fstream& saveFile,int version){
 	if(version >=32){
 		VectorRead(saveFile,WeaponMods,version);
 	}
+	if(version >=18){
+		currentLoadout.read(saveFile);
+	}
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
@@ -190,19 +193,23 @@ void playerData::cout(int version){
 		std::cout << "	Displaying Weapon Mods:"<<endl;
 		VectorCout(WeaponMods);
 	}
+	if(version >=18){
+		std::cout << "	Displaying Weapons Loadout:"<<endl;
+		currentLoadout.cout();
+	}
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
-	std::cout << "Player has " << Credits << " Credits" << endl;
-	std::cout << "Player has " << Medigel << " Medigel" << endl;
-	std::cout << "Player has " << Eezo << " Eezo" << endl;
-	std::cout << "Player has " << Iridium << " Iridium" << endl;
-	std::cout << "Player has " << Palladium << " Palladium" << endl;
-	std::cout << "Player has " << Platinum << " Platinum" << endl;
-	std::cout << "Player has " << Probes << " Probes" << endl;
-	std::cout << "Player has " << CurrentFuel << " CurrentFuel" << endl;
+	std::cout << "	Player has " << Credits << " Credits" << endl;
+	std::cout << "	Player has " << Medigel << " Medigel" << endl;
+	std::cout << "	Player has " << Eezo << " Eezo" << endl;
+	std::cout << "	Player has " << Iridium << " Iridium" << endl;
+	std::cout << "	Player has " << Palladium << " Palladium" << endl;
+	std::cout << "	Player has " << Platinum << " Platinum" << endl;
+	std::cout << "	Player has " << Probes << " Probes" << endl;
+	std::cout << "	Player has " << CurrentFuel << " CurrentFuel" << endl;
 	if(version >=54){
-		std::cout << "Player has " << Grenades << " Grenades" << endl;
+		std::cout << "	Player has " << Grenades << " Grenades" << endl;
 	}
 	
 	std::cout << "****************End of Player Information****************" << std::endl;
