@@ -27,3 +27,22 @@ void ReadBool(fstream& saveFile,bool& aBool){
 	aBool = (bool) rawBool;
 	saveFile.seekg(3,ios_base::cur);
 }
+
+void VectorRead(fstream& saveFile,vector<string>& items,int version){
+	int numberofItems = 0;
+	saveFile.read((char *) &numberofItems,4);
+	items.clear();
+	if(numberofItems){
+		items.reserve(numberofItems);
+		for(int i=0;i<numberofItems;i++){
+			if(!saveFile.good()){
+				cerr << "Error in void VectorRead(fstream& saveFile,vector<T> aVector,int version)" << endl; 
+				cerr << "FileStream is not good" << endl;
+				exit(1);
+			}
+			string aString;
+ 			StringRead(saveFile,aString);
+			items.push_back(aString);
+		}
+	}
+}

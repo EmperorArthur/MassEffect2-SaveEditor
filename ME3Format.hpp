@@ -90,7 +90,7 @@ struct Weapon{
 struct WeaponMod{
 	~WeaponMod();
 	string name;
-	vector<string*> WeaponModClassNames;
+	vector<string> WeaponModClassNames;
 	void read(fstream& saveFile,int version);
 	void cout();
 };

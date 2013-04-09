@@ -20,6 +20,9 @@ void StringRead(fstream& saveFile,string& aString);
 //This is for binary files that store bools as a 4 byte little endian value, where 1 is true and 0 is false.
 void ReadBool(fstream& saveFile,bool& aBool);
 
+//This is a near copy of the general VectorRead, but it's designed to work with strings
+void VectorRead(fstream& saveFile,vector<string>& items,int version);
+
 template <typename T>
 void VectorRead(fstream& saveFile,vector<T*>& items,int version){
 	int numberofItems = 0;
@@ -34,16 +37,12 @@ void VectorRead(fstream& saveFile,vector<T*>& items,int version){
 				exit(1);
 			}
 			T * anItem = new T;
-			//I'm trying to read strings without having to create a whole new function.
-// 			if(typeid(T) == typeid(std::string)){
-// 				StringRead(saveFile,*anItem);
-// 			}else{
-				anItem->read(saveFile,version);
-// 			}
+			anItem->read(saveFile,version);
 			items.push_back(anItem);
 		}
 	}
 }
+
 //This is a copy of VectorRead with the "anItem.read(...)" replaced by reading in 4 bytes, and version removed
 template <typename  T>
 void VectorRead4(fstream& saveFile,vector<T>& items){

@@ -138,7 +138,9 @@ void playerData::read(fstream& saveFile,int version){
 		VectorRead(saveFile,assets,version);
 	}
 	VectorRead(saveFile,weapons,version);
-	//VectorRead(saveFile,WeaponMods,version);
+	if(version >=32){
+		VectorRead(saveFile,WeaponMods,version);
+	}
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
@@ -184,8 +186,10 @@ void playerData::cout(int version){
 	}
 	std::cout << "	Displaying Weapons:"<<endl;
 	VectorCout(weapons,version);
-	std::cout << "	Displaying Weapon Mods:"<<endl;
-	//VectorCout(WeaponMods);
+	if(version >=32){
+		std::cout << "	Displaying Weapon Mods:"<<endl;
+		VectorCout(WeaponMods);
+	}
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
@@ -313,15 +317,15 @@ void Weapon::cout(int version){
 }
 
 WeaponMod::~WeaponMod(){
-	VectorDelete(WeaponModClassNames);
+	//Don't need to delete the string vector since it's not a vector of pointers
 }
 void WeaponMod::read(fstream& saveFile, int version){
 	StringRead(saveFile,name);
-	//VectorRead(saveFile,WeaponModClassNames,version);
+	VectorRead(saveFile,WeaponModClassNames,version);
 }
 void WeaponMod::cout(){
-	std::cout << "Mod Name:  " << name << endl;
+	std::cout << "		Mod Name:  " << name << endl;
 	for(size_t i=0;i<WeaponModClassNames.size();i++){
-		std::cout << "	ClassName:  " << WeaponModClassNames[i] << endl;
+		std::cout << "			ClassName:  " << WeaponModClassNames[i] << endl;
 	}
 }
