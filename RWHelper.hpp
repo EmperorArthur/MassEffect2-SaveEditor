@@ -20,10 +20,9 @@ void StringRead(fstream& saveFile,string& aString);
 //This is for binary files that store bools as a 4 byte little endian value, where 1 is true and 0 is false.
 void ReadBool(fstream& saveFile,bool& aBool);
 
-//This is a near copy of the general VectorRead, but it's designed to work with strings
-void VectorRead(fstream& saveFile,vector<string>& items,int version);
-
 //This allows me to cut down on copy and pasted codes
+//Read a string into a vector
+void ReadItem(fstream& saveFile,vector<string>& items,int version);
 //Read an item into a vector
 template <typename T>
 void ReadItem(fstream& saveFile,vector<T*>& items,int version){
