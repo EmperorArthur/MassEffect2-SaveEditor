@@ -144,9 +144,20 @@ void playerData::read(fstream& saveFile,int version){
 	if(version >=18){
 		currentLoadout.read(saveFile);
 	}
+	if(version >=41){
+		StringRead(saveFile,PrimaryWeapon);
+		StringRead(saveFile,SecondaryWeapon);
+	}
+	if(version >=33){
+		VectorRead(saveFile,LoadoutWeaponGroups,version);
+	}
+	if(version >=19){
+		//VectorRead(saveFile,hotkeys,version);
+	}
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
+	IFELSEREAD4(version < 44, 0.0f, CurrentHealth);
 	READ4(Credits);
 	READ4(Medigel);
 	READ4(Eezo);
@@ -197,9 +208,24 @@ void playerData::cout(int version){
 		std::cout << "	Displaying Weapons Loadout:"<<endl;
 		currentLoadout.cout();
 	}
+	if(version >=41){
+		std::cout << "	Primary Weapon:    " << PrimaryWeapon << endl;
+		std::cout << "	Secondary Weapon:  " << SecondaryWeapon << endl;
+	}
+	if(version >=33){
+		std::cout << "	Displaying Loadout Weapon Groups:" << endl;
+		VectorCoutBasic(LoadoutWeaponGroups);
+	}
+	if(version >=19){
+		//std::cout << "	Displaying Hotkeys:"<<endl;
+		//VectorCout(hotkeys,version);
+	}
 	///////////////////////////////////////////MORE ME3 Stuff here
 	
 	///////////////////////////////////////////END ME3 Stuff
+	if(version >=44){
+		std::cout << "	Player has " << CurrentHealth << " Health" << endl;
+	}
 	std::cout << "	Player has " << Credits << " Credits" << endl;
 	std::cout << "	Player has " << Medigel << " Medigel" << endl;
 	std::cout << "	Player has " << Eezo << " Eezo" << endl;
@@ -335,4 +361,18 @@ void WeaponMod::cout(){
 	for(size_t i=0;i<WeaponModClassNames.size();i++){
 		std::cout << "			ClassName:  " << WeaponModClassNames[i] << endl;
 	}
+}
+
+Hotkey::Hotkey(){
+	PawnName = "";
+	PowerID = 0;
+	PowerName = "";
+}
+void Hotkey::read(fstream& saveFile, int version){
+	StringRead(saveFile,PawnName);
+	READ4(PowerID);
+	StringRead(saveFile,PowerName);
+}
+void Hotkey::cout(int version){
+	std::cout << "	" << PawnName << " : " << PowerID << " : " << PowerName << endl;
 }

@@ -96,10 +96,11 @@ struct WeaponMod{
 };
 struct Hotkey{
 	string PawnName;
-	int PowerID; //Not sure about this
-	//mstring PowerName; //Not sure about this
-	void read(fstream& saveFile);
-	void cout();
+	int PowerID; 		//Not sure about this
+	string PowerName; 	//Not sure about this
+	Hotkey();
+	void read(fstream& saveFile,int version);
+	void cout(int version);
 };
 struct playerData {
 	~playerData();
@@ -124,11 +125,11 @@ struct playerData {
 	vector<Weapon*> weapons;
 	vector<WeaponMod*> WeaponMods; //Version < 32
 	Loadout currentLoadout; //s => s.Version < 18, () => new Loadout());
-	//string PrimaryWeapon; //s => s.Version < 41, () => null);
-	//string SecondaryWeapon; //s => s.Version < 41, () => null);
-	//vector<int> LoadoutWeaponGroups; //Version < 33
-	//vector<Hotkey*> hotkeys; //Version < 19
-	//float CurrentHealth; //s => s.Version < 44, () => 0.0f);
+	string PrimaryWeapon; //s => s.Version < 41, () => null);
+	string SecondaryWeapon; //s => s.Version < 41, () => null);
+	vector<int> LoadoutWeaponGroups; //Version < 33
+	vector<Hotkey*> hotkeys; //Version < 19
+	float CurrentHealth; //s => s.Version < 44, () => 0.0f);
 	int Credits;
 	int Medigel;
 	int Eezo;
