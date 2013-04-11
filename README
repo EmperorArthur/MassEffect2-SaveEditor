@@ -11,13 +11,16 @@ All the code is mine, but you might notice that a few variable names are the sam
 See here for more:  http://blog.gib.me/
 
 To Do:
-	Fix the crash at exit bug on windows systems.
-		There is an unused variable that seems to cause the problem.
-		However, when it's removed LevelRecords start repeating the second name seen.
-		The weird thing is that, not only does it not crash on my linux machine, but valgrind reports no errors.
-		I'm going to try testing with different save files to see if I can replicate the problem on my linux box.
+	Finish parsing ME3 Save file.
+		With the improvements made, quite a few things in ME3Format can be moved to MEShared.
+			Don't do this right now.
+			I'll probably end up with a unified ME Save Format that will work with ME2 and ME3, so I'm waiting to merge the files.
 	Handle Head Morphs
 		Currently this code asserts and dies with a charachter that has a head morph.
+	Change all the READ4's in my code to ReadInt and ReadFloat
+		This will allow me to easily modify the code if I'm ever running on a system where ints and floats aren't 4 byte little endian values.
+	Modify guid output so it looks better.
+		The output using the guid object just doesn't look as good as it can.
 	Create write functions for my objects.
 		This is fairly straightforward, but takes time to actually write.
 	Figure out how to calculate a CRC32 value.
