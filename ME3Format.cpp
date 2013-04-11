@@ -5,10 +5,6 @@
 
 //These are some macros to help me with my reading depending on version number
 #define READ4(variable) saveFile.read((char *) &variable,4);
-#define IFELSEREAD4(versionCheck,checkFailedState,variable) if(versionCheck){variable = checkFailedState;}else{READ4(variable);}
-#define IFELSEREADBOOL(versionCheck,checkFailedState,variable) if(versionCheck){variable = checkFailedState;}else{ReadBool(saveFile,variable);}
-//WATCH OUT:  This does the reading in the if block.  IFELSEREAD4 does the reading in the else block
-#define IFREAD4(versionCheck,variable) if(versionCheck){READ4(variable);}
 
 ME3Format::ME3Format(){
 	version = 0;
@@ -157,14 +153,13 @@ playerData::~playerData(){
 void playerData::read(fstream& saveFile,int version){
 	ReadBool(saveFile,IsFemale);
 	StringRead(saveFile,className);
-	//This if statement and the IFELSEREADBOOL are the same thing, one just involves less typing
-	if(version < 37){
-		IsCombatPawn = true;
-	}else{
+	if(version >= 37){
 		ReadBool(saveFile,IsCombatPawn);
 	}
-	IFELSEREADBOOL(version < 48,false,IsInjuredPawn);
-	IFELSEREADBOOL(version < 48,false,UseCasualAppearance);
+	if(version >=48){
+		ReadBool(saveFile,IsInjuredPawn);
+		ReadBool(saveFile,UseCasualAppearance);
+	}
 	saveFile.read((char *) &level,4);
 	saveFile.read((char *) &xp,4);
 	StringRead(saveFile,firstName);
@@ -197,7 +192,9 @@ void playerData::read(fstream& saveFile,int version){
 	if(version >=19){
 		VectorRead(saveFile,hotkeys,version);
 	}
-	IFELSEREAD4(version < 44, 0.0f, CurrentHealth);
+	if(version >= 44){
+		READ4(CurrentHealth);
+	}
 	READ4(Credits);
 	READ4(Medigel);
 	READ4(Eezo);
@@ -206,7 +203,9 @@ void playerData::read(fstream& saveFile,int version){
 	READ4(Platinum);
 	READ4(Probes);
 	READ4(CurrentFuel);
-	IFELSEREAD4(version < 54, 0, Grenades);
+	if(version >= 54){
+		READ4(Grenades);
+	}
 	if(version >=25){
 		StringRead(saveFile,FaceCode);
 	}else{
@@ -214,7 +213,9 @@ void playerData::read(fstream& saveFile,int version){
 		cerr << "ERROR:  This program can not read versions lower than 25" << endl;
 		exit(1);
 	}
-	IFELSEREAD4(version < 26, 0, ClassFriendlyName);
+	if(version >= 26){
+		READ4(ClassFriendlyName);
+	}
 	if(version >= 42){
 		id.read(saveFile);
 	}
@@ -335,7 +336,9 @@ void Appearance::read(fstream& saveFile,int version){
 	saveFile.read((char *) &HelmetID,4);
 	ReadBool(saveFile,HasMorphHead);
 	assert(!HasMorphHead);
-	IFELSEREAD4(version < 55,0,EmissiveId);
+	if(version >= 55){
+		READ4(EmissiveId);
+	}
 }
 void Appearance::cout(int version){
 	bool ThisFunctionNeedsToBeWritten = true;
@@ -352,13 +355,17 @@ Power::Power(){
 }
 void Power::read(fstream& saveFile,int version){
 	StringRead(saveFile,PowerName);
-	saveFile.read((char *) &CurrentRank,4);
-	IFELSEREAD4(version < 30,0,EvolvedChoice[0]);
-	IFELSEREAD4(version < 30,0,EvolvedChoice[1]);
-	IFELSEREAD4(version < 31,0,EvolvedChoice[2]);
-	IFELSEREAD4(version < 31,0,EvolvedChoice[3]);
-	IFELSEREAD4(version < 31,0,EvolvedChoice[4]);
-	IFELSEREAD4(version < 31,0,EvolvedChoice[5]);
+	READ4(CurrentRank);
+	if(version >= 30){
+		READ4(EvolvedChoice[0]);
+		READ4(EvolvedChoice[1]);
+	}
+	if(version >= 30){
+		READ4(EvolvedChoice[2]);
+		READ4(EvolvedChoice[3]);
+		READ4(EvolvedChoice[4]);
+		READ4(EvolvedChoice[5]);
+	}
 	StringRead(saveFile,PowerClassName);
 	saveFile.read((char *) &WheelDisplayIndex,4);
 }
