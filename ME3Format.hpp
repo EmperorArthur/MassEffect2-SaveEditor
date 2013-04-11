@@ -139,9 +139,9 @@ struct playerData {
 	int Probes;
 	float CurrentFuel;
 	int Grenades; //Version < 54,0
-	//string FaceCode; //assert(stream.Version >= 25) (this is pretty much what gibbed's code does)
-	//int ClassFriendlyName; //Version < 26,0
-	//guid id; //s.Version < 42, () => Guid.Empty);
+	string FaceCode; //assert(stream.Version >= 25) (this is pretty much what gibbed's code does)
+	int ClassFriendlyName; //Version < 26,0
+	guid id; //s.Version < 42, () => Guid.Empty);
 	void read(fstream& saveFile,int version);
 	void cout(int version);
 };

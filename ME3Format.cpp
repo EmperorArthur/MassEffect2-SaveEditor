@@ -164,6 +164,17 @@ void playerData::read(fstream& saveFile,int version){
 	READ4(Probes);
 	READ4(CurrentFuel);
 	IFELSEREAD4(version < 54, 0, Grenades);
+	if(version >=25){
+		StringRead(saveFile,FaceCode);
+	}else{
+		//This is basically what gibbed's code does
+		cerr << "ERROR:  This program can not read versions lower than 25" << endl;
+		exit(1);
+	}
+	IFELSEREAD4(version < 26, 0, ClassFriendlyName);
+	if(version >= 42){
+		id.read(saveFile);
+	}
 }
 void playerData::cout(int version){
 	std::cout << "****************Start of Player Information****************" << std::endl;
@@ -231,7 +242,18 @@ void playerData::cout(int version){
 	if(version >=54){
 		std::cout << "	Player has " << Grenades << " Grenades" << endl;
 	}
-	
+	if(version >=25){
+		std::cout << "	Player's FaceCode is: " << FaceCode << endl;
+	}
+	if(version >=26){
+		std::cout << "	Player's ClassFriendlyName is:  " << ClassFriendlyName << endl;
+	}
+	if(version >= 42){
+		//Consider modifying the guid cout so it looks better
+		std::cout << "	Player's ID is:  " << endl;
+		id.cout();
+		std::cout << endl;
+	}
 	std::cout << "****************End of Player Information****************" << std::endl;
 }
 void Appearance::read(fstream& saveFile,int version){
