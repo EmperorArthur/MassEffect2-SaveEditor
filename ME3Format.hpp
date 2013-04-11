@@ -96,8 +96,8 @@ struct WeaponMod{
 };
 struct Hotkey{
 	string PawnName;
-	int PowerID; 		//Not sure about this
-	string PowerName; 	//Not sure about this
+	int PowerID; 		//Version >= 30,0 (doesn't exist in ME3)
+	string PowerName; 	//Version < 30,null
 	Hotkey();
 	void read(fstream& saveFile,int version);
 	void cout(int version);

@@ -152,11 +152,8 @@ void playerData::read(fstream& saveFile,int version){
 		VectorRead(saveFile,LoadoutWeaponGroups,version);
 	}
 	if(version >=19){
-		//VectorRead(saveFile,hotkeys,version);
+		VectorRead(saveFile,hotkeys,version);
 	}
-	///////////////////////////////////////////MORE ME3 Stuff here
-	
-	///////////////////////////////////////////END ME3 Stuff
 	IFELSEREAD4(version < 44, 0.0f, CurrentHealth);
 	READ4(Credits);
 	READ4(Medigel);
@@ -217,12 +214,9 @@ void playerData::cout(int version){
 		VectorCoutBasic(LoadoutWeaponGroups);
 	}
 	if(version >=19){
-		//std::cout << "	Displaying Hotkeys:"<<endl;
-		//VectorCout(hotkeys,version);
+		std::cout << "	Displaying Hotkeys:"<<endl;
+		VectorCout(hotkeys,version);
 	}
-	///////////////////////////////////////////MORE ME3 Stuff here
-	
-	///////////////////////////////////////////END ME3 Stuff
 	if(version >=44){
 		std::cout << "	Player has " << CurrentHealth << " Health" << endl;
 	}
@@ -370,9 +364,16 @@ Hotkey::Hotkey(){
 }
 void Hotkey::read(fstream& saveFile, int version){
 	StringRead(saveFile,PawnName);
-	READ4(PowerID);
-	StringRead(saveFile,PowerName);
+	if(version < 30){
+		READ4(PowerID);
+	}else{
+		StringRead(saveFile,PowerName);
+	}
 }
 void Hotkey::cout(int version){
-	std::cout << "	" << PawnName << " : " << PowerID << " : " << PowerName << endl;
+	if(version < 30){
+		std::cout << "		" << PawnName << " : " << PowerID << endl;
+	}else{
+		std::cout << "		" << PawnName << " : " << PowerName << endl;
+	}
 }
