@@ -31,11 +31,11 @@ ME3Format::~ME3Format(){
 void ME3Format::read(fstream& saveFile){
 	//Read the data from the file
 	saveFile.seekg(ios_base::beg + 0x00);
-	saveFile.read((char *) &version,4);
+	READ4(version);
 	assert(29 == version||59 == version);	//Make sure we're reading the correct file type
 	StringRead(saveFile,DebugName);
-	saveFile.read((char *) &playTime,4);
-	saveFile.read((char *) &Disc,4);
+	READ4(playTime);
+	READ4(Disc);
 	StringRead(saveFile,BaseLevelName);
 	if(version<36){
 		BaseLevelNameDisplayOverrideAsRead = "None";
@@ -47,11 +47,11 @@ void ME3Format::read(fstream& saveFile){
 		char unknown = 0;
 		saveFile.read(&unknown,1);
 	}
-	saveFile.read((char *) &EndGameState,4);
+	READ4(EndGameState);
 	SaveDateTime.read(saveFile);
 	playerPosition.read(saveFile);
 	myRotation.read(saveFile);
-	saveFile.read((char *) &CurrentLoadingTip,4);
+	READ4(CurrentLoadingTip);
 	VectorRead(saveFile,levels,version);
 	VectorRead(saveFile,streams,version);
 	VectorRead(saveFile,kismets,version);
@@ -160,13 +160,13 @@ void playerData::read(fstream& saveFile,int version){
 		ReadBool(saveFile,IsInjuredPawn);
 		ReadBool(saveFile,UseCasualAppearance);
 	}
-	saveFile.read((char *) &level,4);
-	saveFile.read((char *) &xp,4);
+	READ4(level);
+	READ4(xp);
 	StringRead(saveFile,firstName);
-	saveFile.read((char *) &lastname,4);
+	READ4(lastname);
 	saveFile.read((char *) &origin,1);
 	saveFile.read((char *) &Notoriety,1);
-	saveFile.read((char *) &TalentPoints,4);
+	READ4(TalentPoints);
 	StringRead(saveFile,mappedPower1);
 	StringRead(saveFile,mappedPower2);
 	StringRead(saveFile,mappedPower3);
@@ -321,19 +321,19 @@ Appearance::Appearance(){
 }
 void Appearance::read(fstream& saveFile,int version){
 	saveFile.read((char *) &CombatAppearance,1);
-	saveFile.read((char *) &CasualID,4);
-	saveFile.read((char *) &FullBodyID,4);
-	saveFile.read((char *) &TorsoID,4);
-	saveFile.read((char *) &ShoulderID,4);
-	saveFile.read((char *) &ArmID,4);
-	saveFile.read((char *) &LegID,4);
-	saveFile.read((char *) &SpecID,4);
-	saveFile.read((char *) &Tint1ID,4);
-	saveFile.read((char *) &Tint2ID,4);
-	saveFile.read((char *) &Tint3ID,4);
-	saveFile.read((char *) &PatternID,4);
-	saveFile.read((char *) &PatternColorID,4);
-	saveFile.read((char *) &HelmetID,4);
+	READ4(CasualID);
+	READ4(FullBodyID);
+	READ4(TorsoID);
+	READ4(ShoulderID);
+	READ4(ArmID);
+	READ4(LegID);
+	READ4(SpecID);
+	READ4(Tint1ID);
+	READ4(Tint2ID);
+	READ4(Tint3ID);
+	READ4(PatternID);
+	READ4(PatternColorID);
+	READ4(HelmetID);
 	ReadBool(saveFile,HasMorphHead);
 	assert(!HasMorphHead);
 	if(version >= 55){
@@ -367,7 +367,7 @@ void Power::read(fstream& saveFile,int version){
 		READ4(EvolvedChoice[5]);
 	}
 	StringRead(saveFile,PowerClassName);
-	saveFile.read((char *) &WheelDisplayIndex,4);
+	READ4(WheelDisplayIndex);
 }
 void Power::cout(int version){
 	std::cout << "		" << PowerName << " : " << PowerClassName << ": " << CurrentRank << "," << WheelDisplayIndex << endl;
@@ -387,8 +387,8 @@ void GAWAsset::read(fstream& saveFile,int version){
 	read(saveFile);
 }
 void GAWAsset::read(fstream& saveFile){
-	saveFile.read((char *) &ID,4);
-	saveFile.read((char *) &Strength,4);
+	READ4(ID);
+	READ4(Strength);
 }
 void GAWAsset::cout(int version){
 	cout();
@@ -407,8 +407,8 @@ Weapon::Weapon(){
 }
 void Weapon::read(fstream& saveFile,int version){
 	StringRead(saveFile,name);
-	saveFile.read((char *) &AmmoUsedCount,4);
-	saveFile.read((char *) &TotalAmmo,4);
+	READ4(AmmoUsedCount);
+	READ4(TotalAmmo);
 	ReadBool(saveFile,CurrentWeapon);
 	ReadBool(saveFile,LastWeapon);
 	if(version >=17){
