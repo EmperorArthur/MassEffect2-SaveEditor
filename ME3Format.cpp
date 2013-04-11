@@ -10,6 +10,17 @@
 //WATCH OUT:  This does the reading in the if block.  IFELSEREAD4 does the reading in the else block
 #define IFREAD4(versionCheck,variable) if(versionCheck){READ4(variable);}
 
+ME3Format::ME3Format(){
+	version = 0;
+	DebugName = "";
+	playTime = 0;
+	Disc = 0;
+	BaseLevelName = "";
+	BaseLevelNameDisplayOverrideAsRead = "None";
+	dificulty = 0;
+	EndGameState = 0;
+	CurrentLoadingTip = 0;	
+}
 ME3Format::~ME3Format(){
 	VectorDelete(levels);
 	VectorDelete(streams);
@@ -105,6 +116,38 @@ void Placeable::cout(int version){
 void Placeable::cout(){
 	id.cout();
 	std::cout << ": " << (bool)IsDestroyed << "," << (bool)IsDeactivated << endl;
+}
+
+playerData::playerData(){
+	IsFemale = false;
+	className = "";
+	IsCombatPawn = true;
+	IsInjuredPawn = false;
+	UseCasualAppearance = false;
+	level = 0;
+	xp = 0;
+	firstName = "";
+	lastname = 0;
+	origin = 0;
+	Notoriety = 0;
+	TalentPoints = 0;
+	mappedPower1 = "";
+	mappedPower2 = "";
+	mappedPower3 = "";
+	PrimaryWeapon = "";
+	SecondaryWeapon = "";
+	CurrentHealth = 0;
+	Credits = 0;
+	Medigel = 0;
+	Eezo = 0;
+	Iridium = 0;
+	Palladium = 0;
+	Platinum = 0;
+	Probes = 0;
+	CurrentFuel = 0;
+	Grenades = 0;
+	FaceCode = "";
+	ClassFriendlyName = 0;
 }
 playerData::~playerData(){
 	VectorDelete(powers);
@@ -256,6 +299,25 @@ void playerData::cout(int version){
 	}
 	std::cout << "****************End of Player Information****************" << std::endl;
 }
+
+Appearance::Appearance(){
+	CombatAppearance = 0;
+	CasualID = 0;
+	FullBodyID = 0;
+	TorsoID = 0;
+	ShoulderID = 0;
+	ArmID = 0;
+	LegID = 0;
+	SpecID = 0;
+	Tint1ID = 0;
+	Tint2ID = 0;
+	Tint3ID = 0;
+	PatternID = 0;
+	PatternColorID = 0;
+	HelmetID = 0;
+	HasMorphHead = 0;
+	EmissiveId = 0;
+}
 void Appearance::read(fstream& saveFile,int version){
 	saveFile.read((char *) &CombatAppearance,1);
 	saveFile.read((char *) &CasualID,4);
@@ -365,6 +427,9 @@ void Weapon::cout(int version){
 	}
 }
 
+WeaponMod::WeaponMod(){
+	name = "";
+}
 WeaponMod::~WeaponMod(){
 	//Don't need to delete the string vector since it's not a vector of pointers
 }

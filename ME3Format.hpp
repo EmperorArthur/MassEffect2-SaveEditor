@@ -44,6 +44,7 @@ struct GAWAsset{
 
 //All of these are just ME2 structs with some extra stuff added on
 struct Appearance{
+	Appearance();
 	unsigned char CombatAppearance; //(display as an int) really an enum(0 means parts, 1 means full)
 	int CasualID;
 	int FullBodyID;
@@ -88,6 +89,7 @@ struct Weapon{
 	void cout(int version);
 };
 struct WeaponMod{
+	WeaponMod();
 	~WeaponMod();
 	string name;
 	vector<string> WeaponModClassNames;
@@ -103,6 +105,7 @@ struct Hotkey{
 	void cout(int version);
 };
 struct playerData {
+	playerData();
 	~playerData();
 	bool IsFemale;
 	string className;
@@ -193,6 +196,7 @@ struct DependentDLC{
 	void cout();
 };
 struct ME3Format{
+	ME3Format();
 	~ME3Format();
 	unsigned int version;		// This handles saves of version 29 and 59 (Coppied from Gibbed's work)
 								// 29 is ME2 and 59 is ME3
