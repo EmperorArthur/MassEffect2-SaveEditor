@@ -6,7 +6,7 @@
 void StringRead(fstream& saveFile,string& aString){
 	int readSize;
 	char readChar;
-	saveFile.read((char *) &readSize,4);
+	ReadInt(saveFile,readSize);
 	aString.clear();
 	if(0 == readSize){
 		return;
@@ -26,6 +26,28 @@ void ReadBool(fstream& saveFile,bool& aBool){
 	saveFile.read((char *) &rawBool,1);
 	aBool = (bool) rawBool;
 	saveFile.seekg(3,ios_base::cur);
+}
+void ReadInt(fstream& saveFile,int& anInt){
+	saveFile.read((char *) &anInt,4);
+}
+void ReadUInt(fstream& saveFile,unsigned int& anInt){
+	saveFile.read((char *) &anInt,4);
+}
+void ReadFloat(fstream& saveFile,float& aFloat){
+	saveFile.read((char *) &aFloat,4);
+}
+
+void ReadBasic(fstream& saveFile,int& anItem){
+	ReadInt(saveFile,anItem);
+}
+void ReadBasic(fstream& saveFile,float& anItem){
+	ReadFloat(saveFile,anItem);
+}
+void ReadBasic(fstream& saveFile,bool& anItem){
+	ReadBool(saveFile,anItem);
+}
+void ReadBasic(fstream& saveFile,unsigned int& anItem){
+	ReadUInt(saveFile,anItem);
 }
 
 void ReadItem(fstream& saveFile,vector<string>& items,int version){

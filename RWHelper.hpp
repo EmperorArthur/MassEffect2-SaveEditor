@@ -14,11 +14,26 @@
 using namespace std;
 
 //This handles reading a string from a binary file
-//This is a format where the length of the string is stored as a 4 byte little endian int before the string itself.
+//This is a format where the length of the string is stored as an int before the string itself.
 void StringRead(fstream& saveFile,string& aString);
 //Read a bool from a binary file
 //This is for binary files that store bools as a 4 byte little endian value, where 1 is true and 0 is false.
 void ReadBool(fstream& saveFile,bool& aBool);
+//Read an int from a binary file
+//This is for binary files that store ints as a 4 byte little endian value
+void ReadInt(fstream& saveFile,int& anInt);
+//Read a float from a binary file
+//This is for binary files that store floats as a 4 byte little endian value
+void ReadFloat(fstream& saveFile,float& aFloat);
+//Read an unsigned int from a binary file
+//This is for binary files that store unsigned ints as a 4 byte little endian value
+void ReadUInt(fstream& saveFile,unsigned int& anInt);
+
+//I'm lazy, so these will let me read anything with one function
+void ReadBasic(fstream& saveFile,int& anItem);
+void ReadBasic(fstream& saveFile,float& anItem);
+void ReadBasic(fstream& saveFile,bool& anItem);
+void ReadBasic(fstream& saveFile,unsigned int& anItem);
 
 //This allows me to cut down on copy and pasted codes
 //Read a string into a vector
@@ -39,7 +54,7 @@ void ReadItem(fstream& saveFile,vector<T*>& items,int version){
 template <typename T>
 void VectorRead(fstream& saveFile,vector<T>& items,int version){
 	int numberofItems = 0;
-	saveFile.read((char *) &numberofItems,4);
+	ReadInt(saveFile,numberofItems);
 	items.clear();
 	if(numberofItems){
 		items.reserve(numberofItems);

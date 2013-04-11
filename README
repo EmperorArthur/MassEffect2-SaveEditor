@@ -17,8 +17,6 @@ To Do:
 			I'll probably end up with a unified ME Save Format that will work with ME2 and ME3, so I'm waiting to merge the files.
 	Handle Head Morphs
 		Currently this code asserts and dies with a charachter that has a head morph.
-	Change all the READ4's in my code to ReadInt and ReadFloat
-		This will allow me to easily modify the code if I'm ever running on a system where ints and floats aren't 4 byte little endian values.
 	Modify guid output so it looks better.
 		The output using the guid object just doesn't look as good as it can.
 	Create write functions for my objects.

@@ -14,10 +14,10 @@ void Timestamp::read(fstream& saveFile,int version){
 	this->read(saveFile);
 }
 void Timestamp::read(fstream& saveFile){
-	saveFile.read((char *) &SecondsSinceMidnight,4);
-	saveFile.read((char *) &day,4);
-	saveFile.read((char *) &month,4);
-	saveFile.read((char *) &year,4);
+	ReadBasic(saveFile,SecondsSinceMidnight);
+	ReadBasic(saveFile,day);
+	ReadBasic(saveFile,month);
+	ReadBasic(saveFile,year);
 }
 void Timestamp::cout(int version){
 	this->cout();
@@ -34,9 +34,9 @@ void xyzvector::read(fstream& saveFile,int version){
 	this->read(saveFile);
 }
 void xyzvector::read(fstream& saveFile){
-	saveFile.read((char *) &x,4);
-	saveFile.read((char *) &y,4);
-	saveFile.read((char *) &z,4);
+	ReadBasic(saveFile,x);
+	ReadBasic(saveFile,y);
+	ReadBasic(saveFile,z);
 }
 void xyzvector::cout(int version){
 	this->cout();
@@ -53,9 +53,9 @@ PlayerRotation::PlayerRotation(){
 	Roll = 0;
 }
 void PlayerRotation::read(fstream& saveFile){
-	saveFile.read((char *) &Pitch,4);
-	saveFile.read((char *) &Yaw,4);
-	saveFile.read((char *) &Roll,4);
+	ReadBasic(saveFile,Pitch);
+	ReadBasic(saveFile,Yaw);
+	ReadBasic(saveFile,Roll);
 }
 void PlayerRotation::cout(int version){
 	this->cout();
@@ -223,8 +223,8 @@ void xyvector::read(fstream& saveFile,int version){
 	this->read(saveFile);
 }
 void xyvector::read(fstream& saveFile){
-	saveFile.read((char *) &x,4);
-	saveFile.read((char *) &y,4);
+	ReadBasic(saveFile,x);
+	ReadBasic(saveFile,y);
 }
 void xyvector::cout(int version){
 	this->cout();
