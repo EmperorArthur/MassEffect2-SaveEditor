@@ -13,21 +13,50 @@
 
 using namespace std;
 
-//This handles reading a string from a binary file
-//This is a format where the length of the string is stored as an int before the string itself.
+/**
+ * @brief This handles reading a string from a binary file.
+ * Strings are stored in a format where the length of the string is stored as an unsigned int before the string itself.
+ * 
+ * @param saveFile An fstream handle to the file to read from.
+ * @param aString The string that's being read.
+ */
 void StringRead(fstream& saveFile,string& aString);
-//Read a bool from a binary file
-//This is for binary files that store bools as a 4 byte little endian value, where 1 is true and 0 is false.
+
+/**
+ * @brief Read a bool from a binary file.
+ * This is for binary files that store bools as a 4 byte little endian value, where 1 is true and 0 is false.
+ * 
+ * @param saveFile An fstream handle to the file to read from.
+ * @param aBool The bool that's being read.
+ */
 void ReadBool(fstream& saveFile,bool& aBool);
-//Read an int from a binary file
-//This is for binary files that store ints as a 4 byte little endian value
+
+/**
+ * @brief Read an int from a binary file.
+ * This is for binary files that store ints as a 4 byte little endian value.
+ * 
+ * @param saveFile An fstream handle to the file to read from.
+ * @param anInt The interger that's being read.
+ */
 void ReadInt(fstream& saveFile,int& anInt);
-//Read a float from a binary file
-//This is for binary files that store floats as a 4 byte little endian value
+
+/**
+ * Read a float from a binary file.
+ * This is for binary files that store floats as a 4 byte little endian value.
+ * 
+ * @param saveFile An fstream handle to the file to read from.
+ * @param aFloat The float that's being read.
+ */
 void ReadFloat(fstream& saveFile,float& aFloat);
-//Read an unsigned int from a binary file
-//This is for binary files that store unsigned ints as a 4 byte little endian value
-void ReadUInt(fstream& saveFile,unsigned int& anInt);
+
+/**
+ * Read an unsigned int from a binary file.
+ * This is for binary files that store unsigned ints as a 4 byte little endian value.
+ * 
+ * @param saveFile An fstream handle to the file to read from.
+ * @param aUInt The unsigned interger that's being read.
+ */
+void ReadUInt(fstream& saveFile,unsigned int& aUInt);
 
 //I'm lazy, so these will let me read anything with one function
 void ReadBasic(fstream& saveFile,int& anItem);
@@ -53,8 +82,8 @@ void ReadItem(fstream& saveFile,vector<T*>& items,int version){
 //Read a saved vector from the file
 template <typename T>
 void VectorRead(fstream& saveFile,vector<T>& items,int version){
-	int numberofItems = 0;
-	ReadInt(saveFile,numberofItems);
+	unsigned int numberofItems = 0;
+	ReadBasic(saveFile,numberofItems);
 	items.clear();
 	if(numberofItems){
 		items.reserve(numberofItems);

@@ -30,8 +30,8 @@ void ReadBool(fstream& saveFile,bool& aBool){
 void ReadInt(fstream& saveFile,int& anInt){
 	saveFile.read((char *) &anInt,4);
 }
-void ReadUInt(fstream& saveFile,unsigned int& anInt){
-	saveFile.read((char *) &anInt,4);
+void ReadUInt(fstream& saveFile,unsigned int& aUInt){
+	saveFile.read((char *) &aUInt,4);
 }
 void ReadFloat(fstream& saveFile,float& aFloat){
 	saveFile.read((char *) &aFloat,4);
