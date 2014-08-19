@@ -1,2 +1,10 @@
-*.o
+*.[oa]
 *.exe
+*.pcsav
+
+SaveExtract
+
+CMakeFiles
+*.cmake
+CMakeCache.txt
+Makefile
