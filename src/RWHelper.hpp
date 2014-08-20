@@ -1,5 +1,10 @@
-//Helper functions for binary read write of strings and vectors
-//Copyright Arthur Moore 2012 GPL V3
+/**
+ * @file
+ * @author Arthur Moore
+ * @brief Helper functions for binary read write of strings and vectors
+ * @section LICENSE
+ * Copyright Arthur Moore 2012 GPLV3
+ */
 
 #ifndef RWHELPER_H
 #define RWHELPER_H
@@ -15,6 +20,7 @@ using namespace std;
 
 /**
  * @brief This handles reading a string from a binary file.
+ * 
  * Strings are stored in a format where the length of the string is stored as an unsigned int before the string itself.
  * 
  * @param saveFile An fstream handle to the file to read from.
@@ -24,6 +30,7 @@ void StringRead(fstream& saveFile,string& aString);
 
 /**
  * @brief Read a bool from a binary file.
+ * 
  * This is for binary files that store bools as a 4 byte little endian value, where 1 is true and 0 is false.
  * 
  * @param saveFile An fstream handle to the file to read from.
@@ -33,6 +40,7 @@ void ReadBool(fstream& saveFile,bool& aBool);
 
 /**
  * @brief Read an int from a binary file.
+ * 
  * This is for binary files that store ints as a 4 byte little endian value.
  * 
  * @param saveFile An fstream handle to the file to read from.
@@ -42,6 +50,7 @@ void ReadInt(fstream& saveFile,int& anInt);
 
 /**
  * Read a float from a binary file.
+ * 
  * This is for binary files that store floats as a 4 byte little endian value.
  * 
  * @param saveFile An fstream handle to the file to read from.
@@ -51,6 +60,7 @@ void ReadFloat(fstream& saveFile,float& aFloat);
 
 /**
  * Read an unsigned int from a binary file.
+ * 
  * This is for binary files that store unsigned ints as a 4 byte little endian value.
  * 
  * @param saveFile An fstream handle to the file to read from.
@@ -58,10 +68,29 @@ void ReadFloat(fstream& saveFile,float& aFloat);
  */
 void ReadUInt(fstream& saveFile,unsigned int& aUInt);
 
-//I'm lazy, so these will let me read anything with one function
+/**
+ * Overloaded function to handle reading in the basic data types
+ * 
+ * It handles int, float, bool, and unsigned int.
+ * It does NOT handle reading in strings.
+ * \TODO:  Make this function handle reading strings
+ * 
+ * 
+ * @param saveFile An fstream handle to the file to read from.
+ * @param anItem The thing to be read from the file
+ */
 void ReadBasic(fstream& saveFile,int& anItem);
+/**
+ * \overload
+ */
 void ReadBasic(fstream& saveFile,float& anItem);
+/**
+ * \overload
+ */
 void ReadBasic(fstream& saveFile,bool& anItem);
+/**
+ * \overload
+ */
 void ReadBasic(fstream& saveFile,unsigned int& anItem);
 
 //This allows me to cut down on copy and pasted codes

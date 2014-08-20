@@ -1,5 +1,10 @@
-//The shared objects between Mass Effect 2 and 3
-//Copyright Arthur Moore 2012 GPLV3
+/**
+ * @file
+ * @author Arthur Moore
+ * @brief Structs used by both ME2 and ME3
+ * @section LICENSE
+ * Copyright Arthur Moore 2012 GPLV3
+ */
 
 #ifndef MESHARED_H
 #define MESHARED_H

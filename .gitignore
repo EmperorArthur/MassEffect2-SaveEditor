@@ -8,3 +8,5 @@ CMakeFiles
 *.cmake
 CMakeCache.txt
 Makefile
+
+Doxygen

@@ -1,12 +1,17 @@
-//Helper functions for binary read write of strings and vectors
-//Copyright Arthur Moore 2012 GPL V3
+/**
+ * @file
+ * @author Arthur Moore
+ * @brief Helper functions for binary read write of strings and vectors
+ * @section LICENSE
+ * Copyright Arthur Moore 2012 GPLV3
+ */
 
 #include "RWHelper.hpp"
 
 void StringRead(fstream& saveFile,string& aString){
-	int readSize;
+	unsigned int readSize;
 	char readChar;
-	ReadInt(saveFile,readSize);
+	ReadUInt(saveFile,readSize);
 	aString.clear();
 	if(0 == readSize){
 		return;
